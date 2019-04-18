@@ -1,0 +1,38 @@
+/* ==========================================================================
+Blog pages styles
+========================================================================== */
+:host {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 10px 25px 25px 275px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.comment-item-detail {
+    font-size: 14px;
+    position: relative;
+    width: 100%;
+    margin-right: auto;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+.comment-item-author {
+    font-weight: 600;
+}
+.comment-item-separator {
+    font-size: 12px;
+}
+.comment-item-datetime {
+    font-size: 12px;
+}
+.comment-item-content {
+    padding: 10px 0px 0px 10px;
+}
+.comment-item-post-link {
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.comment-item-parent-comment {
+    margin-bottom: 8px;
+}

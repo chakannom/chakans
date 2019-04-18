@@ -1,0 +1,79 @@
+{
+    "global": {
+        "title": "C.Account",
+        "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
+        "menu": {
+            "sign": {
+                "in": "Sign in",
+                "out": "Sign out",
+                "up": "Sign up"
+            },
+            "account": {
+                "main": "Account",
+                "settings": "Settings",
+                "login": "Sign in",
+                "logout": "Sign out",
+                "password": "Password"
+            },
+            "language": "Language"
+        },
+        "form": {
+            "email": "Email",
+            "email.placeholder": "Your email",
+            "newpassword": "New password",
+            "newpassword.placeholder": "New password",
+            "confirmpassword": "New password confirmation",
+            "confirmpassword.placeholder": "Confirm the new password"
+        },
+        "messages": {
+            "info": {
+                "authenticated": {
+                    "link": "sign in"
+                },
+                "sign.up": {
+                    "link": "Sign up"
+                }
+            },
+            "error": {
+                "dontmatch": "The password and its confirmation do not match!"
+            },
+            "validate": {
+                "newpassword": {
+                    "required": "Your password is required.",
+                    "minlength": "Your password is required to be at least 4 characters.",
+                    "maxlength": "Your password cannot be longer than 50 characters.",
+                    "strength": "Password strength:"
+                },
+                "confirmpassword": {
+                    "required": "Your confirmation password is required.",
+                    "minlength": "Your confirmation password is required to be at least 4 characters.",
+                    "maxlength": "Your confirmation password cannot be longer than 50 characters."
+                },
+                "email": {
+                    "required": "Your email is required.",
+                    "invalid": "Your email is invalid.",
+                    "minlength": "Your email is required to be at least 5 characters.",
+                    "maxlength": "Your email cannot be longer than 50 characters."
+                }
+            }
+        },
+        "field": {
+            "id": "ID"
+        },
+        "ribbon": {
+            "dev": "Development"
+        },
+        "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+    },
+    "error": {
+        "internalServerError": "Internal server error",
+        "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
+        "NotNull": "Field {{ fieldName }} cannot be empty!",
+        "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "Email is already in use!",
+        "idexists": "A new {{ entityName }} cannot already have an ID"
+    },
+    "footer": "This is your footer"
+}

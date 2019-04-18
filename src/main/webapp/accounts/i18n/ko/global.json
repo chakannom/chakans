@@ -1,0 +1,81 @@
+{
+    "global": {
+        "title": "C.계정",
+        "browsehappy": "당신은 <strong>오래된</strong> 브라우저를 사용하고 있군요. <a href=\"http://browsehappy.com/?locale=en\">브라우저를 업그레이드</a> 해 당신의 경험을 발전시키세요.",
+        "menu": {
+            "sign": {
+                "in": "인증",
+                "out": "로그아웃",
+                "up": "등록"
+            },
+            "account": {
+                "main": "계정",
+                "settings": "설정",
+                "login": "인증",
+                "logout": "로그아웃",
+                "password": "비밀번호"
+            },
+            "language": "언어"
+        },
+        "form": {
+            "email": "이메일",
+            "email.placeholder": "이메일을 입력하세요",
+            "newpassword": "새 비밀번호",
+            "newpassword.placeholder": "새 비밀번호",
+            "confirmpassword": "새 비밀번호 확인",
+            "confirmpassword.placeholder": "새 비밀번호 확인"
+        },
+        "messages": {
+            "info": {
+                "authenticated": {
+                    "prefix": "",
+                    "link": "인증",
+                    "suffix": "을 원하시면, 기본 계정을 사용할 수 있습니다:<br/>- 관리자 (아이디=\"admin\", 비밀번호=\"admin\") <br/>- 사용자 (아이디=\"user\", 비밀번호=\"user\")."
+                },
+                "sign.up": {
+                    "link": "회원가입"
+                }
+            },
+            "error": {
+                "dontmatch": "비밀번호가 일치하지 않습니다!"
+            },
+            "validate": {
+                "newpassword": {
+                    "required": "비밀번호 입력이 필요합니다.",
+                    "minlength": "비밀번호는 최소 5자 이상이어야 합니다",
+                    "maxlength": "비밀번호는 최대 50자 까지입니다.",
+                    "strength": "비밀번호 길이:"
+                },
+                "confirmpassword": {
+                    "required": "확인할 비밀번호 입력이 필요합니다.",
+                    "minlength": "확인할 비밀번호는 최소 5자 이상이어야 합니다",
+                    "maxlength": "확인할 비밀번호는 최대 50자 까지입니다"
+                },
+                "email": {
+                    "required": "이메일 입력이 필요합니다.",
+                    "invalid": "잘못된 이메일입니다.",
+                    "minlength": "이메일은 최소 5자 이상이어야 합니다",
+                    "maxlength": "이메일은 최대 50자 까지입니다."
+                }
+            }
+        },
+        "field": {
+            "id": "ID"
+        },
+        "ribbon": {
+            "dev": "Development"
+        },
+        "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+    },
+    "error": {
+        "internalServerError": "Internal server error",
+        "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
+        "NotNull": "Field {{fieldName}} cannot be empty!",
+        "Size": "Field {{fieldName}} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "Email is already in use!",
+        "idexists": "A new {{entityName}} cannot already have an ID"
+    },
+    "footer": "하단영역"
+}

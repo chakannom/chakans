@@ -18,17 +18,20 @@ logging:
         ROOT: DEBUG
         io.github.jhipster: DEBUG
         com.chakans.portal: DEBUG
+        com.chakans.account: DEBUG
+        com.chakans.blog: DEBUG
+        com.chakans.drive: DEBUG
 
 spring:
     profiles:
         active: dev
         include:
-            - swagger
-            # Uncomment to activate TLS for the dev profile
-            #- tls
+        - swagger
+        # Uncomment to activate TLS for the dev profile
+        #- tls
     devtools:
         restart:
-            enabled: true
+            enabled: false
             additional-exclude: .h2.server.properties
         livereload:
             enabled: false # we use Webpack dev server + BrowserSync for livereload
@@ -131,4 +134,29 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    filters:
+        html-render:
+            remote-addresses:
+                chrome-driver: http://localhost:9515
+            token: devToken
+    graceful-shutdown:
+        shutdown-timeout-seconds: 5
+    minio:
+        end-point: http://localhost:9000
+        access-key: storage1
+        secret-key: storage1
+        secure: false
+        buckets:
+            album: album
+            theme: theme
+            drive: drive
+        folders:
+            album-blog: blog
+            album-blog-default: default
+            album-blog-blog:  blog
+            theme-blog: blog
+        web-rpc-url: http://localhost:9000/minio/webrpc
+    blog:
+        domain: blog.localhost:8080
+

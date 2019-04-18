@@ -1,0 +1,43 @@
+/* ==========================================================================
+Blog settings styles
+========================================================================== */
+:host {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 10px 25px 25px 275px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.settings-border {
+    border: 1px solid #c6cfd6;
+}
+.settings-header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    position: relative;
+    padding: 0;
+}
+.settings-title {
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -ms-flex-item-align: center;
+    align-self: center;
+    box-sizing: border-box;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    font-weight: initial;
+    padding: .75rem 1.25rem;
+}
+.settings-action {
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -ms-flex-item-align: center;
+    align-self: center;
+    box-sizing: border-box;
+    padding: 9px;
+}

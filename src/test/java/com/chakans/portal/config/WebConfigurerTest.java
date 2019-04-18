@@ -47,6 +47,8 @@ public class WebConfigurerTest {
 
     private JHipsterProperties props;
 
+    private ApplicationProperties aProps;
+
     @Before
     public void setup() {
         servletContext = spy(new MockServletContext());
@@ -57,8 +59,9 @@ public class WebConfigurerTest {
 
         env = new MockEnvironment();
         props = new JHipsterProperties();
+        aProps = new ApplicationProperties();
 
-        webConfigurer = new WebConfigurer(env, props);
+        webConfigurer = new WebConfigurer(env, props, aProps);
     }
 
     @Test
@@ -121,7 +124,7 @@ public class WebConfigurerTest {
             .build();
 
         mockMvc.perform(
-            options("/api/test-cors")
+            options("/apis/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com")
                 .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST"))
             .andExpect(status().isOk())
@@ -132,7 +135,7 @@ public class WebConfigurerTest {
             .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "1800"));
 
         mockMvc.perform(
-            get("/api/test-cors")
+            get("/apis/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com"))
             .andExpect(status().isOk())
             .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "other.domain.com"));
@@ -166,7 +169,7 @@ public class WebConfigurerTest {
             .build();
 
         mockMvc.perform(
-            get("/api/test-cors")
+            get("/apis/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com"))
             .andExpect(status().isOk())
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
@@ -181,7 +184,7 @@ public class WebConfigurerTest {
             .build();
 
         mockMvc.perform(
-            get("/api/test-cors")
+            get("/apis/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com"))
             .andExpect(status().isOk())
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));

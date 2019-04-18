@@ -1,0 +1,82 @@
+/* ==========================================================================
+Navbar
+========================================================================== */
+.cks-navbar {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #353d47;
+    padding: 0.125em 1em;
+    z-index: 1000;
+}
+
+.cks-navbar .profile-image {
+    margin: -10px 0px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.cks-navbar .dropdown-item.active,
+.cks-navbar .dropdown-item.active:focus,
+.cks-navbar .dropdown-item.active:hover {
+    background-color: #353d47;
+}
+
+.cks-navbar .dropdown-toggle::after {
+    margin-left: 0.15em;
+}
+
+.cks-navbar ul.navbar-nav {
+    padding: 0.375em 0.5em;
+}
+
+.cks-navbar .navbar-nav .nav-item {
+    margin-left: 1.5rem;
+}
+
+.cks-navbar a.nav-link {
+    font-weight: 400;
+}
+
+.cks-navbar .cks-navbar-toggler {
+    color: #ccc;
+    font-size: 1.5em;
+    padding: 8px;
+}
+
+.cks-navbar .cks-navbar-toggler:hover {
+    color: #fff;
+}
+
+.navbar-brand {
+    padding: 0 15px;
+    height: 52px;
+    line-height: 52px;
+}
+
+.navbar-title {
+    display: inline-block;
+    vertical-align: middle;
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar-version {
+    font-size: 10px;
+    color: #ccc;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+    .cks-navbar-toggler {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .cks-logo-container {
+        width: 100%;
+    }
+}

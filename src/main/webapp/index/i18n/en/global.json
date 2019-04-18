@@ -1,0 +1,35 @@
+{
+    "global": {
+        "title": "Chakans",
+        "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
+        "menu": {
+            "sign": {
+                "in": "Sign in",
+                "out": "Sign out",
+                "up": "Sign up"
+            },
+            "account": {
+                "main": "Account",
+                "settings": "Settings",
+                "login": "Sign in",
+                "logout": "Sign out",
+                "password": "Password"
+            },
+            "language": "Language"
+        },
+        "ribbon": {
+            "dev": "Development"
+        }
+    },
+    "error": {
+        "internalServerError": "Internal server error",
+        "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
+        "NotNull": "Field {{ fieldName }} cannot be empty!",
+        "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "Email is already in use!",
+        "idexists": "A new {{ entityName }} cannot already have an ID"
+    },
+    "footer": "© Chakans"
+}

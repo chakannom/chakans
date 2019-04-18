@@ -1,0 +1,11 @@
+/* ==========================================================================
+Blog welcome styles
+========================================================================== */
+:host {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 10px 25px 25px 275px;
+    box-sizing: border-box;
+    overflow: hidden;
+}

@@ -4,14 +4,13 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "http://repo.spring.io/plugins-release" }
+        maven { url "https://repo.spring.io/plugins-release" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
         classpath "io.spring.gradle:propdeps-plugin:0.0.10.RELEASE"
         classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.5.2"
-        //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
     }
 }
 
@@ -22,8 +21,7 @@ plugins {
     id "net.ltgt.apt" version "0.19"
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "com.moowork.node" version "1.2.0"
-    id 'org.liquibase.gradle' version '2.0.1'
-    //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+    id "org.liquibase.gradle" version "2.0.1"
 }
 
 apply plugin: 'java'
@@ -41,16 +39,15 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'idea'
 
 idea {
-  module {
-    excludeDirs += files('node_modules')
-  }
+    module {
+        excludeDirs += files('node_modules')
+    }
 }
 
 dependencyManagement {
-  imports {
-    mavenBom 'io.github.jhipster:jhipster-dependencies:' + jhipster_dependencies_version
-    //jhipster-needle-gradle-dependency-management - JHipster will add additional dependencies management here
-  }
+    imports {
+        mavenBom 'io.github.jhipster:jhipster-dependencies:' + jhipster_dependencies_version
+    }
 }
 
 defaultTasks 'bootRun'
@@ -114,7 +111,6 @@ task testReport(type: TestReport) {
 
 apply from: 'gradle/docker.gradle'
 apply from: 'gradle/sonar.gradle'
-//jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
 
 if (project.hasProperty('prod')) {
     apply from: 'gradle/profile_prod.gradle'
@@ -150,7 +146,7 @@ liquibase {
             referenceUrl 'hibernate:spring:com.chakans.portal.domain?dialect=org.hibernate.dialect.H2Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
             defaultSchemaName ''
             logLevel 'debug'
-            classpath "$buildDir/classes/java/main"
+            classpath '$buildDir/classes/java/main'
         }
     }
 
@@ -166,7 +162,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-    //jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
 dependencies {
@@ -200,6 +195,19 @@ dependencies {
     liquibaseRuntime "org.liquibase:liquibase-core"
     liquibaseRuntime "org.liquibase.ext:liquibase-hibernate5:${liquibase_hibernate5_version}"
     liquibaseRuntime sourceSets.main.compileClasspath
+    compile "org.tuckey:urlrewritefilter:${urlrewritefilter_version}"
+    compile ("org.seleniumhq.selenium:selenium-java:${selenium_version}") {
+        exclude module: 'selenium-edge-driver'
+        exclude module: 'selenium-firefox-driver'
+        exclude module: 'selenium-ie-driver'
+        exclude module: 'selenium-opera-driver'
+        exclude module: 'selenium-safari-driver'
+    }
+    compile "org.seleniumhq.selenium:selenium-api:${selenium_version}"
+    compile "org.seleniumhq.selenium:selenium-chrome-driver:${selenium_version}"
+    compile "org.seleniumhq.selenium:selenium-remote-driver:${selenium_version}"
+    compile "org.seleniumhq.selenium:selenium-support:${selenium_version}"
+    compile "io.minio:minio:${minio_version}"
     compile "org.springframework.boot:spring-boot-loader-tools"
     compile "org.springframework.boot:spring-boot-starter-mail"
     compile "org.springframework.boot:spring-boot-starter-logging"

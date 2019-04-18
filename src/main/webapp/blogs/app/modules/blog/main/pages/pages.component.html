@@ -1,0 +1,161 @@
+<div class="blog-main-header">
+    <div class="blog-main-header-title">
+        <span jhiTranslate="blog.sidebar.sub-menu.manage.pages">Pages</span>
+    </div>
+    <div class="blog-main-header-panel">
+	    <ul class="nav cks-tabs">
+	        <li class="nav-item">
+	            <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="pages/published" jhiTranslate="blog.pages.tabs.published">
+	                Published
+	            </a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="pages/draft" jhiTranslate="blog.pages.tabs.draft">
+	                Draft
+	            </a>
+	        </li>
+	        <li class="nav-item">
+	            <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="pages/trashed" jhiTranslate="blog.pages.tabs.trashed">
+	                Trashed
+	            </a>
+	        </li>
+	    </ul>
+    </div>
+</div>
+<div class="blog-main-content">
+    <ul class="list-group cks-list" *ngIf="pages">
+        <li class="list-group-item" *ngFor="let page of pages; let i = index">
+			<div class="page-item-detail">
+				<div class="page-item-title">
+					<a class="page-item-title-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=page;pageId={{page.id}};prevMenu={{pageType}};rowNum={{i}}">
+						<span>{{page.title}}</span>
+					</a>
+				</div>
+				<div class="page-item-meta">
+					<div class="page-item-meta-datetime">
+						<a class="page-item-meta-datetime-link" href="#">
+							<span>{{page.createdDate | prettyDate:'yyyy-MM-dd HH:mm'}}</span>
+						</a>
+					</div>
+					<div class="page-item-meta-count">
+						<fa-layers [fixedWidth]="true">
+							<fa-icon [icon]="'eye'"></fa-icon>
+						</fa-layers>
+						<span>{{page.viewedCount}}</span>
+					</div>
+					<div class="page-item-meta-count">
+						<fa-layers [fixedWidth]="true">
+							<fa-icon [icon]="'comment'"></fa-icon>
+						</fa-layers>
+						<span>{{page.commentCount}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="badge">
+				<cks-blogs-blog-popover [cksPopover]="pagesPopMenu" [cksValue]="{'pageId': page.id, 'menuType': pageType, 'rowNum': i}"></cks-blogs-blog-popover>
+			</div>
+		</li>
+    </ul>
+</div>
+<ng-template #pagesPopMenu let-pageId="pageId" let-menuType="menuType" let-rowNum="rowNum">
+	<ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType === 'pages/published'">
+		<li>
+			<a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=page;pageId={{pageId}};prevMenu={{menuType}};rowNum={{rowNum}}">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.modify">Modify {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+        <li>
+			<a class="dropdown-item" (click)="moveToDraft(pageId)">
+				<span>
+					<fa-layers [fixedWidth]="true">
+						<fa-icon [icon]="'level-down-alt'"></fa-icon>
+					</fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.move_to_draft">Move to draft {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="dropdown-item">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'eye'"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.view_page">View page {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="dropdown-item" (click)="trash(pageId)">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.trash">Trash {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+	</ul>
+	<ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType === 'pages/draft'">
+		<li>
+			<a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=page;pageId={{pageId}};prevMenu={{menuType}};rowNum={{rowNum}}">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.modify">Modify {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="dropdown-item" (click)="publish(pageId)">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="['far','newspaper']"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.publish">Publish {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="dropdown-item">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'eye'"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.preview">Preview {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="dropdown-item" (click)="trash(pageId)">
+				<span>
+					<fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </fa-layers>
+					<span jhiTranslate="blog.pages.pop_menu.trash">Trash {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+	</ul>
+	<ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType === 'pages/trashed'">
+		<li>
+			<a class="dropdown-item" (click)="restoreFromTrash(pageId)">
+				<span>
+					<span jhiTranslate="blog.pages.pop_menu.restore_from_trash">Restore from Trash {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+		<li>
+			<a class="dropdown-item" (click)="deleteFromTrash(pageId)">
+				<span>
+					<span jhiTranslate="blog.pages.pop_menu.delete_from_trash">Delete from Trash {{pageId}}</span>
+				</span>
+			</a>
+		</li>
+	</ul>
+</ng-template>

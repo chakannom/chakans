@@ -57,6 +57,7 @@ public class CacheConfiguration {
         // In development, remove multicast auto-configuration
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
+            System.setProperty("hazelcast.rest.enabled", "true");
 
             config.getNetworkConfig().getJoin().getAwsConfig().setEnabled(false);
             config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
@@ -67,6 +68,9 @@ public class CacheConfiguration {
         // Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
         config.setManagementCenterConfig(initializeDefaultManagementCenterConfig(jHipsterProperties));
         config.getMapConfigs().put("com.chakans.portal.domain.*", initializeDomainMapConfig(jHipsterProperties));
+        config.getMapConfigs().put("com.chakans.account.domain.*", initializeDomainMapConfig(jHipsterProperties));
+        config.getMapConfigs().put("com.chakans.blog.domain.*", initializeDomainMapConfig(jHipsterProperties));
+        config.getMapConfigs().put("com.chakans.drive.domain.*", initializeDomainMapConfig(jHipsterProperties));
         return Hazelcast.newHazelcastInstance(config);
     }
 

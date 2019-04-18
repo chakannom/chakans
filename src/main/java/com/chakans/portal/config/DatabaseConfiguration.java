@@ -4,6 +4,7 @@ import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.h2.H2ConfigurationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,7 +17,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.sql.SQLException;
 
 @Configuration
-@EnableJpaRepositories("com.chakans.portal.repository")
+@EntityScan({
+    "com.chakans.portal.domain",
+    "com.chakans.account.domain",
+    "com.chakans.blog.domain",
+    "com.chakans.drive.domain"
+})
+@EnableJpaRepositories({
+    "com.chakans.portal.repository",
+    "com.chakans.account.repository",
+    "com.chakans.blog.repository",
+    "com.chakans.drive.repository"
+})
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {
@@ -38,11 +50,12 @@ public class DatabaseConfiguration {
     @Bean(initMethod = "start", destroyMethod = "stop")
     @Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
     public Object h2TCPServer() throws SQLException {
+        log.debug("Starting H2 database");
         String port = getValidPortForH2();
         log.debug("H2 database is available on port {}", port);
         return H2ConfigurationHelper.createServer(port);
     }
-	
+
     private String getValidPortForH2() {
         int port = Integer.parseInt(env.getProperty("server.port"));
         if (port < 10000) {

@@ -1,0 +1,228 @@
+{
+    "blog": {
+        "title": "Management - C.Blog",
+        "sidebar": {
+            "dropdown": {
+                "my_blog": "My Blog",
+                "new_blog": "New Blog..."
+            },
+            "menu": {
+                "welcome": "Welcome",
+                "viewblog": "View Blog",
+                "stats": "Stats",
+                "manage": "Manage",
+                "design": "Design",
+                "settings": "Settings"
+            },
+            "sub-menu": {
+                "manage": {
+                    "pages": "Pages",
+                    "posts": "Posts",
+                    "comments": "Comments"
+                },
+                "design": {
+                    "layout": "Layout",
+                    "theme": "Theme"
+                },
+                "settings": {
+                    "basic": "Basic",
+                    "other": "Other",
+                    "user": "User"
+                }
+            }
+        },
+        "initial": {
+            "title": "Welcome to C.Blog",
+            "sub_title": "User profile",
+            "form": {
+                "nickname": "Nickname",
+                "nickname.placeholder": "Your nickname",
+                "buttons": {
+                    "continue": "Continue to C.Blog"
+                }
+            },
+            "messages": {
+                "validate": {
+                    "nickname": {
+                        "required": "Your nickname is required.",
+                        "minlength": "Your nickname is required to be at least 3 characters.",
+                        "maxlength": "Your nickname cannot be longer than 100 characters."
+                    }
+                },
+                "error": {
+                    "fail": "<strong>Registration failed!</strong> Please try again later."
+                }
+            }
+        },
+        "maker": {
+            "title": "Create New Blog",
+            "form": {
+                "title": "Title",
+                "title.placeholder": "Title",
+                "address": "Address",
+                "address.placeholder": "ex: newblogaddress",
+                "address.postfix": ".blog.localhost:8080",
+                "theme": "Theme",
+                "buttons": {
+                    "create": "Create",
+                    "cancel": "Cancel"
+                },
+                "messages": {
+                    "address": {
+                        "enter": "Enter blog address.",
+                        "entering": "Entering...",
+                        "available": "This blog address is available.",
+                        "invalid": "Invalid blog address.",
+                        "unavailable": "Unavailable blog address."
+                    }
+                }
+            },
+            "theme_detail": {
+                "title": "Theme Preview"
+            }
+        },
+        "welcome": {
+            "button": {
+                "create_new_blog": "Create New Blog"
+            }
+        },
+        "pages": {
+            "tabs": {
+                "published": "Published",
+                "draft": "Draft",
+                "trashed": "Trashed"
+            },
+            "pop_menu": {
+                "modify": "Modify",
+                "view_page": "View page",
+                "move_to_draft": "Move to draft",
+                "trash": "Trash",
+                "publish": "Publish",
+                "preview": "Preview",
+                "restore_from_trash": "Restore from Trash",
+                "delete_from_trash": "Delete from Trash"
+            }
+        },
+        "posts": {
+            "tabs": {
+                "published": "Published",
+                "draft": "Draft",
+                "trashed": "Trashed"
+            },
+            "pop_menu": {
+                "modify": "Modify",
+                "view_post": "View post",
+                "move_to_draft": "Move to draft",
+                "trash": "Trash",
+                "publish": "Publish",
+                "preview": "Preview",
+                "restore_from_trash": "Restore from Trash",
+                "delete_from_trash": "Delete from Trash"
+            }
+        },
+        "comments": {
+            "tabs": {
+                "published": "Published",
+                "spam": "Spam",
+                "trashed": "Trashed"
+            },
+            "content": {
+                "author_name.anonymous": "Anonymous",
+                "reply_of_comment": "of comment"
+            },
+            "pop_menu": {
+                "spam": "Spam",
+                "trash": "Trash",
+                "publish": "Publish",
+                "restore_from_trash": "Restore from Trash",
+                "delete_from_trash": "Delete from Trash"
+            }
+        },
+        "settings": {
+            "basic": {
+                "blog_info": {
+                    "title": "Blog Information",
+                    "form": {
+                        "title": "Title",
+                        "title.placeholder": "Title",
+                        "description": "Description",
+                        "description.placeholder": "Description"
+                    }
+                },
+                "blog_addr": {
+                    "title": "Blog Address",
+                    "form": {
+                        "address": "Address",
+                        "address.placeholder": "Address"
+                    },
+                    "labels": {
+                        "owned.url": "Setting your owned URL",
+                        "my.owned.url": "My owned URL",
+                        "original.url": "Original URL"
+                    }
+                },
+                "blog_readers": {
+                    "title": "Blog Readers",
+                    "form": {
+                        "readers_all": "Public",
+                        "readers_author": "Private - Open to only author"
+                    }
+                },
+                "permissions": {
+                    "title": "Permissions"
+                }
+            },
+            "other": {
+                "blog_delete": {
+                    "title": "Delete Blog",
+                    "info": "Your blog will be deleted."
+                }
+            },
+            "user": {
+                "privacy": {
+                    "title": "Privacy",
+                    "form": {
+                        "open_profile": "Open profile",
+                        "open_email": "Open e-mail"
+                    }
+                },
+                "profile_image": {
+                    "title": "Profile Image",
+                    "form": {
+                        "buttons": {
+                            "upload": "Upload",
+                            "remove": "Remove"
+                        }
+                    }
+                },
+                "user_info": {
+                    "title": "User Information",
+                    "form": {
+                        "email": "E-mail",
+                        "email.placeholder": "E-mail",
+                        "nickname": "Nickname",
+                        "nickname.placeholder": "Nickname"
+                    }
+                }
+            },
+            "form": {
+                "buttons": {
+                    "save": "Save",
+                    "modify": "Modify",
+                    "delete": "Delete",
+                    "cancel": "Cancel"
+                }
+            }
+        },
+        "common": {
+            "datetime": {
+                "a_few_seconds_ago": "A few seconds ago",
+                "a_minute_ago": "A minute ago",
+                "minutes_ago": "minutes ago",
+                "a_hour_ago": "A hour ago",
+                "hours_ago": "hours ago",
+                "format": "M d, yyyy h:mm a"
+            }
+        }
+    }
+}

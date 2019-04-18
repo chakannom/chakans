@@ -1,0 +1,43 @@
+<div class="toolbar-container">
+    <div class="toolbar">
+        <div class="toolbar-left">
+            My Drive
+        </div>
+        <div class="toolbar-right">
+            <ul class="toolbar-items">
+                <li class="toolbar-item dropdown pointer" placement="bottom-right" autoClose="outside" ngbDropdown>
+                    <button class="btn btn-light dropdown-toggle" ngbDropdownToggle>
+                        <fa-layers class="fa-fw">
+                            <fa-icon icon="search"></fa-icon>
+                        </fa-layers>
+                    </button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </div>
+                </li>
+                <li class="toolbar-item">
+                    <button class="btn btn-light">
+                        <fa-layers class="fa-fw">
+                            <fa-icon icon="th-list"></fa-icon>
+                        </fa-layers>
+                    </button>
+                </li>
+                <li class="toolbar-item dropdown pointer" placement="bottom-right" ngbDropdown>
+                    <button class="btn btn-light dropdown-toggle" ngbDropdownToggle>
+                        <fa-layers class="fa-fw">
+                            <fa-icon icon="ellipsis-v"></fa-icon>
+                        </fa-layers>
+                    </button>
+                    <ul class="dropdown-menu" ngbDropdownMenu>
+                        <li>
+                            <a class="dropdown-item">New Folder</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item">Uploading Files</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

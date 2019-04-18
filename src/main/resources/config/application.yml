@@ -117,7 +117,7 @@ jhipster:
     mail:
         from: chakans@localhost
     swagger:
-        default-include-pattern: /api/.*
+        default-include-pattern: /apis/.*
         title: chakans API
         description: chakans API documentation
         version: 0.0.1
@@ -137,4 +137,6 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    url-security:
+        permit-apis-paths: /apis/blog/**

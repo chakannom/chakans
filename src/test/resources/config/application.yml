@@ -57,7 +57,6 @@ spring:
     thymeleaf:
         mode: HTML
 
-
 server:
     port: 10344
     address: localhost
@@ -104,4 +103,19 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    url-security:
+        permit-apis-paths: /apis/blog/**
+    minio:
+        end-point: http://localhost:9000
+        access-key: storage1
+        secret-key: storage1
+        secure: false
+        buckets:
+            album: album
+            theme: theme
+            drive: drive
+        folders:
+            album-my-images: my_images
+            theme-blog: blog
+        web-rpc-url: http://localhost:9000/minio/webrpc

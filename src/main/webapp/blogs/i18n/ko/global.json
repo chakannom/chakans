@@ -1,0 +1,63 @@
+{
+    "global": {
+        "title": "C.블로그",
+        "browsehappy": "당신은 <strong>오래된</strong> 브라우저를 사용하고 있군요. <a href=\"http://browsehappy.com/?locale=en\">브라우저를 업그레이드</a> 해 당신의 경험을 발전시키세요.",
+        "menu": {
+            "sign": {
+                "in": "인증",
+                "out": "로그아웃"
+            },
+            "account": {
+                "main": "계정",
+                "settings": "설정",
+                "login": "인증",
+                "logout": "로그아웃",
+                "password": "비밀번호"
+            },
+            "language": "언어"
+        },
+        "messages": {
+            "info": {
+                "authenticated": {
+                    "prefix": "",
+                    "link": "인증",
+                    "suffix": "을 원하시면, 기본 계정을 사용할 수 있습니다:<br/>- 관리자 (아이디=\"admin\", 비밀번호=\"admin\") <br/>- 사용자 (아이디=\"user\", 비밀번호=\"user\")."
+                },
+                "register": {
+                    "noaccount": "아직 계정이 없습니까?",
+                    "link": "새로운 계정을 등록하세요"
+                }
+            },
+            "error": {
+                "dontmatch": "비밀번호가 일치하지 않습니다!"
+            },
+            "validate": {
+                "email": {
+                    "required": "이메일 입력이 필요합니다.",
+                    "invalid": "잘못된 이메일입니다.",
+                    "minlength": "이메일은 최소 5자 이상이어야 합니다",
+                    "maxlength": "이메일은 최대 254자 까지입니다."
+                },
+                "nickname": {
+                    "required": "별칭 입력이 필요합니다.",
+                    "minlength": "별칭은 최소 3자 이상이어야 합니다",
+                    "maxlength": "별칭은 최대 100자 까지입니다."
+                }
+            }
+        },
+        "ribbon": {
+            "dev": "Development"
+        }
+    },
+    "error": {
+        "internalServerError": "Internal server error",
+        "server.not.reachable": "Server not reachable",
+        "url.not.found": "Not found",
+        "NotNull": "Field {{fieldName}} cannot be empty!",
+        "Size": "Field {{fieldName}} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "Email is already in use!",
+        "idexists": "A new {{entityName}} cannot already have an ID"
+    },
+    "footer": "© Chakans"
+}

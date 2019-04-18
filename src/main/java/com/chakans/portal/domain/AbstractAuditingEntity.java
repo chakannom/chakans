@@ -36,14 +36,22 @@ public abstract class AbstractAuditingEntity implements Serializable {
     private Instant createdDate = Instant.now();
 
     @LastModifiedBy
-    @Column(name = "last_modified_by", length = 50)
+    @Column(name = "modified_by", length = 50)
     @JsonIgnore
-    private String lastModifiedBy;
+    private String modifiedBy;
 
     @LastModifiedDate
-    @Column(name = "last_modified_date")
+    @Column(name = "modified_date")
     @JsonIgnore
-    private Instant lastModifiedDate = Instant.now();
+    private Instant modifiedDate = Instant.now();
+
+    @Column(name = "deleted_by", length = 50)
+    @JsonIgnore
+    private String deletedBy;
+
+    @Column(name = "deleted_date")
+    @JsonIgnore
+    private Instant deletedDate;
 
     public String getCreatedBy() {
         return createdBy;
@@ -61,19 +69,35 @@ public abstract class AbstractAuditingEntity implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getModifiedBy() {
+        return modifiedBy;
     }
 
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
     }
 
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
+    public Instant getModifiedDate() {
+        return modifiedDate;
     }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setModifiedDate(Instant modifiedDate) {
+        this.modifiedDate = modifiedDate;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
+    }
+
+    public Instant getDeletedDate() {
+        return deletedDate;
+    }
+
+    public void setDeletedDate(Instant deletedDate) {
+        this.deletedDate = deletedDate;
     }
 }

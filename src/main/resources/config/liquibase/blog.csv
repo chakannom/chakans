@@ -1,0 +1,3 @@
+id;title;description;url;custom_url;lang_key;post_count;page_count;status;created_by;created_date;modified_by;modified_date
+1;DEV;DESCRIPTION;dev.blog.localhost:8080;null;ko;0;0;2;system;2018-12-12T13:00:00;system;2018-12-12T13:00:00
+2;DEV2;DESCRIPTION;dev2.chakans.blog;dev2.chakans.blog;ko;0;0;2;system;2019-01-14T13:00:00;system;2019-01-14T13:00:00

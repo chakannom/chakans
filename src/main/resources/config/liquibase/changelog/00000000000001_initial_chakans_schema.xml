@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="autoIncrement" value="true"/>
+
+    <changeSet id="00000000000001" author="chakannom">
+        <!-- Language -->
+        <createTable tableName="language">
+            <column name="key" type="varchar(6)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/languages.csv"
+                  separator=";"
+                  tableName="language"/>
+
+        <addForeignKeyConstraint baseColumnNames="lang_key"
+                                 baseTableName="user"
+                                 constraintName="fk_user_lang_key"
+                                 referencedColumnNames="key"
+                                 referencedTableName="language"/>
+
+        <!-- Agreement -->
+        <createTable tableName="agreement">
+            <column name="name" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="required" type="boolean" valueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/agreements.csv"
+                  separator=";"
+                  tableName="agreement">
+            <column name="required" type="boolean"/>
+        </loadData>
+
+        <!-- User Agreement -->
+        <createTable tableName="user_agreement">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agreement_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agreed" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, agreement_name" tableName="user_agreement"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_agreement"
+                                 constraintName="fk_user_agreement_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+
+        <addForeignKeyConstraint baseColumnNames="agreement_name"
+                                 baseTableName="user_agreement"
+                                 constraintName="fk_user_agree_agree_name"
+                                 referencedColumnNames="name"
+                                 referencedTableName="agreement"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/users_agreements.csv"
+                  separator=";"
+                  tableName="user_agreement">
+            <column name="agreed" type="boolean"/>
+        </loadData>
+
+    </changeSet>
+</databaseChangeLog>

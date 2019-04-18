@@ -1,0 +1,15 @@
+<div class="card cks-card">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 jhiTranslate="sign-up.title">Registration</h1>
+
+            <div class="alert alert-success" *ngIf="success" jhiTranslate="sign-up.messages.success">
+                <strong>Registration saved!</strong> Please check your email for confirmation.
+            </div>
+
+            <div class="alert alert-danger" *ngIf="error" jhiTranslate="sign-up.messages.error.fail">
+                <strong>Registration failed!</strong> Please try again later.
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="blog-main-header">
+    <div class="blog-main-header-title">
+        <span jhiTranslate="blog.sidebar.sub-menu.settings.user">User</span>
+    </div>
+</div>
+<div class="blog-main-content" *ngIf="userProfile">
+    <div class="card settings-border mb-3">
+        <form name="privacyForm" role="form" (ngSubmit)="savePrivacy()">
+            <div class="card-header settings-header">
+                <div class="settings-title" jhiTranslate="blog.settings.user.privacy.title">Privacy</div>
+                <div class="settings-action">
+                    <button type="submit" class="btn btn-primary btn-sm" [disabled]="isSaving" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="open_profile" name="open_profile" [(ngModel)]="userProfile.openedProfile">
+                    <label class="form-check-label" for="open_profile" jhiTranslate="blog.settings.user.privacy.form.open_profile">Open profile</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="open_email" name="open_email" [(ngModel)]="userProfile.openedEmail">
+                    <label class="form-check-label" for="open_email" jhiTranslate="blog.settings.user.privacy.form.open_email">Open e-mail</label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card settings-border mb-3">
+        <form name="profileImageForm" role="form" (ngSubmit)="saveProfileImage()">
+            <div class="card-header settings-header">
+                <div class="settings-title" jhiTranslate="blog.settings.user.profile_image.title">Profile Image</div>
+                <div class="settings-action">
+                    <button type="submit" class="btn btn-primary btn-sm" [disabled]="isSaving" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <img class="img-profile" [src]="userProfile.imageUrl" *ngIf="userProfile.imageUrl">
+                <div class="img-control">
+                    <div class="upload" *ngIf="!userProfile.imageUrl">
+                        <label class="btn btn-primary btn-sm" for="profile-img-upload" jhiTranslate="blog.settings.user.profile_image.form.buttons.upload">Upload</label>
+                        <input type="file" id="profile-img-upload" accept="image/*" (change)="previewImage($event)">
+                    </div>
+                    <div *ngIf="userProfile.imageUrl">
+                        <button type="button" class="btn btn-primary btn-sm" (click)="removeImage()" jhiTranslate="blog.settings.user.profile_image.form.buttons.remove">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card settings-border">
+        <form name="userInfoForm" role="form" (ngSubmit)="saveUserInfo()" #userInfoForm="ngForm" novalidate>
+            <div class="card-header settings-header">
+                <div class="settings-title" jhiTranslate="blog.settings.user.user_info.title">User Information</div>
+                <div class="settings-action">
+                    <button type="submit" class="btn btn-primary btn-sm" [disabled]="userInfoForm.form.invalid || isSaving" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label jhiTranslate="blog.settings.user.user_info.form.email">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" #email="ngModel"
+                           [(ngModel)]="userProfile.email" minlength=5 maxlength=254 email required
+                           placeholder="{{'blog.settings.user.user_info.form.email.placeholder' | translate}}">
+                    <div *ngIf="email.dirty && email.invalid">
+                        <small class="form-text text-danger" *ngIf="email.errors.required"
+                               jhiTranslate="global.messages.validate.email.required">
+                            Your email is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="email.errors.invalid"
+                               jhiTranslate="global.messages.validate.email.invalid">
+                            Your email is invalid.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="email.errors.minlength"
+                               jhiTranslate="global.messages.validate.email.minlength">
+                            Your email is required to be at least 5 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="email.errors.maxlength"
+                               jhiTranslate="global.messages.validate.email.maxlength">
+                            Your email cannot be longer than 254 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="blog.settings.user.user_info.form.nickname">Nickname</label>
+                    <input type="text" class="form-control" id="nickname" name="nickname" #nickname="ngModel"
+                           [(ngModel)]="userProfile.nickname" minlength=3 maxlength=100 required
+                           placeholder="{{'blog.settings.user.user_info.form.nickname.placeholder' | translate}}">
+                    <div *ngIf="nickname.dirty && nickname.invalid">
+                        <small class="form-text text-danger" *ngIf="nickname.errors.required"
+                               jhiTranslate="global.messages.validate.email.required">
+                            Your nickname is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="nickname.errors.minlength"
+                               jhiTranslate="global.messages.validate.email.minlength">
+                            Your nickname is required to be at least 3 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="nickname.errors.maxlength"
+                               jhiTranslate="global.messages.validate.email.maxlength">
+                            Your nickname cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

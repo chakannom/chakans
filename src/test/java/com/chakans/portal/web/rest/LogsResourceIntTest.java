@@ -1,7 +1,8 @@
 package com.chakans.portal.web.rest;
 
 import com.chakans.portal.ChakansApp;
-import com.chakans.portal.web.rest.vm.LoggerVM;
+import com.chakans.portal.web.rest.anonymous.LogsResource;
+import com.chakans.portal.web.rest.anonymous.vm.LoggerVM;
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.LoggerContext;
 import org.junit.Before;

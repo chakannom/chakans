@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="autoIncrement" value="true"/>
+
+    <changeSet id="00000000000001" author="chakannom">
+        <!-- Drive Personal Node -->
+        <createTable tableName="drive_personal_node">
+            <column name="id" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_login" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mime_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sizeof" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permission" type="varchar(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="etag" type="varchar(255)"/>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="modified_by" type="varchar(50)"/>
+            <column name="modified_date" type="timestamp"/>
+            <column name="deleted_by" type="varchar(50)"/>
+            <column name="deleted_date" type="timestamp"/>
+        </createTable>
+        
+        <addPrimaryKey columnNames="id, user_login" tableName="drive_personal_node"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/drive_personal_node.csv"
+                  separator=";"
+                  tableName="drive_personal_node">
+            <column name="created_date" type="timestamp"/>
+        </loadData>
+                         
+        <dropDefaultValue tableName="drive_personal_node" columnName="created_date" columnDataType="datetime"/>
+    
+        <!-- Drive Personal Tree -->
+        <createTable tableName="drive_personal_tree">
+            <column name="id" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_login" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id" type="varchar(50)"/>
+        </createTable>
+        
+        <addPrimaryKey columnNames="id, user_login" tableName="drive_personal_tree"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/drive_personal_tree.csv"
+                  separator=";"
+                  tableName="drive_personal_tree"/>
+
+    </changeSet>
+
+</databaseChangeLog>

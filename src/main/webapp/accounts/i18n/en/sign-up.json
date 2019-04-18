@@ -1,0 +1,23 @@
+{
+    "sign-up": {
+        "title": "Registration",
+        "form": {
+            "button": "Sign up"
+        },
+        "messages": {
+            "validate": {
+            },
+            "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
+            "error": {
+                "fail": "<strong>Registration failed!</strong> Please try again later.",
+                "emailexists": "<strong>Email is already in use!</strong> Please choose another one."
+            }
+        },
+        "terms.and.policies": {
+            "title": "Terms &amp; Policies",
+            "form": {
+                "agree.button": "Agree"
+            }
+        }
+    }
+}

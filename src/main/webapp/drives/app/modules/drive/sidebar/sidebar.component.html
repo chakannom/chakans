@@ -1,0 +1,65 @@
+<div class="sidebar-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+        </div>
+        <div class="sidebar-content">
+            <ul class="nav-tree-root">
+                <li>
+                    <a (click)="directoryClick()">
+                        <div class="point">
+                            <fa-layers class="fa-fw">
+                                <fa-icon [icon]="'chevron-down'"></fa-icon>
+                                <!--<fa-icon [icon]="'chevron-right'"></fa-icon>-->
+                            </fa-layers>
+                        </div>
+                        <div class="icon">
+                            <fa-layers class="fa-fw">
+                                <fa-icon [icon]="'hdd'"></fa-icon>
+                            </fa-layers>
+                        </div>
+                        <span>My Drive</span>
+                    </a>
+                    <ul class="directory-tree" *ngIf="directories.length > 0">
+                        <ng-container *ngTemplateOutlet="directoryTreeTemplate; context:{ 'directories': directories, 'depth': 1 }"></ng-container>
+                    </ul>
+                </li>
+                <li>
+                    <a>
+                        <div class="point"></div>
+                        <div class="icon">
+                            <fa-layers class="fa-fw">
+                                <fa-icon [icon]="'trash-alt'"></fa-icon>
+                            </fa-layers>
+                        </div>
+                        <span>Trash</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+        </div>
+    </div>
+</div>
+<ng-template #directoryTreeTemplate let-directories="directories" let-depth="depth">
+    <li *ngFor="let directory of directories">
+        <a (click)="directoryClick()">
+            <div class="depth" *ngFor="let dummy of ' '.repeat(depth).split('')"></div>
+            <div class="point">
+                <fa-layers class="fa-fw">
+                    <fa-icon [icon]="'chevron-down'"></fa-icon>
+                    <!--<fa-icon [icon]="'chevron-right'"></fa-icon>-->
+                </fa-layers>
+            </div>
+            <div class="icon">
+                <fa-layers class="fa-fw">
+                    <fa-icon [icon]="'folder-open'"></fa-icon>
+                    <!--<fa-icon [icon]="'folder'" class="mr-1"></fa-icon>-->
+                </fa-layers>
+            </div>
+            <span>{{directory.name}}</span>
+        </a>
+        <ul class="directory-tree" *ngIf="directory.directories.length > 0">
+            <ng-container *ngTemplateOutlet="directoryTreeTemplate; context:{ 'directories': directory.directories, 'depth': depth + 1 }"></ng-container>
+        </ul>
+    </li>
+</ng-template>

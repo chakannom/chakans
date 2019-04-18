@@ -10,16 +10,27 @@
         "noImplicitAny": false,
         "skipLibCheck": true,
         "suppressImplicitAnyIndexErrors": true,
-        "outDir": "build/www/app",
+        "outDir": "build/www",
         "lib": ["es7", "dom"],
         "typeRoots": ["node_modules/@types"],
         "baseUrl": "./",
         "paths": {
-            "app/*": ["src/main/webapp/app/*"]
+            "index/app/*": ["src/main/webapp/index/app/*"],
+            "accounts/app/*": ["src/main/webapp/accounts/app/*"],
+            "blogs/app/*": ["src/main/webapp/blogs/app/*"],
+            "drives/app/*": ["src/main/webapp/drives/app/*"],
+            "admin/app/*": ["src/main/webapp/admin/app/*"]
         },
         "importHelpers": true,
         "allowJs": true
     },
-    "include": ["src/main/webapp/app", "src/test/javascript/"],
+    "include": [
+        "src/main/webapp/index/app",
+        "src/main/webapp/accounts/app",
+        "src/main/webapp/blogs/app",
+        "src/main/webapp/drives/app",
+        "src/main/webapp/admin/app",
+        "src/test/javascript/"
+    ],
     "exclude": ["node_modules"]
 }

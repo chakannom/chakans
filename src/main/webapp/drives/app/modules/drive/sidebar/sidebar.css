@@ -1,0 +1,88 @@
+/* ==========================================================================
+Drive sidebar styles
+========================================================================== */
+.sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border-right: 1px solid #c6cfd6;
+    width: 250px;
+    overflow: auto;
+    padding: 56px 0 0;
+    background: #dbe2e6;
+    z-index: 100;
+}
+.sidebar-header {
+    padding: 10px;
+}
+.sidebar-content {
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+}
+.depth {
+    display: inline-block;
+    width: 24px;
+}
+.point {
+    display: inline-block;
+    font-size: 12px;
+    width: 22px;
+    padding: 0 5px;
+}
+.icon {
+    display: inline-block;
+    font-size: 20px;
+}
+.nav-tree-root {
+    list-style: none;
+    margin: 0;
+    padding: 0 24px 0 0;
+}
+.nav-tree-root > li > a {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 40px;
+    line-height: 38px;
+    padding-left: 6px;
+    border: solid transparent;
+    border-width: 1px 1px 1px 0;
+}
+.nav-tree-root > li > a > .icon {
+    padding-right: 24px;
+}
+.directory-tree {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.directory-tree > li > a {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    height: 32px;
+    line-height: 30px;
+    border: solid transparent;
+    border-width: 1px 1px 1px 0;
+}
+.directory-tree > li > a > .icon {
+    padding-right: 8px;
+}

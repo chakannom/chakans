@@ -11,7 +11,7 @@ module.exports = (options) => ({
         extensions: ['.ts', '.js'],
         modules: ['node_modules'],
         alias: {
-            app: utils.root('src/main/webapp/app/'),
+            app: utils.root('src/main/webapp/' + options.appName + '/app/'),
             ...rxPaths()
         }
     },
@@ -20,18 +20,6 @@ module.exports = (options) => ({
     },
     module: {
         rules: [
-            {
-                test: /\.html$/,
-                loader: 'html-loader',
-                options: {
-                    minimize: true,
-                    caseSensitive: true,
-                    removeAttributeQuotes:false,
-                    minifyJS:false,
-                    minifyCSS:false
-                },
-                exclude: /(src\/main\/webapp\/index.html)/
-            },
             {
                 test: /\.(jpe?g|png|gif|svg|woff2?|ttf|eot)$/i,
                 loader: 'file-loader',
@@ -63,31 +51,27 @@ module.exports = (options) => ({
                 // If this URL is left empty (""), then it will be relative to the current context.
                 // If you use an API server, in `prod` mode, you will need to enable CORS
                 // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
-                SERVER_API_URL: `''`
+                SERVER_API_URL: `'/'`,
+                IMGPROXY_URL: `'${options.imgproxy.url}'`,
+                IMGPROXY_KEY: `'${options.imgproxy.key}'`,
+                IMGPROXY_SALT: `'${options.imgproxy.salt}'`
             }
         }),
         new CopyWebpackPlugin([
-            { from: './node_modules/swagger-ui/dist/css', to: 'swagger-ui/dist/css' },
-            { from: './node_modules/swagger-ui/dist/lib', to: 'swagger-ui/dist/lib' },
-            { from: './node_modules/swagger-ui/dist/swagger-ui.min.js', to: 'swagger-ui/dist/swagger-ui.min.js' },
-            { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
-            { from: './src/main/webapp/content/', to: 'content' },
-            { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
-            { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
-            // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
-            { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
+            { from: './src/main/webapp/' + options.appName + '/content/', to: 'content' },
+            { from: './src/main/webapp/' + options.appName + '/manifest.webapp', to: 'manifest.webapp' }
         ]),
         new MergeJsonWebpackPlugin({
             output: {
                 groupBy: [
-                    { pattern: "./src/main/webapp/i18n/ko/*.json", fileName: "./i18n/ko.json" },
-                    { pattern: "./src/main/webapp/i18n/en/*.json", fileName: "./i18n/en.json" }
+                    { pattern: "./src/main/webapp/" + options.appName + "/i18n/ko/*.json", fileName: "./i18n/ko.json" },
+                    { pattern: "./src/main/webapp/" + options.appName + "/i18n/en/*.json", fileName: "./i18n/en.json" }
                     // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
                 ]
             }
         }),
         new HtmlWebpackPlugin({
-            template: './src/main/webapp/index.html',
+            template: './src/main/webapp/' + options.appName + '/index.html',
             chunks: ['vendors', 'polyfills', 'main', 'global'],
             chunksSortMode: 'manual',
             inject: 'body'

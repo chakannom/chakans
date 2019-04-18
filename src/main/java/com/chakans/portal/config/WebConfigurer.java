@@ -1,13 +1,16 @@
 package com.chakans.portal.config;
 
+import com.chakans.core.config.shutdown.UndertowGracefulShutdownHandlerWrapper;
+import com.chakans.core.filters.htmlrender.HtmlRenderFilter;
+import com.chakans.portal.config.filter.UrlRewriteFilter;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.h2.H2ConfigurationHelper;
 import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
 import io.undertow.UndertowOptions;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.boot.web.server.*;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
@@ -41,10 +44,12 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final JHipsterProperties jHipsterProperties;
 
-    public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
+    private final ApplicationProperties applicationProperties;
 
+    public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties, ApplicationProperties applicationProperties) {
         this.env = env;
         this.jHipsterProperties = jHipsterProperties;
+        this.applicationProperties = applicationProperties;
     }
 
     @Override
@@ -53,6 +58,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
             log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
         }
         EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC);
+        initHtmlRenderFilter(servletContext, disps);
+        initUrlRewriteFilter(servletContext, disps);
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             initCachingHttpHeadersFilter(servletContext, disps);
         }
@@ -70,6 +77,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         setMimeMappings(server);
         // When running in an IDE or with ./gradlew bootRun, set location of the static web assets.
         setLocationForStaticAssets(server);
+        // Enable graceful shutdown for Undertow
+        setGracefulShutdown(server);
 
         /*
          * Enable HTTP/2 for Undertow - https://twitter.com/ankinson/status/829256167700492288
@@ -110,6 +119,14 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
     }
 
+    private void setGracefulShutdown(WebServerFactory server) {
+        if (server instanceof UndertowServletWebServerFactory) {
+            ((UndertowServletWebServerFactory) server)
+                .addDeploymentInfoCustomizers(builder ->
+                    builder.addInitialHandlerChainWrapper(undertowGracefulShutdownHandlerWrapper()));
+        }
+    }
+
     /**
      * Resolve path prefix to static resources.
      */
@@ -146,17 +163,59 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         cachingHttpHeadersFilter.setAsyncSupported(true);
     }
 
+    /**
+     * Initializes HtmlRenderFilter.
+     */
+    private void initHtmlRenderFilter(ServletContext servletContext, EnumSet<DispatcherType> disps) {
+        log.debug("Initializing HtmlRenderFilter registries");
+        FilterRegistration.Dynamic htmlRenderFilter =
+                servletContext.addFilter("htmlRenderFilter", new HtmlRenderFilter());
+
+        String remoteAddressForChromeDriver = applicationProperties.getFilters().getHtmlRender().getRemoteAddresses().get("chrome-driver");
+        String token = applicationProperties.getFilters().getHtmlRender().getToken();
+
+        htmlRenderFilter.setInitParameter("remoteAddressForChromeDriver", remoteAddressForChromeDriver);
+        htmlRenderFilter.setInitParameter("token", token);
+
+//        htmlRenderFilter.addMappingForUrlPatterns(disps, true, "/*");
+        htmlRenderFilter.addMappingForUrlPatterns(disps, true, "/apis/blog/v1/blogs/blog");
+        htmlRenderFilter.setAsyncSupported(true);
+    }
+
+    /**
+     * Initializes UrlRewriteFilter.
+     */
+    private void initUrlRewriteFilter(ServletContext servletContext, EnumSet<DispatcherType> disps) {
+        log.debug("Initializing UrlRewriteFilter registries");
+        FilterRegistration.Dynamic urlRewriteFilter =
+            servletContext.addFilter("urlRewriteFilter", new UrlRewriteFilter());
+
+        urlRewriteFilter.setInitParameter("confPath", "url-rewrite.xml");
+        urlRewriteFilter.setInitParameter("confReloadLastCheck", "-1");
+        urlRewriteFilter.setInitParameter("logLevel", "WARM");
+
+        urlRewriteFilter.addMappingForUrlPatterns(disps, true, "/*");
+        urlRewriteFilter.setAsyncSupported(true);
+    }
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = jHipsterProperties.getCors();
         if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
             log.debug("Registering CORS filter");
-            source.registerCorsConfiguration("/api/**", config);
+            source.registerCorsConfiguration("/apis/**", config);
             source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v2/api-docs", config);
         }
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public UndertowGracefulShutdownHandlerWrapper undertowGracefulShutdownHandlerWrapper() {
+        long shutdownTimeoutSeconds = applicationProperties.getGracefulShutdown().getShutdownTimeoutSeconds();
+        log.info("Graceful shutdown timeout seconds: {}", shutdownTimeoutSeconds);
+        return new UndertowGracefulShutdownHandlerWrapper(shutdownTimeoutSeconds);
     }
 
     /**

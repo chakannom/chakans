@@ -1,0 +1,51 @@
+/* ==========================================================================
+Drive toolbar styles
+========================================================================== */
+.toolbar-container {
+    position: fixed;
+    top: 56px;
+    left: 250px;
+    right: 0px;
+    z-index: 100;
+}
+.toolbar {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px solid #c6cfd6;
+    padding: 0.125em 1em;
+}
+.toolbar-left {
+    width: 100%;
+}
+.toolbar-right {
+    flex-basis: 100%;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-align: center;
+    align-items: center;
+}
+ul.toolbar-items {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    margin-left: auto !important;
+    margin-bottom: 0;
+    list-style: none;
+    padding: 0.1em 0.5em;
+}
+.toolbar-item {
+    margin-left: 0.25rem;
+}
+
+.toolbar-item > button.dropdown-toggle::after {
+    display: none;
+}

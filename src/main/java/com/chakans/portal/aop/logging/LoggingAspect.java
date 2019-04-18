@@ -41,12 +41,42 @@ public class LoggingAspect {
     }
 
     /**
-     * Pointcut that matches all Spring beans in the application's main packages.
+     * Pointcut that matches all Spring beans in the application's portal packages.
      */
-    @Pointcut("within(com.chakans.portal.repository..*)"+
-        " || within(com.chakans.portal.service..*)"+
+    @Pointcut("within(com.chakans.portal.repository..*)" +
+        " || within(com.chakans.portal.service..*)" +
         " || within(com.chakans.portal.web.rest..*)")
-    public void applicationPackagePointcut() {
+    public void applicationPortalPackagePointcut() {
+        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+    }
+
+    /**
+     * Pointcut that matches all Spring beans in the application's account packages.
+     */
+    @Pointcut("within(com.chakans.account.repository..*)" +
+        " || within(com.chakans.account.service..*)" +
+        " || within(com.chakans.account.web.rest..*)")
+    public void applicationAccountPackagePointcut() {
+        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+    }
+
+    /**
+     * Pointcut that matches all Spring beans in the application's blog packages.
+     */
+    @Pointcut("within(com.chakans.blog.repository..*)" +
+        " || within(com.chakans.blog.service..*)" +
+        " || within(com.chakans.blog.web.rest..*)")
+    public void applicationBlogPackagePointcut() {
+        // Method is empty as this is just a Pointcut, the implementations are in the advices.
+    }
+    
+    /**
+     * Pointcut that matches all Spring beans in the application's drive packages.
+     */
+    @Pointcut("within(com.chakans.drive.repository..*)" +
+        " || within(com.chakans.drive.service..*)" +
+        " || within(com.chakans.drive.web.rest..*)")
+    public void applicationDrivePackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
 
@@ -56,7 +86,11 @@ public class LoggingAspect {
      * @param joinPoint join point for advice
      * @param e exception
      */
-    @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
+    @AfterThrowing(pointcut = "springBeanPointcut()" +
+            " && applicationPortalPackagePointcut()" +
+            " && applicationAccountPackagePointcut()" +
+            " && applicationBlogPackagePointcut()" +
+            " && applicationDrivePackagePointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
         if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             log.error("Exception in {}.{}() with cause = \'{}\' and exception = \'{}\'", joinPoint.getSignature().getDeclaringTypeName(),
@@ -75,7 +109,11 @@ public class LoggingAspect {
      * @return result
      * @throws Throwable throws IllegalArgumentException
      */
-    @Around("applicationPackagePointcut() && springBeanPointcut()")
+    @Around("springBeanPointcut()" +
+            " && applicationPortalPackagePointcut()" +
+            " && applicationAccountPackagePointcut()" +
+            " && applicationBlogPackagePointcut()" +
+            " && applicationDrivePackagePointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         if (log.isDebugEnabled()) {
             log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),

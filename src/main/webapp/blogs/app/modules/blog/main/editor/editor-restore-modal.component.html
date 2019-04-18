@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h4 class="modal-title">삭제된 글</h4>
+</div>
+<div class="modal-body">
+이 글은 휴지통으로 이동되었습니다. 계속 작성하려면 복구하세요.
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light float-left" data-dismiss="modal" (click)="activeModal.dismiss('notsave')">저장 안 함</button>
+    <button type="button" class="btn btn-secondary float-left" data-dismiss="modal" (click)="activeModal.dismiss('restore')">복구</button>
+</div>

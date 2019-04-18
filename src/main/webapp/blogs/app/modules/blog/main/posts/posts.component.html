@@ -1,0 +1,161 @@
+<div class="blog-main-header">
+    <div class="blog-main-header-title">
+        <span jhiTranslate="blog.sidebar.sub-menu.manage.posts">Posts</span>
+    </div>
+    <div class="blog-main-header-panel">
+        <ul class="nav cks-tabs">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="posts/published" jhiTranslate="blog.posts.tabs.published">
+                    Published
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="posts/draft" jhiTranslate="blog.posts.tabs.draft">
+                    Draft
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="posts/trashed" jhiTranslate="blog.posts.tabs.trashed">
+                    Trashed
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="blog-main-content">
+    <ul class="list-group cks-list" *ngIf="posts">
+        <li class="list-group-item" *ngFor="let post of posts; let i = index">
+            <div class="post-item-detail">
+                <div class="post-item-title">
+                    <a class="post-item-title-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=post;postId={{post.id}};prevMenu={{pageType}};rowNum={{i}}">
+                        <span>{{post.title}}</span>
+                    </a>
+                </div>
+                <div class="post-item-meta">
+                    <div class="post-item-meta-datetime">
+                        <a class="post-item-meta-datetime-link" href="#">
+                            <span>{{post.createdDate | prettyDate:'yyyy-MM-dd HH:mm'}}</span>
+                        </a>
+                    </div>
+                    <div class="post-item-meta-count">
+						<fa-layers [fixedWidth]="true">
+							<fa-icon [icon]="'eye'"></fa-icon>
+						</fa-layers>
+						<span>{{post.viewedCount}}</span>
+					</div>
+					<div class="post-item-meta-count">
+						<fa-layers [fixedWidth]="true">
+							<fa-icon [icon]="'comment'"></fa-icon>
+						</fa-layers>
+						<span>{{post.commentCount}}</span>
+					</div>
+                </div>
+            </div>
+            <div class="badge">
+                <cks-blogs-blog-popover [cksPopover]="postsPopMenu" [cksValue]="{'postId': post.id, 'menuType': pageType, 'rowNum': i}"></cks-blogs-blog-popover>
+            </div>
+        </li>
+    </ul>
+</div>
+<ng-template #postsPopMenu let-postId="postId" let-menuType="menuType" let-rowNum="rowNum">
+    <ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType === 'posts/published'">
+        <li>
+            <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=post;postId={{postId}};prevMenu={{menuType}};rowNum={{rowNum}}">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.modify">Modify {{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="moveToDraft(postId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'level-down-alt'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.move_to_draft">Move to draft {{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'eye'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.view_post">View post{{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="trash(postId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.trash">Trash {{postId}}</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType === 'posts/draft'">
+        <li>
+            <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=post;postId={{postId}};prevMenu={{menuType}};rowNum={{rowNum}}">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.modify">Modify {{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="publish(postId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="['far','newspaper']"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.publish">Publish {{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'eye'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.preview">Preview {{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="trash(postId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.posts.pop_menu.trash">Trash {{postId}}</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType === 'posts/trashed'">
+        <li>
+            <a class="dropdown-item" (click)="restoreFromTrash(postId)">
+                <span>
+                    <span jhiTranslate="blog.posts.pop_menu.restore_from_trash">Restore from Trash {{postId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="deleteFromTrash(postId)">
+                <span>
+                    <span jhiTranslate="blog.posts.pop_menu.delete_from_trash">Delete from Trash {{postId}}</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+</ng-template>

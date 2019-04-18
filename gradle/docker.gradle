@@ -33,3 +33,4 @@ task copyWwwIntoStatic (type: Copy) {
 }
 
 jibDockerBuild.dependsOn copyWwwIntoStatic
+jibBuildTar.dependsOn copyWwwIntoStatic

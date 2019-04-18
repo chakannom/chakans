@@ -1,7 +1,7 @@
 package com.chakans.portal.config.timezone;
 
 import com.chakans.portal.ChakansApp;
-import com.chakans.portal.repository.timezone.DateTimeWrapper;
+import com.chakans.portal.domain.timezone.DateTimeWrapper;
 import com.chakans.portal.repository.timezone.DateTimeWrapperRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -162,7 +162,7 @@ public class HibernateTimeZoneTest {
     }
 
     private String generateSqlRequest(String fieldName, long id) {
-        return format("SELECT %s FROM jhi_date_time_wrapper where id=%d", fieldName, id);
+        return format("SELECT %s FROM date_time_wrapper where id=%d", fieldName, id);
     }
 
     private void assertThatDateStoredValueIsEqualToInsertDateValueOnGMTTimeZone(SqlRowSet sqlRowSet, String expectedValue) {

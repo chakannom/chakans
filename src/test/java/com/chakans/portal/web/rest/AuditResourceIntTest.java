@@ -5,6 +5,7 @@ import com.chakans.portal.config.audit.AuditEventConverter;
 import com.chakans.portal.domain.PersistentAuditEvent;
 import com.chakans.portal.repository.PersistenceAuditEventRepository;
 import com.chakans.portal.service.AuditEventService;
+import com.chakans.portal.web.rest.anonymous.AuditResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

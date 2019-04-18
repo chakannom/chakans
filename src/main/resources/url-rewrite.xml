@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN" "https://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite>
+
+    <rule match-type="regex">
+        <name>INDEX</name>
+        <!-- static file uri -->
+        <condition type="request-uri" operator="notequal">
+            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
+        </condition>
+        <!-- multi apps uri -->
+        <condition type="request-uri" operator="notequal">
+            ^/(accounts|blogs|drives|admin|yacht)(/.*)*$
+        </condition>
+        <!-- backend uri -->
+        <condition type="request-uri" operator="notequal">
+            ^/(apis|social|management|v2/api-docs|swagger-resources|swagger-ui|h2-console)(/.*)*$
+        </condition>
+        <from>^/(.*)$</from>
+        <to last="true">/index.html</to>
+    </rule>
+
+    <rule match-type="regex">
+        <name>ACCOUNTS</name>
+        <condition type="request-uri" operator="notequal">
+            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
+        </condition>
+        <from>^/accounts(/.*)*$</from>
+        <to last="true">/accounts/index.html</to>
+    </rule>
+
+    <rule match-type="regex">
+        <name>BLOGS</name>
+        <condition type="request-uri" operator="notequal">
+            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
+        </condition>
+        <from>^/(blogs/?|blogs(/main|/go|/initial.cb|/blog.cb)(/.*)*)$</from>
+        <to last="true">/blogs/index.html</to>
+    </rule>
+
+    <rule match-type="regex">
+        <name>DRIVES</name>
+        <condition type="request-uri" operator="notequal">
+            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
+        </condition>
+        <from>^/drives(/.*)*$</from>
+        <to last="true">/drives/index.html</to>
+    </rule>
+
+    <rule match-type="regex">
+        <name>ADMIN</name>
+        <condition type="request-uri" operator="notequal">
+            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
+        </condition>
+        <from>^/admin(/.*)*$</from>
+        <to last="true">/admin/index.html</to>
+    </rule>
+
+    <rule match-type="regex">
+        <name>YACHT</name>
+        <condition type="request-uri" operator="notequal">
+            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
+        </condition>
+        <from>^/yacht(/.*)*$</from>
+        <to last="true">/yacht/index.html</to>
+    </rule>
+
+</urlrewrite>

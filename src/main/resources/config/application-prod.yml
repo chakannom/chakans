@@ -16,8 +16,11 @@
 logging:
     level:
         ROOT: INFO
-        com.chakans.portal: INFO
         io.github.jhipster: INFO
+        com.chakans.portal: INFO
+        com.chakans.account: INFO
+        com.chakans.blog: INFO
+        com.chakans.drive: INFO
 
 spring:
     devtools:
@@ -27,9 +30,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mariadb://localhost:3306/chakans?useLegacyDatetimeCode=false&serverTimezone=UTC
-        username: root
-        password:
+        url: jdbc:mariadb://#chakans.db.address#:3306/#chakans.db.name#?useLegacyDatetimeCode=false&serverTimezone=UTC
+        username: #chakans.db.username#
+        password: #chakans.db.password#
         hikari:
             poolName: Hikari
             auto-commit: false
@@ -85,8 +88,9 @@ server:
     port: 8080
     compression:
         enabled: true
-        mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
-        min-response-size: 1024
+        mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json
+        min-response-size: 2048
+        excluded-user-agents: gozilla,traviata
 
 # ===================================================================
 # JHipster specific properties
@@ -142,4 +146,28 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+    filters:
+        html-render:
+            remote-addresses:
+                chrome-driver: #chakans.filters.html_render.remote_address.chrome_driver#
+            token: #chakans.filters.html_render.token#
+    graceful-shutdown:
+        shutdown-timeout-seconds: 30
+    minio:
+        end-point: #chakans.minio.endpoint#
+        access-key: #chakans.minio.accesskey#
+        secret-key: #chakans.minio.secretkey#
+        secure: #chakans.minio.secure#
+        buckets:
+            album: #chakans.minio.buckets.album#
+            theme: #chakans.minio.buckets.theme#
+            drive: #chakans.minio.buckets.drive#
+        folders:
+            album-blog: #chakans.minio.folders.album_blog#
+            album-blog-default:  #chakans.minio.folders.album_blog_default#
+            album-blog-blog:  #chakans.minio.folders.album_blog_blog#
+            theme-blog: #chakans.minio.folders.theme_blog#
+        web-rpc-url: #chakans.minio.webrpcurl#
+    blog:
+        domain: #chakans.blog.domain#

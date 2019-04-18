@@ -1,9 +1,9 @@
 package com.chakans.portal.security;
 
-import com.chakans.portal.config.Constants;
-
 import java.util.Optional;
 
+import com.chakans.core.config.constants.Constants;
+import com.chakans.core.security.SecurityUtils;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

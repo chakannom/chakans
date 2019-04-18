@@ -1,7 +1,7 @@
 package com.chakans.portal.repository;
 
 import com.chakans.portal.ChakansApp;
-import com.chakans.portal.config.Constants;
+import com.chakans.core.config.constants.Constants;
 import com.chakans.portal.config.audit.AuditEventConverter;
 import com.chakans.portal.domain.PersistentAuditEvent;
 import org.junit.Before;
