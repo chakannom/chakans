@@ -12,7 +12,7 @@
         </condition>
         <!-- multi apps uri -->
         <condition type="request-uri" operator="notequal">
-            ^/(accounts|blogs|drives|admin|yacht)(/.*)*$
+            ^/(accounts|blogs|drives|admin)(/.*)*$
         </condition>
         <!-- backend uri -->
         <condition type="request-uri" operator="notequal">
@@ -56,15 +56,6 @@
         </condition>
         <from>^/admin(/.*)*$</from>
         <to last="true">/admin/index.html</to>
-    </rule>
-
-    <rule match-type="regex">
-        <name>YACHT</name>
-        <condition type="request-uri" operator="notequal">
-            ^.*\.(html?|htc|js|css|xml|map|json|ico|bmp|gif|jpe?g|png|svg|eot|woff|woff2|ttf|pdf|swf|txt)$
-        </condition>
-        <from>^/yacht(/.*)*$</from>
-        <to last="true">/yacht/index.html</to>
     </rule>
 
 </urlrewrite>
