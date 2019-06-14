@@ -1,8 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ChakansSharedLibsModule, ChakansSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
+import { ChakansSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
 
 @NgModule({
-  imports: [ChakansSharedLibsModule, ChakansSharedCommonModule],
+  imports: [ChakansSharedCommonModule],
   declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
   entryComponents: [JhiLoginModalComponent],
   exports: [ChakansSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective],
