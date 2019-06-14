@@ -39,7 +39,7 @@ public class DockerHelper {
 	private final String tag;
 
 	public DockerHelper(String imageName, String tag) throws DockerClientException {
-		this("tcp://localhost:237", imageName, tag);
+		this("tcp://localhost:2375", imageName, tag);
 	}
 
 	public DockerHelper(String serverUrl, String imageName, String tag) throws DockerClientException {
