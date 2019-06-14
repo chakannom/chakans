@@ -1,7 +1,7 @@
 package com.chakans.account.web.rest.anonymous.model.request;
 
 /**
- * Request Model object for storing the user's key and password.
+ * View Model object for storing the user's key and password.
  */
 public class KeyAndPasswordRequestModel {
 

@@ -1,0 +1,219 @@
+/* ==========================================================================
+Blog editor styles
+========================================================================== */
+.blog-editor-main {
+  position: relative;
+  padding: 0 17.125em 0 0;
+}
+.blog-editor-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 2.8125em;
+  padding: 0.125em 0.125em 0.125em 1.25em;
+  background: #fff;
+  border-bottom: 0.0625em solid #c6cfd6;
+  z-index: 900;
+}
+.blog-editor-nav-info {
+  height: 2.5rem;
+  line-height: 2.5rem;
+}
+.blog-editor-header-control {
+  display: -ms-flexbox;
+  display: flex;
+  flex-basis: auto;
+  align-items: center;
+  button {
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -ms-flex-item-align: center;
+    align-self: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-right: 0.1875rem;
+    font-size: 1.5625rem;
+  }
+}
+.blog-editor-content {
+  padding-top: 0.625em;
+  padding-bottom: 1.5625em;
+}
+.blog-editor-title {
+  max-width: 43.875em;
+  margin: 0 auto;
+  input {
+    font-size: 2rem;
+    margin-bottom: 0.9375em;
+    border: 0.0625em solid #c5c5c5;
+    border-radius: 0;
+  }
+}
+.blog-editor-wysiwyg {
+  max-width: 43.75em;
+  margin: 0 auto;
+}
+.blog-editor-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-left: 0.0625em solid #c6cfd6;
+  width: 17.125em;
+  overflow: auto;
+  padding: 3.5em 0 0;
+  background: #dbe2e6;
+  z-index: 100;
+}
+.blog-editor-sidebar-header {
+  padding: 0.625em 0.9375em;
+}
+.blog-editor-settings {
+  font-size: 0.875rem;
+  ::ng-deep .card {
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0.0625em solid #c6cfd6 !important;
+    border-radius: 0;
+    &:first-child {
+      border-top: 0.0625em solid #c6cfd6 !important;
+    }
+  }
+  ::ng-deep .card-header {
+    padding: 0;
+    border-bottom: 0;
+    background-color: initial;
+    &:first-child {
+      border-radius: 0;
+    }
+    > h5 {
+      > button {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        color: #6f6f6f;
+        text-align: left;
+        font-size: 0.9rem;
+        border: 0;
+        border-radius: 0;
+        text-decoration: none !important;
+        :hover {
+          color: #ff5722;
+        }
+      }
+    }
+  }
+  ::ng-deep .card-body {
+    padding: 0 1rem 1rem 1rem;
+  }
+}
+.input-tags {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  background-color: #fff;
+  border: 0.0625em solid #c6cfd6;
+  cursor: text;
+  padding: 0.3125em 0.3125em 0.3125em 0;
+  width: 100%;
+  font-weight: 400;
+  .item {
+    display: -ms-flexbox;
+    display: flex;
+    color: #fff;
+    margin: 0.125em 0 0.125em 0.3125em;
+    overflow: hidden;
+    .tag {
+      display: inline-block;
+      border-radius: 0.25em 0 0 0.25em;
+      padding: 0 0.125em 0 0.375em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.4375em;
+      background: #6c757d;
+      border-top: 0.0625em solid #6c757d;
+      border-left: 0.0625em solid #6c757d;
+      border-bottom: 0.0625em solid #6c757d;
+    }
+    .btn-remove {
+      padding: 0 0.375em;
+      font-size: 0.9375rem;
+      color: #fff;
+      line-height: 1.4375em;
+      cursor: pointer;
+      background: #6c757d;
+      border-radius: 0 0.25em 0.25em 0;
+      border-color: #6c757d;
+      border-left: 0;
+      &:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+      }
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+.tag-inputbox {
+  width: 100%;
+  padding: 0.3125em 0.625em;
+  border: 0.0625em solid #c6cfd6;
+  font-weight: 400;
+  outline: 0;
+}
+.suggestion-tags {
+  background: #fff;
+  max-height: 0;
+  overflow-y: scroll;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  transition: all 0.15s ease-in-out;
+  &.expanded {
+    max-height: 9.0625em;
+  }
+  .tag {
+    display: block;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+    font-size: 0.8125rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    &:hover {
+      background: #00aadc;
+      color: #fff;
+    }
+  }
+}
+.opening-datepicker {
+  margin-bottom: 0.5em;
+}
+.opening-timepicker {
+  display: block;
+  text-align: center;
+  ::ng-deep fieldset {
+    display: inline-block;
+  }
+}
+.more-option-legend {
+  display: block;
+  font-size: 0.8125rem;
+  margin-bottom: 0.25em;
+}
+.more-option {
+  font-size: 0.8125rem;
+}
+::ng-deep .modal-backdrop {
+  .not-fade {
+    transition: initial;
+  }
+}

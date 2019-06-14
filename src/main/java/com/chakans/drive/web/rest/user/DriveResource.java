@@ -3,7 +3,6 @@ package com.chakans.drive.web.rest.user;
 import com.chakans.core.config.constants.AuthoritiesConstants;
 import com.chakans.core.config.constants.Constants;
 import com.chakans.core.security.SecurityUtils;
-import com.chakans.core.web.rest.errors.InternalServerErrorException;
 import com.chakans.drive.domain.DrivePersonalNode;
 import com.chakans.drive.repository.DrivePersonalNodeRepository;
 import com.chakans.drive.service.DrivePersonalFileService;
@@ -34,10 +33,16 @@ import javax.validation.Valid;
 @PreAuthorize("hasRole(\"" + AuthoritiesConstants.USER + "\")")
 public class DriveResource {
 
+    private static class DriveResourceException extends RuntimeException {
+        private DriveResourceException(String message) {
+            super(message);
+        }
+    }
+
     private final Logger log = LoggerFactory.getLogger(DriveResource.class);
 
     private final DrivePersonalNodeRepository drivePersonalNodeRepository;
-    
+
     private final DrivePersonalFileService drivePersonalFileService;
 
     private final DriveStorageService driveStorageService;
@@ -53,7 +58,7 @@ public class DriveResource {
     @ResponseStatus(HttpStatus.CREATED)
     public FileResponseModel createFile(@Valid @RequestBody FileCreateRequestModel fileCreateRequestModel) {
         log.debug("REST request to create My File : {}", fileCreateRequestModel);
-        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new InternalServerErrorException("Current user login not found"));
+        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new DriveResourceException("Current user login not found"));
         Optional<DrivePersonalNode> existingNode = drivePersonalNodeRepository.findOneByIdAndUserLogin(fileCreateRequestModel.getParent().getId(), userLogin);
         if (!existingNode.isPresent()) {
             throw new ParentNodeNotFoundException();
@@ -66,7 +71,7 @@ public class DriveResource {
     public List<Object> getFiles() {
         return null;
     }
-    
+
     @GetMapping("/files/presigned-put-url")
     public ResponseEntity<Map<String, String>> getFilePresignedPutUrl(@RequestParam("filename") String filename) {
         return ResponseUtil.wrapOrNotFound(driveStorageService.getPresignedPutUrl(filename).map(url -> ImmutableMap.of("url", url)));

@@ -1,5 +1,25 @@
 {
-    "initial": {
-        "title": "처음 사용자 - C.Blog"
+  "initial": {
+    "title": "처음 사용자 - C.블로그",
+    "sub_title": "사용자 프로필",
+    "form": {
+      "nickname": "별칭",
+      "nickname.placeholder": "당신의 별칭",
+      "buttons": {
+        "continue": "시작하기"
+      }
+    },
+    "messages": {
+      "validate": {
+        "nickname": {
+          "required": "별칭 입력이 필요합니다.",
+          "minlength": "별칭 최소 3자 이상이어야 합니다",
+          "maxlength": "별칭 최대 100자 까지입니다."
+        }
+      },
+      "error": {
+        "fail": "<strong>별칭 등록이 실패했습니다!</strong> 다시 시도해 주세요."
+      }
     }
+  }
 }

@@ -1,0 +1,39 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+.see-all-products {
+  border-top: 1px solid #bdbdbd;
+}
+.product-icon-list {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 0.875rem;
+  padding: 40px 0;
+  list-style: none;
+  li {
+    float: left;
+    margin: 1.5% 2%;
+    text-align: center;
+    width: 45%;
+    a {
+      color: #533f03;
+      text-decoration: none;
+    }
+    .icon {
+      height: 60px;
+      margin-bottom: 0.5rem;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    li {
+      width: 20%;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    li {
+      width: 10%;
+    }
+  }
+}

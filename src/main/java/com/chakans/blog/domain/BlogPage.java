@@ -25,7 +25,7 @@ import com.chakans.portal.domain.AbstractAuditingEntity;
  * A blog_page.
  */
 @Entity
-@Table(name = "blog_page")
+@Table(name = "cks_blog_page")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogPage extends AbstractAuditingEntity implements Serializable {
 
@@ -38,13 +38,12 @@ public class BlogPage extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @Column(name = "blog_id", nullable = false, updatable = false)
     private Long blogId;
-    
+
     @NotNull
     @Size(min = 1, max = 255)
     @Column(length = 255, nullable = false)
     private String title;
 
-    @Lob
     private String content;
 
     @NotNull
@@ -55,11 +54,11 @@ public class BlogPage extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @Column(name = "viewed_count", nullable = false)
     private Long viewedCount = (long) 0;
-    
+
     @NotNull
     @Column(name = "comment_count", nullable = false)
     private Long commentCount = (long) 0;
-    
+
     @NotNull
     @Column(name = "permit_comment", nullable = false)
     private boolean permitComment = false;
@@ -116,7 +115,7 @@ public class BlogPage extends AbstractAuditingEntity implements Serializable {
     public void setViewedCount(Long viewedCount) {
         this.viewedCount = viewedCount;
     }
-    
+
     public Long getCommentCount() {
         return commentCount;
     }
@@ -146,13 +145,11 @@ public class BlogPage extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogPage)) {
             return false;
         }
-
-        BlogPage blogPage = (BlogPage) o;
-        return Objects.equals(id, blogPage.getId());
-    }    
+        return id != null && id.equals(((BlogPage) o).id);
+    }
 
     @Override
     public int hashCode() {
@@ -171,6 +168,6 @@ public class BlogPage extends AbstractAuditingEntity implements Serializable {
             ", commentCount=" + commentCount +
             ", permitComment=" + permitComment +
             ", status=" + status +
-            '}';
+            "}";
     }
 }

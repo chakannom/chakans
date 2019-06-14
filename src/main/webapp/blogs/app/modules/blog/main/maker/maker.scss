@@ -1,0 +1,51 @@
+/* ==========================================================================
+Blog maker styles
+========================================================================== */
+.blog-maker-main {
+  position: relative;
+  padding: 0.625em 1.5625em 1.5625em calc(41.666667% + 1.5625em);
+}
+.theme-list-group {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  background-color: #fff;
+  border: 0.0625em solid #c6cfd6;
+  cursor: text;
+  padding: 0.3125em;
+  width: 100%;
+  font-size: 0.875em;
+  font-weight: 400;
+  height: 15.25em;
+  overflow-y: auto;
+}
+.theme-list-item {
+  margin: 0.3125em;
+  cursor: pointer;
+  &.selected {
+    outline: 0.25em solid #9bb5dd;
+  }
+}
+.img-theme-thumbnail {
+  width: 8.9375em;
+  height: 5.625em;
+}
+.blog-maker-sidebar-container {
+  position: fixed;
+  top: 3.5em;
+  left: 0;
+  bottom: 0;
+  border-right: 0.0625em solid #c6cfd6;
+  width: 41.666667%;
+  max-width: 41.666667%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #fff;
+  z-index: 100;
+}
+.blog-maker-theme-detail {
+  padding: 0.9375em 1.25em;
+}

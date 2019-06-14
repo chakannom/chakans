@@ -33,7 +33,7 @@ public class BlogThemeDescriptionId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BlogThemeDescriptionId)) return false;
 
         BlogThemeDescriptionId blogThemeDescriptionId = (BlogThemeDescriptionId) o;
         return Objects.equals(themeId, blogThemeDescriptionId.getThemeId())

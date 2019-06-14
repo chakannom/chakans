@@ -1,93 +1,98 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, mergeMap } from 'rxjs/operators';
 
-import { MyProfile, StorageService, UserProfile, UserProfileService } from '../../../../../core';
+import { StorageService, IUserProfile, UserProfileService } from '../../../../../core';
 import { createImgproxySignatureUrl } from '../../../../../shared';
 
 @Component({
-    selector: 'cks-blogs-blog-user-settings',
-    templateUrl: './user-settings.component.html',
-    styleUrls: ['../../main.css', '../settings.css', './user-settings.css']
+  selector: 'cks-blog-user-settings',
+  templateUrl: './user-settings.component.html',
+  styleUrls: ['../../main.scss', '../settings.scss', './user-settings.scss']
 })
 export class BlogUserSettingsComponent implements OnInit {
-    userProfile: UserProfile;
-    isSaving: boolean;
-    profileImgFile: any;
+  isSaving: boolean;
+  profileImageUrl: string;
+  privacyForm = this.fb.group({
+    openedProfile: [false],
+    openedEmail: [false]
+  });
+  profileImageForm = this.fb.group({
+    profileImage: []
+  });
+  userInfoForm = this.fb.group({
+    email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email, Validators.required]],
+    nickname: ['', [Validators.minLength(3), Validators.maxLength(100), Validators.required]]
+  });
 
-    constructor(private myProfile: MyProfile, private userProfileService: UserProfileService, private storageService: StorageService) {}
+  constructor(private userProfileService: UserProfileService, private storageService: StorageService, private fb: FormBuilder) {}
 
-    ngOnInit() {
-        this.isSaving = false;
-        this.myProfile.get().then(userProfile => {
-            this.userProfile = this.copyUserProfile(userProfile);
-        });
+  ngOnInit() {
+    this.isSaving = false;
+    this.userProfileService.identity().then(userProfile => {
+      this.privacyForm.setValue({ openedProfile: userProfile.openedProfile, openedEmail: userProfile.openedEmail });
+      this.profileImageUrl = userProfile.imageUrl;
+      this.userInfoForm.setValue({ email: userProfile.email, nickname: userProfile.nickname });
+    });
+  }
+
+  savePrivacy() {
+    this.isSaving = true;
+    const userProfile = {
+      openedProfile: this.privacyForm.get(['openedProfile']).value,
+      openedEmail: this.privacyForm.get(['openedEmail']).value
+    };
+    this.userProfileService
+      .patchMyProfile(userProfile, ['openedProfile', 'openedEmail'])
+      .subscribe(() => this.onSuccessSave(), () => this.onError());
+  }
+
+  saveProfileImage() {
+    this.isSaving = true;
+    if (!this.profileImageUrl && this.profileImageUrl.startsWith('data:image/')) {
+      this.storageService
+        .uploadImageFile(this.profileImageForm.get(['profileImage']).value)
+        .pipe(
+          map((response: any) => response.url.split('?')[0]),
+          map((imgFileUrl: string) => createImgproxySignatureUrl('fit', 120, 120, 'ce', 0, imgFileUrl, 'png')),
+          map((profileImageUrl: string) => (this.profileImageUrl = profileImageUrl)),
+          mergeMap((profileImageUrl: string) => this.userProfileService.patchMyProfile({ imageUrl: profileImageUrl }, ['imageUrl']))
+        )
+        .subscribe(() => this.onSuccessSave(), () => this.onError());
+    } else {
+      this.userProfileService
+        .patchMyProfile({ imageUrl: this.profileImageUrl }, ['imageUrl'])
+        .subscribe(() => this.onSuccessSave(), () => this.onError());
     }
+  }
 
-    savePrivacy() {
-        this.isSaving = true;
-        const userProfile = { openedProfile: this.userProfile.openedProfile, openedEmail: this.userProfile.openedEmail };
-        this.userProfileService
-            .patchMyProfile(userProfile, ['openedProfile', 'openedEmail'])
-            .subscribe(response => this.onSuccessSave(response), () => this.onErrorSave());
-    }
+  saveUserInfo() {
+    this.isSaving = true;
+    const userProfile = { email: this.userInfoForm.get(['email']).value, nickname: this.userInfoForm.get(['nickname']).value };
+    this.userProfileService.patchMyProfile(userProfile, ['email', 'nickname']).subscribe(() => this.onSuccessSave(), () => this.onError());
+  }
 
-    saveProfileImage() {
-        this.isSaving = true;
-        if (this.userProfile.imageUrl !== '' && this.userProfile.imageUrl.startsWith('data:image/')) {
-            this.storageService
-                .uploadImageFile(this.profileImgFile)
-                .pipe(
-                    map(response => response.url.split('?')[0]),
-                    map(imgFileUrl => createImgproxySignatureUrl('fit', 120, 120, 'ce', 0, imgFileUrl, 'png')),
-                    map(profileImgUrl => (this.userProfile.imageUrl = profileImgUrl)),
-                    mergeMap(profileImgUrl => this.userProfileService.patchMyProfile({ imageUrl: profileImgUrl }, ['imageUrl']))
-                )
-                .subscribe(response => this.onSuccessSave(response), () => this.onErrorSave());
-        } else {
-            this.userProfileService
-                .patchMyProfile({ imageUrl: this.userProfile.imageUrl }, ['imageUrl'])
-                .subscribe(response => this.onSuccessSave(response), () => this.onErrorSave());
-        }
-    }
+  previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent & { target: { result: string } }) => {
+      this.profileImageUrl = e.target.result;
+      this.profileImageForm.setValue({ profileImage: event.target.files[0] });
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
 
-    saveUserInfo() {
-        this.isSaving = true;
-        const userProfile = { email: this.userProfile.email, nickname: this.userProfile.nickname };
-        this.userProfileService
-            .patchMyProfile(userProfile, ['email', 'nickname'])
-            .subscribe(response => this.onSuccessSave(response), () => this.onErrorSave());
-    }
+  removeImage() {
+    this.profileImageUrl = '';
+    this.profileImageForm.setValue({ profileImage: null });
+  }
 
-    previewImage(event) {
-        const reader = new FileReader();
-        reader.onload = (e: ProgressEvent & { target: { result: string } }) => {
-            this.userProfile.imageUrl = e.target.result;
-            this.profileImgFile = event.target.files[0];
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
+  private onSuccessSave() {
+    this.userProfileService.identity(true).then(() => {
+      this.isSaving = false;
+    });
+  }
 
-    removeImage() {
-        this.userProfile.imageUrl = '';
-        this.profileImgFile = null;
-    }
-
-    private copyUserProfile(userProfile) {
-        return {
-            openedProfile: userProfile.openedProfile,
-            openedEmail: userProfile.openedEmail,
-            imageUrl: userProfile.imageUrl,
-            email: userProfile.email,
-            nickname: userProfile.nickname
-        };
-    }
-
-    private onSuccessSave(response) {
-        this.isSaving = false;
-        this.myProfile.set(response.body);
-    }
-
-    private onErrorSave() {
-        this.isSaving = false;
-    }
+  private onError() {
+    this.isSaving = false;
+  }
 }

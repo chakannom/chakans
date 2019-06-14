@@ -26,7 +26,7 @@ import com.chakans.portal.domain.AbstractAuditingEntity;
  * A blog_post.
  */
 @Entity
-@Table(name = "blog_post")
+@Table(name = "cks_blog_post")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogPost extends AbstractAuditingEntity implements Serializable {
 
@@ -45,7 +45,6 @@ public class BlogPost extends AbstractAuditingEntity implements Serializable {
     @Column(length = 255, nullable = false)
     private String title;
 
-    @Lob
     private String content;
 
     @NotNull
@@ -60,11 +59,11 @@ public class BlogPost extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @Column(name = "viewed_count", nullable = false)
     private Long viewedCount = (long) 0;
-    
+
     @NotNull
     @Column(name = "comment_count", nullable = false)
     private Long commentCount = (long) 0;
-    
+
     @NotNull
     @Column(name = "permit_comment", nullable = false)
     private boolean permitComment = false;
@@ -159,12 +158,10 @@ public class BlogPost extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogPost)) {
             return false;
         }
-
-        BlogPost blogPost = (BlogPost) o;
-        return Objects.equals(id, blogPost.getId());
+        return id != null && id.equals(((BlogPost) o).id);
     }
 
     @Override
@@ -185,7 +182,7 @@ public class BlogPost extends AbstractAuditingEntity implements Serializable {
             ", commentCount=" + commentCount +
             ", permitComment=" + permitComment +
             ", status=" + status +
-            '}';
+            "}";
     }
 
 }

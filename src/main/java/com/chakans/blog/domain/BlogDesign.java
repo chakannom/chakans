@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A blog_design.
  */
 @Entity
-@Table(name = "blog_design")
+@Table(name = "cks_blog_design")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogDesign implements Serializable {
 
@@ -40,7 +40,6 @@ public class BlogDesign implements Serializable {
     private Integer rightbarWidth = 180;
 
     @NotNull
-    @Lob
     private String theme;
 
     @NotNull
@@ -100,12 +99,10 @@ public class BlogDesign implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogDesign)) {
             return false;
         }
-
-        BlogDesign blogDesign = (BlogDesign) o;
-        return Objects.equals(blogId, blogDesign.getBlogId());
+        return blogId != null && blogId.equals(((BlogDesign) o).blogId);
     }
 
     @Override
@@ -122,6 +119,6 @@ public class BlogDesign implements Serializable {
             ", rightbarWidth=" + rightbarWidth +
             ", theme='" + theme + '\'' +
             ", topBar=" + topBar +
-            '}';
+            "}";
     }
 }

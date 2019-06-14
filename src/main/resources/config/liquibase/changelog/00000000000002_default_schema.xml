@@ -3,14 +3,14 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="autoIncrement" value="true"/>
 
     <changeSet id="00000000000001" author="chakannom">
         <!-- File Upload Album -->
-        <createTable tableName="file_upload_album">
+        <createTable tableName="cks_file_upload_album">
             <column name="directory" type="varchar(512)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -20,7 +20,7 @@
         </createTable>
 
         <!-- File Upload Theme -->
-        <createTable tableName="file_upload_theme">
+        <createTable tableName="cks_file_upload_theme">
             <column name="directory" type="varchar(512)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -30,7 +30,7 @@
         </createTable>
 
         <!-- File Upload Drive -->
-        <createTable tableName="file_upload_drive">
+        <createTable tableName="cks_file_upload_drive">
             <column name="directory" type="varchar(512)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -38,7 +38,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
     </changeSet>
 
 </databaseChangeLog>

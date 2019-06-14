@@ -1,24 +1,17 @@
 import { Routes } from '@angular/router';
 
 import {
-    activateRoute,
-    passwordResetFinishRoute,
-    passwordResetInitRoute,
-    signInRoute,
-    signUpResultRoute,
-    signUpRoute
+  ACTIVATE_ROUTE,
+  PASSWORD_RESET_FINISH_ROUTE,
+  PASSWORD_RESET_INIT_ROUTE,
+  SIGN_IN_ROUTE,
+  SIGN_UP_ROUTE,
+  SIGN_UP_RESULT_ROUTE
 } from './';
 
-const INTERNAL_ROUTES = [
-    activateRoute,
-    passwordResetFinishRoute,
-    passwordResetInitRoute,
-    signInRoute,
-    signUpResultRoute,
-    signUpRoute
-];
-
-export const internalState: Routes = [{
+export const INTERNAL_ROUTES: Routes = [
+  {
     path: '',
-    children: INTERNAL_ROUTES
-}];
+    children: [ACTIVATE_ROUTE, PASSWORD_RESET_FINISH_ROUTE, PASSWORD_RESET_INIT_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE, SIGN_UP_RESULT_ROUTE]
+  }
+];

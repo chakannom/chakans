@@ -1,37 +1,39 @@
-<div class="initial-header">
-    <div class="initial-header-title">
-        <span jhiTranslate="blog.initial.title">Welcome to C.Blog</span>
-    </div>
-</div>
-<div class="initial-content">
-    <div class="initial-content-title" jhiTranslate="blog.initial.sub_title">User profile</div>
-    <div>
-        <div class="alert alert-danger" *ngIf="error" jhiTranslate="blog.initial.messages.error.fail">
-            <strong>Registration failed!</strong> Please try again later.
+<div class="cks-main">
+    <div class="initial-header">
+        <div class="initial-header-title">
+            <span jhiTranslate="initial.title">Welcome to C.Blog</span>
         </div>
     </div>
-    <form name="form" role="form" (ngSubmit)="start()" #registerForm="ngForm" ngNativeValidate>
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <label class="card-title" for="nickname" jhiTranslate="blog.initial.form.nickname">Nickname</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname" #nickname="ngModel" placeholder="{{'blog.initial.form.nickname.placeholder' | translate}}" [(ngModel)]="userProfile.nickname" autocomplete="off" minlength=3 maxlength=100 required>
-                    <div *ngIf="nickname.dirty && nickname.invalid">
-                        <small class="form-text text-danger" *ngIf="nickname.errors.required" jhiTranslate="blog.initial.messages.validate.nickname.required">
-                            Your nickname is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="nickname.errors.minlength" jhiTranslate="blog.initial.messages.validate.nickname.minlength">
-                            Your nickname is required to be at least 3 characters.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="nickname.errors.maxlength" jhiTranslate="blog.initial.messages.validate.nickname.maxlength">
-                            Your nickname cannot be longer than 100 characters.
-                        </small>
+    <div class="initial-content">
+        <div class="initial-content-title" jhiTranslate="initial.sub_title">User profile</div>
+        <div>
+            <div class="alert alert-danger" *ngIf="error" jhiTranslate="initial.messages.error.fail">
+                <strong>Registration failed!</strong> Please try again later.
+            </div>
+        </div>
+        <form name="registerUserProfileForm" role="form" (ngSubmit)="registerUserProfile()" [formGroup]="registerUserProfileForm">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="card-title" for="nickname" jhiTranslate="initial.form.nickname">Nickname</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="{{'initial.form.nickname.placeholder' | translate}}" formControlName="nickname" autocomplete="off" required>
+                        <div *ngIf="registerUserProfileForm.get('nickname').invalid && (registerUserProfileForm.get('nickname').dirty || registerUserProfileForm.get('nickname').touched)">
+                            <small class="form-text text-danger" *ngIf="registerUserProfileForm.get('nickname').errors.required" jhiTranslate="initial.messages.validate.nickname.required">
+                                Your nickname is required.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="registerUserProfileForm.get('nickname').errors.minlength" jhiTranslate="initial.messages.validate.nickname.minlength">
+                                Your nickname is required to be at least 3 characters.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="registerUserProfileForm.get('nickname').errors.maxlength" jhiTranslate="initial.messages.validate.nickname.maxlength">
+                                Your nickname cannot be longer than 100 characters.
+                            </small>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="initial-content-action">
-            <button type="submit" class="btn btn-primary" jhiTranslate="blog.initial.form.buttons.continue">Continue to C.Blog</button>
-        </div>
-    </form>
+            <div class="initial-content-action">
+                <button type="submit" class="btn btn-primary" jhiTranslate="initial.form.buttons.continue">Continue to C.Blog</button>
+            </div>
+        </form>
+    </div>
 </div>

@@ -3,17 +3,17 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class NavbarService {
-    navbarViewed: BehaviorSubject<boolean>;
+  navbarViewed: BehaviorSubject<boolean>;
 
-    constructor() {
-        this.navbarViewed = new BehaviorSubject<boolean>(true);
-    }
+  constructor() {
+    this.navbarViewed = new BehaviorSubject<boolean>(true);
+  }
 
-    get isNavbarViewed() {
-        return this.navbarViewed.asObservable();
-    }
+  get isNavbarViewed() {
+    return this.navbarViewed.asObservable();
+  }
 
-    setNavbarViewed(navbarViewed: boolean) {
-        this.navbarViewed.next(navbarViewed);
-    }
+  setNavbarViewed(navbarViewed: boolean) {
+    this.navbarViewed.next(navbarViewed);
+  }
 }

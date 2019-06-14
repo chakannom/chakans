@@ -1,0 +1,29 @@
+/* ==========================================================================
+Initial page styles
+========================================================================== */
+.initial-header {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.initial-header-title {
+  font-size: 1.25em;
+  padding: 0.7em 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.initial-content {
+  max-width: 45em;
+  margin: auto;
+  .card {
+    margin-bottom: 1em;
+  }
+}
+.initial-content-title {
+  font-size: 1.2em;
+  padding: 0.8em 0;
+}
+.initial-content-action {
+  text-align: right;
+}

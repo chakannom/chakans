@@ -3,23 +3,26 @@ import { RouterModule } from '@angular/router';
 
 import { AccountsSharedModule } from '../../shared';
 
-import { ActivateComponent, PasswordResetFinishComponent, PasswordResetInitComponent, SignInComponent, SignUpResultComponent, SignUpComponent, internalState } from './';
+import {
+  SignInComponent,
+  SignUpComponent,
+  SignUpResultComponent,
+  ActivateComponent,
+  PasswordResetInitComponent,
+  PasswordResetFinishComponent,
+  INTERNAL_ROUTES
+} from './';
 
 @NgModule({
-    imports: [
-        AccountsSharedModule,
-        RouterModule.forChild(internalState)
-    ],
-    declarations: [
-        ActivateComponent,
-        PasswordResetInitComponent,
-        PasswordResetFinishComponent,
-        SignInComponent,
-        SignUpResultComponent,
-        SignUpComponent
-    ],
-    providers: [
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [AccountsSharedModule, RouterModule.forChild(INTERNAL_ROUTES)],
+  declarations: [
+    ActivateComponent,
+    SignInComponent,
+    SignUpResultComponent,
+    SignUpComponent,
+    PasswordResetInitComponent,
+    PasswordResetFinishComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountsInternalModule {}

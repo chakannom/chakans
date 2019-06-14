@@ -1,128 +1,130 @@
-<div class="blog-main-header">
-    <div class="blog-main-header-title">
-        <span jhiTranslate="blog.sidebar.sub-menu.manage.comments">Comments</span>
+<div class="blog-main">
+    <div class="blog-main-header">
+        <div class="blog-main-header-title">
+            <span jhiTranslate="blog.sidebar.sub-menu.manage.comments">Comments</span>
+        </div>
+        <div class="blog-main-header-panel">
+            <ul class="nav tabs">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="comments/published" jhiTranslate="blog.comments.tabs.published">
+                        Published
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="comments/spam" jhiTranslate="blog.comments.tabs.spam">
+                        Spam
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="comments/trashed" jhiTranslate="blog.comments.tabs.trashed">
+                        Trashed
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="blog-main-header-panel">
-        <ul class="nav cks-tabs">
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="comments/published" jhiTranslate="blog.comments.tabs.published">
-                    Published
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="comments/spam" jhiTranslate="blog.comments.tabs.spam">
-                    Spam
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="comments/trashed" jhiTranslate="blog.comments.tabs.trashed">
-                    Trashed
-                </a>
+    <div class="blog-main-content">
+        <ul class="list-group cks-list" *ngIf="comments">
+            <li class="list-group-item" *ngFor="let comment of comments; let i = index">
+                <div class="comment-item-detail">
+                    <div class="comment-item-header">
+                        <span class="comment-item-author">{{comment.author.name ? comment.author.name : ('blog.comments.content.author_name.anonymous' | translate)}}</span>
+                        <span class="comment-item-separator">·</span>
+                        <span class="comment-item-datetime">{{comment.createdDate | prettyDate:'yyyy-MM-dd HH:mm'}}</span>
+                    </div>
+                    <div class="comment-item-content">
+                        <div class="comment-item-post-link">
+                            <a *ngIf="comment.page">
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="['far', 'file']"></fa-icon>
+                                </fa-layers>
+                                <span>{{comment.page.title}}</span>
+                            </a>
+                            <a *ngIf="comment.post">
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="['far', 'file-alt']"></fa-icon>
+                                </fa-layers>
+                                <span>{{comment.post.title}}</span>
+                            </a>
+                        </div>
+                        <div class="comment-item-parent-comment" *ngIf="comment.parent">
+                            <span>>&nbsp;'</span>
+                            <span>{{comment.parent.content | ellipsis:30}}</span>
+                            <span>'&nbsp;</span>
+                            <span jhiTranslate="blog.comments.content.reply_of_comment">of comment</span>
+                            <span>:</span>
+                        </div>
+                        <div class="comment-item-body">
+                            {{comment.content}}
+                        </div>
+                    </div>
+                </div>
+                <div class="badge">
+                    <cks-blog-popover [cksPopover]="commentsPopMenu" [cksValue]="{commentId: comment.id, menuType: pageType}"></cks-blog-popover>
+                </div>
             </li>
         </ul>
     </div>
-</div>
-<div class="blog-main-content">
-    <ul class="list-group cks-list" *ngIf="comments">
-        <li class="list-group-item" *ngFor="let comment of comments; let i = index">
-            <div class="comment-item-detail">
-                <div class="comment-item-header">
-                    <span class="comment-item-author">{{comment.author.name ? comment.author.name : ('blog.comments.content.author_name.anonymous' | translate)}}</span>
-                    <span class="comment-item-separator">·</span>
-                    <span class="comment-item-datetime">{{comment.createdDate | prettyDate:'yyyy-MM-dd HH:mm'}}</span>
-                </div>
-                <div class="comment-item-content">
-                    <div class="comment-item-post-link">
-                        <a *ngIf="comment.page">
-                            <fa-layers class="fa-fw">
-                                <fa-icon [icon]="['far', 'file']"></fa-icon>
-                            </fa-layers>
-                            <span>{{comment.page.title}}</span>
-                        </a>
-                        <a *ngIf="comment.post">
-                            <fa-layers class="fa-fw">
-                                <fa-icon [icon]="['far', 'file-alt']"></fa-icon>
-                            </fa-layers>
-                            <span>{{comment.post.title}}</span>
-                        </a>
-                    </div>
-                    <div class="comment-item-parent-comment" *ngIf="comment.parent">
-                        <span>>&nbsp;'</span>
-                        <span>{{comment.parent.content | ellipsis:30}}</span>
-                        <span>'&nbsp;</span>
-                        <span jhiTranslate="blog.comments.content.reply_of_comment">of comment</span>
-                        <span>:</span>
-                    </div>
-                    <div class="comment-item-body">
-                        {{comment.content}}
-                    </div>
-                </div>
-            </div>
-            <div class="badge">
-                <cks-blogs-blog-popover [cksPopover]="commentsPopMenu" [cksValue]="{commentId: comment.id, menuType: pageType}"></cks-blogs-blog-popover>
-            </div>
-        </li>
-    </ul>
 </div>
 <ng-template #commentsPopMenu let-commentId="commentId" let-menuType="menuType">
-        <ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType == 'comments/published'">
-            <li>
-                <a class="dropdown-item" (click)="spam(commentId)">
-                    <span>
-                        <fa-layers class="fa-fw">
-                            <fa-icon [icon]="'exclamation'"></fa-icon>
-                        </fa-layers>
-                        <span jhiTranslate="blog.comments.pop_menu.spam">Spam {{commentId}}</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" (click)="trash(commentId)">
-                    <span>
-                        <fa-layers class="fa-fw">
-                            <fa-icon [icon]="'trash-alt'"></fa-icon>
-                        </fa-layers>
-                        <span jhiTranslate="blog.comments.pop_menu.trash">Trash {{commentId}}</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-        <ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType == 'comments/spam'">
-            <li>
-                <a class="dropdown-item" (click)="publish(commentId)">
-                    <span>
-                        <fa-layers class="fa-fw">
-                            <fa-icon [icon]="'level-up-alt'"></fa-icon>
-                        </fa-layers>
-                        <span jhiTranslate="blog.comments.pop_menu.publish">Publish {{commentId}}</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" (click)="trash(commentId)">
-                    <span>
-                        <fa-layers class="fa-fw">
-                            <fa-icon [icon]="'trash-alt'"></fa-icon>
-                        </fa-layers>
-                        <span jhiTranslate="blog.comments.pop_menu.trash">Trash {{commentId}}</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-        <ul class="dropdown-menu show cks-popover-dropdown-menu" *ngIf="menuType == 'comments/trashed'">
-            <li>
-                <a class="dropdown-item" (click)="restoreFromTrash(commentId)">
-                    <span>
-                        <span jhiTranslate="blog.comments.pop_menu.restore_from_trash">Restore from Trash {{commentId}}</span>
-                    </span>
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" (click)="deleteFromTrash(commentId)">
-                    <span>
-                        <span jhiTranslate="blog.comments.pop_menu.delete_from_trash">Delete from Trash {{commentId}}</span>
-                    </span>
-                </a>
-            </li>
-        </ul>
-    </ng-template>
+    <ul class="dropdown-menu show" *ngIf="menuType == 'comments/published'">
+        <li>
+            <a class="dropdown-item" (click)="spam(commentId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon icon="exclamation"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.comments.pop_menu.spam">Spam {{commentId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="trash(commentId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon icon="trash-alt"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.comments.pop_menu.trash">Trash {{commentId}}</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <ul class="dropdown-menu show" *ngIf="menuType == 'comments/spam'">
+        <li>
+            <a class="dropdown-item" (click)="publish(commentId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon icon="level-up-alt"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.comments.pop_menu.publish">Publish {{commentId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="trash(commentId)">
+                <span>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon icon="trash-alt"></fa-icon>
+                    </fa-layers>
+                    <span jhiTranslate="blog.comments.pop_menu.trash">Trash {{commentId}}</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+    <ul class="dropdown-menu show" *ngIf="menuType == 'comments/trashed'">
+        <li>
+            <a class="dropdown-item" (click)="restoreFromTrash(commentId)">
+                <span>
+                    <span jhiTranslate="blog.comments.pop_menu.restore_from_trash">Restore from Trash {{commentId}}</span>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" (click)="deleteFromTrash(commentId)">
+                <span>
+                    <span jhiTranslate="blog.comments.pop_menu.delete_from_trash">Delete from Trash {{commentId}}</span>
+                </span>
+            </a>
+        </li>
+    </ul>
+</ng-template>

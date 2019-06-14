@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @IdClass(BlogThemeDescriptionId.class)
-@Table(name = "blog_theme_description")
+@Table(name = "cks_blog_theme_description")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogThemeDescription implements Serializable {
 
@@ -33,7 +33,6 @@ public class BlogThemeDescription implements Serializable {
     @Column(length = 100, nullable = false)
     private String name;
 
-    @Lob
     private String description;
 
     public Long getThemeId() {
@@ -71,7 +70,7 @@ public class BlogThemeDescription implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BlogThemeDescription)) return false;
 
         BlogThemeDescription blogThemeDescription = (BlogThemeDescription) o;
         return Objects.equals(themeId, blogThemeDescription.getThemeId())
@@ -90,7 +89,7 @@ public class BlogThemeDescription implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
-            '}';
+            "}";
     }
 
 }

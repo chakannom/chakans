@@ -16,7 +16,7 @@ import java.util.Objects;
  * A file_upload_theme.
  */
 @Entity
-@Table(name = "file_upload_theme")
+@Table(name = "cks_file_upload_theme")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class FileUploadTheme implements Serializable {
 
@@ -51,12 +51,10 @@ public class FileUploadTheme implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof FileUploadTheme)) {
             return false;
         }
-
-        FileUploadTheme fileUploadAlbum = (FileUploadTheme) o;
-        return (directory != null ? Objects.equals(directory, fileUploadAlbum.getDirectory()) : fileUploadAlbum.getDirectory() != null);
+        return Objects.equals(directory, ((FileUploadTheme) o).directory);
     }
 
     @Override
@@ -67,7 +65,7 @@ public class FileUploadTheme implements Serializable {
     @Override
     public String toString() {
         return "BlogFileUpload{" +
-            "directory='" + directory + "'" +
+            "directory='" + directory + '\'' +
             "}";
     }
 }

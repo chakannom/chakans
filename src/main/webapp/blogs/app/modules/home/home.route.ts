@@ -1,14 +1,14 @@
 import { Route } from '@angular/router';
 
-import { HomeRouteAccessService } from '../../core';
-import { HomeComponent } from './home.component';
+import { HomeComponent } from './';
+import { HomeModuleAccessService } from '../../core';
 
 export const HOME_ROUTE: Route = {
-    path: '',
-    component: HomeComponent,
-    data: {
-        authorities: [],
-        pageTitle: 'home.title'
-    },
-    canActivate: [HomeRouteAccessService]
+  path: '',
+  component: HomeComponent,
+  data: {
+    authorities: [],
+    pageTitle: 'home.title'
+  },
+  canActivate: [HomeModuleAccessService]
 };

@@ -1,9 +1,9 @@
 {
-    "home": {
-        "title": "홈 - C.블로그",
-        "info": "지금 개발 중입니다.",
-        "button": {
-            "start_blog": "블로그 시작하기"
-        }
+  "home": {
+    "title": "홈 - C.블로그",
+    "info": "지금 개발 중입니다.",
+    "button": {
+      "start_blog": "블로그 시작하기"
     }
+  }
 }

@@ -1,12 +1,13 @@
 package com.chakans.portal.config;
 
-import com.chakans.core.config.thirdparty.minio.MinioClientHttpRequestInterceptor;
 import io.minio.MinioClient;
 import io.minio.errors.InvalidEndpointException;
 import io.minio.errors.InvalidPortException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+
+import com.chakans.core.config.thirdparty.minio.MinioClientHttpRequestInterceptor;
 
 @Configuration
 public class ClientConfiguration {

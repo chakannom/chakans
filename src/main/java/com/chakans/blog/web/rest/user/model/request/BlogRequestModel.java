@@ -19,14 +19,14 @@ public class BlogRequestModel {
     private String url;
 
     @Pattern(regexp = Constants.BLOG_CUSTOM_URL_REGEX)
-    @Size(min = 4, max = 253)
+    @Size(max = 253)
     private String customUrl;
 
     @Size(min = 2, max = 6)
     private String langKey;
 
     private String status;
-    
+
     private Design design = new Design();
 
     public Long getId() {
@@ -94,7 +94,7 @@ public class BlogRequestModel {
     }
 
     public class Design {
-        
+
         private Integer width;
 
         private Integer leftbarWidth;
@@ -170,5 +170,5 @@ public class BlogRequestModel {
             ", design=" + design +
             '}';
     }
-    
+
 }

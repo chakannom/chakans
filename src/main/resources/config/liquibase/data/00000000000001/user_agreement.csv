@@ -1,0 +1,7 @@
+user_id;agreement_name;agreed
+3;terms;true
+3;privacy;true
+3;promotionalEmails;false
+4;terms;true
+4;privacy;true
+4;promotionalEmails;true

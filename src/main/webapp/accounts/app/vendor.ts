@@ -1,46 +1,46 @@
 /* after changing this file run 'npm run webpack:build' */
 /* tslint:disable */
-import '../content/css/vendor.css';
+import '../content/scss/vendor.scss';
 
 // Imports all fontawesome core and solid icons
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-    faUser,
-    faSort,
-    faSortUp,
-    faSortDown,
-    faSync,
-    faEye,
-    faBan,
-    faTimes,
-    faArrowLeft,
-    faSave,
-    faPlus,
-    faPencilAlt,
-    faBars,
-    faThList,
-    faUserPlus,
-    faRoad,
-    faTachometerAlt,
-    faHeart,
-    faList,
-    faBell,
-    faBook,
-    faHdd,
-    faFlag,
-    faWrench,
-    faClock,
-    faCloud,
-    faSignOutAlt,
-    faSignInAlt,
-    faCalendarAlt,
-    faSearch,
-    faTrashAlt,
-    faAsterisk,
-    faTasks,
-    faHome,
-    faCheckCircle as fasCheckCircle
+  faUser,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faSync,
+  faEye,
+  faBan,
+  faTimes,
+  faArrowLeft,
+  faSave,
+  faPlus,
+  faPencilAlt,
+  faBars,
+  faThList,
+  faUserPlus,
+  faRoad,
+  faTachometerAlt,
+  faHeart,
+  faList,
+  faBell,
+  faBook,
+  faHdd,
+  faFlag,
+  faWrench,
+  faClock,
+  faCloud,
+  faSignOutAlt,
+  faSignInAlt,
+  faCalendarAlt,
+  faSearch,
+  faTrashAlt,
+  faAsterisk,
+  faTasks,
+  faHome,
+  faCheckCircle as fasCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle, faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 
@@ -81,5 +81,3 @@ library.add(faTrashAlt);
 library.add(faAsterisk);
 library.add(fasCheckCircle, farCheckCircle);
 library.add(farClock);
-
-// jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

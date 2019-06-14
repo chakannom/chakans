@@ -29,11 +29,11 @@ public class DrivePersonalTreeId implements Serializable {
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof DrivePersonalTreeId)) return false;
 
         DrivePersonalTreeId drivePersonalTreeId = (DrivePersonalTreeId) o;
         return Objects.equals(id, drivePersonalTreeId.getId())

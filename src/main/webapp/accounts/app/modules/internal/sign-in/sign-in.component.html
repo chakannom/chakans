@@ -1,5 +1,5 @@
-<div class="cks-sign-in-container">
-    <div class="cks-sign-in-card">
+<div class="sign-in-container">
+    <div class="sign-in-card">
         <div class="text-center mb-4">
             <div class="mb-4" alt="" width="72" height="72"></div>
             <h1 class="h1 mb-3 font-weight-normal">Chakans</h1>
@@ -8,16 +8,16 @@
         <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="sign-in.messages.error.authentication">
             <strong>Failed to sign in!</strong> Please check your credentials and try again.
         </div>
-        <form class="form" role="form" (ngSubmit)="signIn()">
+        <form class="form" role="form" (ngSubmit)="signIn()" [formGroup]="signInForm">
             <div class="form-group">
-                <input type="email" class="form-control" name="email" id="email" placeholder="{{'sign-in.form.email.placeholder' | translate}}" [(ngModel)]="email" email>
+                <input type="email" class="form-control" name="email" id="email" placeholder="{{'sign-in.form.email.placeholder' | translate}}" formControlName="email">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" id="password" placeholder="{{'sign-in.form.password.placeholder' | translate}}" [(ngModel)]="password" minlength="4" maxlength="50">
+                <input type="password" class="form-control" name="password" id="password" placeholder="{{'sign-in.form.password.placeholder' | translate}}" formControlName="password">
             </div>
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" name="rememberMe" id="rememberMe" [(ngModel)]="rememberMe" checked>
+                    <input type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
                     <span jhiTranslate="sign-in.form.rememberme">Remember me</span>
                 </label>
             </div>
@@ -32,15 +32,17 @@
         </div>
     </div>
     <p></p>
-    <div class="cks-sign-in-language-card">
-        <div ngbDropdown class="dropdown pointer" placement="top-left" *ngIf="languages">
-            <a class="dropdown-toggle" ngbDropdownToggle id="languagesFooterDropdown" *ngIf="languages.length > 1">
+    <div class="sign-in-language-card">
+        <div ngbDropdown class="dropdown pointer" placement="top-left" *ngIf="languages && languages.length > 1">
+            <a class="dropdown-toggle" ngbDropdownToggle id="languagesFooterDropdown">
                 <span>
-                    <fa-icon [icon]="'flag'"></fa-icon>
+                    <fa-layers [fixedWidth]="true">
+                        <fa-icon icon="flag"></fa-icon>
+                    </fa-layers>
                     <span jhiTranslate="global.menu.language">Language</span>
                 </span>
             </a>
-            <ul class="dropdown-menu" ngbDropdownMenu *ngIf="languages.length > 1">
+            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesFooterDropdown">
                 <li *ngFor="let language of languages">
                     <a class="dropdown-item" [ngClass]="{'active': updateLanguageActiveMenu(language)}"  (click)="changeLanguage(language);">{{language | findLanguageFromKey}}</a>
                 </li>

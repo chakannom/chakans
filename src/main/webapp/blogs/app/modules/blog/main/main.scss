@@ -1,0 +1,57 @@
+/* ==========================================================================
+Blog main styles
+========================================================================== */
+.blog-main {
+  position: relative;
+  padding: 0.625em 1.5625em 1.5625em 17.1875em;
+  > div {
+    max-width: 45em;
+    margin: auto;
+  }
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+.blog-main-header-title {
+  font-size: 1.125em;
+  padding: 0.4375em 0;
+  margin-bottom: 0.3125em;
+}
+.blog-main-header-panel {
+  background: #fff;
+  border: 0.0625em solid #c6cfd6;
+  margin-bottom: 1.25em;
+}
+.tabs {
+  cursor: initial;
+  @media screen and (min-width: 768px) {
+    .nav-item {
+      border-bottom: 2px solid transparent;
+    }
+    .nav-item.active {
+      border-bottom-color: #1b1e21;
+    }
+    .nav-link {
+      padding: 13px 13px 11px 13px;
+    }
+  }
+}
+.cks-list {
+  .list-group-item {
+    box-sizing: border-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #c6cfd6;
+    padding: 0.75rem 0.3rem 0.75rem 1.25rem;
+  }
+  .badge {
+    float: right;
+  }
+}

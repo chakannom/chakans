@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md cks-navbar" *ngIf="isNavbarViewed | async">
+<nav class="navbar navbar-dark navbar-expand-md bg-dark" *ngIf="isNavbarViewed | async">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
         <span jhiTranslate="global.title" class="navbar-title">C.Account</span> <span class="navbar-version">{{version}}</span>
@@ -9,9 +9,9 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
             <li *ngSwitchCase="false" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" routerLink="/signin" [queryParams]="{continue: continueUrl}" (click)="collapseNavbar()">
+                <a class="nav-link" (click)="signIn();collapseNavbar()">
                     <span>
-                        <fa-layers class="fa-fw">
+                        <fa-layers [fixedWidth]="true">
                             <fa-icon icon="sign-in-alt"></fa-icon>
                         </fa-layers>
                         <span jhiTranslate="global.menu.sign.in">Sign in</span>
@@ -19,9 +19,9 @@
                 </a>
             </li>
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="self-account-menu">
                     <span *ngIf="!getImageUrl()">
-                        <fa-layers class="fa-fw">
+                        <fa-layers [fixedWidth]="true">
                             <fa-icon icon="user"></fa-icon>
                         </fa-layers>
                         <span jhiTranslate="global.menu.account.main">
@@ -32,45 +32,45 @@
                         <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar">
                     </span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="my-menu">
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="self-account-menu">
                     <li>
-                        <a class="dropdown-item" routerLink="my/settings" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-layers class="fa-fw">
+                        <a class="dropdown-item" routerLink="self/settings" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-layers [fixedWidth]="true">
                                 <fa-icon icon="wrench"></fa-icon>
                             </fa-layers>
                             <span jhiTranslate="global.menu.account.settings">Settings</span>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" routerLink="my/password/change" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-layers class="fa-fw">
-                                <fa-icon [icon]="['far', 'clock']"></fa-icon>
+                        <a class="dropdown-item" routerLink="self/password/change" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-layers [fixedWidth]="true">
+                                <fa-icon icon="clock"></fa-icon>
                             </fa-layers>
                             <span jhiTranslate="global.menu.account.password">Password</span>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" (click)="logout()" id="logout">
-                            <fa-layers class="fa-fw">
+                        <a class="dropdown-item" (click)="signOut()" id="signOut">
+                            <fa-layers [fixedWidth]="true">
                                 <fa-icon icon="sign-out-alt"></fa-icon>
                             </fa-layers>
-                            <span jhiTranslate="global.menu.account.logout">Sign out</span>
+                            <span jhiTranslate="global.menu.account.sign.out">Sign out</span>
                         </a>
                     </li>
                 </ul>
             </li>
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" *ngIf="languages && languages.length > 1">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown" *ngIf="languages.length > 1">
+                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesNavBarDropdown">
                     <span>
-                        <fa-layers class="fa-fw">
+                        <fa-layers [fixedWidth]="true">
                             <fa-icon icon="flag"></fa-icon>
                         </fa-layers>
                         <span jhiTranslate="global.menu.language">Language</span>
                     </span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesNavBarDropdown">
                     <li *ngFor="let language of languages">
-                        <a class="dropdown-item" [jhiActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                        <a class="dropdown-item" [cksActiveMenu]="language" href="javascript:void(0);" (click)="changeLanguage(language);collapseNavbar();">{{language | findLanguageFromKey}}</a>
                     </li>
                 </ul>
             </li>

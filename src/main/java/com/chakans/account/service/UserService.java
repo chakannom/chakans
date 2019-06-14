@@ -3,15 +3,14 @@ package com.chakans.account.service;
 import com.chakans.account.domain.Authority;
 import com.chakans.account.domain.User;
 import com.chakans.account.repository.AuthorityRepository;
-import com.chakans.core.config.constants.Constants;
 import com.chakans.account.repository.UserRepository;
+import com.chakans.account.service.dto.UserDTO;
 import com.chakans.core.config.constants.AuthoritiesConstants;
+import com.chakans.core.config.constants.Constants;
 import com.chakans.core.security.SecurityUtils;
 import com.chakans.core.util.RandomUtil;
-import com.chakans.account.service.dto.UserDTO;
+import com.chakans.core.web.rest.errors.*;
 
-import com.chakans.core.web.rest.errors.EmailAlreadyUsedException;
-import com.chakans.core.web.rest.errors.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -103,7 +102,6 @@ public class UserService {
                 throw new EmailAlreadyUsedException();
             }
         });
-
         User newUser = new User();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(RandomUtil.getRandomUUID(userRepository, "findOneByLogin"));
@@ -174,12 +172,12 @@ public class UserService {
     /**
      * Update basic information (first name, last name, email, language) for the current user.
      *
-     * @param firstName first name of user
-     * @param lastName last name of user
-     * @param email email id of userUserAgreement
-     * @param langKey language key
-     * @param imageUrl image URL of user
-     * @param promotionalEmails agree promotional emails of user
+     * @param firstName first name of user.
+     * @param lastName  last name of user.
+     * @param email     email id of user.
+     * @param langKey   language key.
+     * @param imageUrl  image URL of user.
+     * @param promotionalEmails agree promotional emails of user.
      */
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, boolean promotionalEmails) {
         SecurityUtils.getCurrentUserLogin()
@@ -190,7 +188,7 @@ public class UserService {
                 user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
-                user.getAgreements().put("promotional_emails", promotionalEmails);
+                user.getAgreements().put("promotionalEmails", promotionalEmails);
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
             });
@@ -199,8 +197,8 @@ public class UserService {
     /**
      * Update all information for a specific user, and return the modified user.
      *
-     * @param userDTO user to update
-     * @return updated user
+     * @param userDTO user to update.
+     * @return updated user.
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
@@ -281,7 +279,8 @@ public class UserService {
      */
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
-        userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
+        userRepository
+            .findAllByActivatedIsFalseAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
             .forEach(user -> {
                 log.debug("Deleting not activated user {}", user.getLogin());
                 userRepository.delete(user);
@@ -290,7 +289,8 @@ public class UserService {
     }
 
     /**
-     * @return a list of all the authorities
+     * Gets a list of all the authorities.
+     * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());

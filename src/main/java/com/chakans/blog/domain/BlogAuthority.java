@@ -16,7 +16,7 @@ import java.util.Objects;
  * An authority (a security role) used by Spring Security.
  */
 @Entity
-@Table(name = "blog_authority")
+@Table(name = "cks_blog_authority")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogAuthority implements Serializable {
 
@@ -41,12 +41,10 @@ public class BlogAuthority implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogAuthority)) {
             return false;
         }
-
-        BlogAuthority blogAuthority = (BlogAuthority) o;
-        return Objects.equals(name, blogAuthority.getName());
+        return Objects.equals(name, ((BlogAuthority) o).name);
     }
 
     @Override
@@ -58,6 +56,6 @@ public class BlogAuthority implements Serializable {
     public String toString() {
         return "BlogAuthority{" +
             "name='" + name + '\'' +
-            '}';
+            "}";
     }
 }

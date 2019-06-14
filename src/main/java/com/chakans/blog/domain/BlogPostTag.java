@@ -20,7 +20,7 @@ import com.chakans.blog.domain.id.BlogPostTagId;
  */
 @Entity
 @IdClass(BlogPostTagId.class)
-@Table(name = "blog_post_tag")
+@Table(name = "cks_blog_post_tag")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogPostTag implements Serializable {
 
@@ -66,7 +66,7 @@ public class BlogPostTag implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BlogPostTag)) return false;
 
         BlogPostTag blogPostTag = (BlogPostTag) o;
         return Objects.equals(postId, blogPostTag.getPostId())
@@ -86,6 +86,6 @@ public class BlogPostTag implements Serializable {
             "postId=" + postId +
             ", blogId=" + blogId +
             ", name='" + name + '\'' +
-            '}';
+            "}";
     }
 }

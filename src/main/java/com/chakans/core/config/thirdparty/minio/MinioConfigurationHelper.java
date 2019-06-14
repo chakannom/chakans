@@ -16,20 +16,31 @@
 
 package com.chakans.core.config.thirdparty.minio;
 
-import com.chakans.core.tools.RunProcess;
-import io.minio.MinioClient;
-import io.minio.errors.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.xmlpull.v1.XmlPullParserException;
-
-import javax.transaction.SystemException;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xmlpull.v1.XmlPullParserException;
+
+import com.chakans.core.config.thirdparty.docker.DockerHelper;
+import com.github.dockerjava.api.exception.DockerClientException;
+
+import io.minio.MinioClient;
+import io.minio.errors.ErrorResponseException;
+import io.minio.errors.InsufficientDataException;
+import io.minio.errors.InternalException;
+import io.minio.errors.InvalidBucketNameException;
+import io.minio.errors.InvalidEndpointException;
+import io.minio.errors.InvalidPortException;
+import io.minio.errors.NoResponseException;
+import io.minio.errors.RegionConflictException;
 
 /**
  * Utility class to configure Minio in development.
@@ -41,53 +52,40 @@ public class MinioConfigurationHelper {
 
     private static final Logger log = LoggerFactory.getLogger(MinioConfigurationHelper.class);
 
-    public static RunProcess createServer(Map<String, String> buckets) {
-        return createServer("http://localhost:9000/", "storage1", "storage1", false, buckets);
-    }
-
-    public static RunProcess createServer(String endPoint, String accessKey, String secretKey, boolean secure, Map<String, String> buckets) {
-        try {
-            log.debug("Starting Minio storage server");
-            String workingDirectory =  Paths.get(System.getProperty("user.dir"), "thirdparty/minio").toString();
-            String minioCommend = getCommend(workingDirectory);
-            String configDirectory = Paths.get(workingDirectory, "config").toString();
-            String dataDirectory = Paths.get(System.getProperty("user.dir"), "build/minio").toString();
-            RunProcess minioProcess = new RunProcess(minioCommend);
-            minioProcess.run(false, "server", "--config-dir", configDirectory, dataDirectory);
-            minioProcess.getRunningProcess().waitFor(5, TimeUnit.SECONDS);
-            log.debug("Config dir: " + configDirectory);
-            log.debug("Data dir: " + dataDirectory);
-            log.debug("Started Minio storage server");
+    private static final String imageName = "minio/minio";
+    
+    private static final String tag = "RELEASE.2019-06-13T01-41-13Z";
+    
+    private static final String containerName = "dev-minio";
+    
+    private static final Integer hostPort = 9000;
+    
+    public static boolean createServer(String endPoint, String accessKey, String secretKey, boolean secure, Map<String, String> buckets) {
+    	try {
+    		log.debug("Starting Minio's docker container");
+    		DockerHelper dockerHelper = new DockerHelper(imageName, tag);
+    		if (!dockerHelper.isExistedImage()) {
+    			dockerHelper.pullImage();
+    		}
+    		if (!dockerHelper.isExistedRunningContainer(containerName)) {
+    			List<String> environments = Arrays.asList("MINIO_ACCESS_KEY=" + accessKey, "MINIO_SECRET_KEY=" + secretKey, "MINIO_WORM=on");
+    			Map<String, String> volumes = new HashMap<>();
+    			volumes.put(Paths.get(System.getProperty("user.dir"), "build/minio").toString(), "/data");
+    			Map<Integer, Integer> ports = new HashMap<>();
+    			ports.put(hostPort, 9000);
+    			List<String> commands = Arrays.asList("server", "/data");
+    			dockerHelper.runContainer(environments, volumes, ports, containerName, commands);
+    		}
+    		dockerHelper.waitStarted(containerName);
+    		log.debug("Started Minio's docker container");
             if (buckets != null && buckets.size() > 0) {
                 createBuckets(endPoint, accessKey, secretKey, secure, buckets);
             }
-            return minioProcess;
-        } catch (SystemException e) {
-            throw new RuntimeException("It can not run minio storage server under your operation system", e);
-        }  catch (InterruptedException e) {
-            throw new RuntimeException("The minio's thread is interrupted", e);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to create minio server", e);
-        }
-    }
-
-    private static String getCommend(String workingDirectory) throws SystemException {
-        String osFolderName;
-        String minioexe;
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.indexOf("win") >= 0) {
-            osFolderName = "windows";
-            minioexe = "minio.exe";
-        } else if (osName.indexOf("nix") >= 0 || osName.indexOf("nux") >= 0) {
-            osFolderName = "linux";
-            minioexe = "minio";
-        } else if (osName.indexOf("mac") >= 0) {
-            osFolderName = "mac";
-            minioexe = "minio";
-        } else {
-            throw new SystemException(osName);
-        }
-        return Paths.get(workingDirectory, osFolderName, minioexe).toString();
+		} catch (DockerClientException e) {
+			log.debug("Failed to start Minio's docker container");
+			return false;
+		}
+		return true;
     }
 
     public static void createBuckets(String endPoint, String accessKey, String secretKey, boolean secure, Map<String, String> buckets) {
@@ -102,9 +100,9 @@ public class MinioConfigurationHelper {
                 }
             }
         } catch (InvalidEndpointException | InvalidPortException | InvalidKeyException | NoSuchAlgorithmException
-        		| NoResponseException | XmlPullParserException | InsufficientDataException | RegionConflictException
-        		| InvalidBucketNameException | ErrorResponseException | InternalException | IOException e) {
-        	log.debug(e.getMessage());
+                | NoResponseException | XmlPullParserException | InsufficientDataException | RegionConflictException
+                | InvalidBucketNameException | ErrorResponseException | InternalException | IOException e) {
+            log.debug(e.getMessage());
         }
     }
 }

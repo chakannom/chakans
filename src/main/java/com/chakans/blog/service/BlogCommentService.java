@@ -30,15 +30,15 @@ import java.util.Optional;
 public class BlogCommentService {
 
     private final Logger log = LoggerFactory.getLogger(BlogCommentService.class);
-    
+
     private final BlogCommentRepository blogCommentRepository;
-    
+
     private final BlogUserRepository blogUserRepository;
 
     private final BlogPageRepository blogPageRepository;
 
     private final BlogPostRepository blogPostRepository;
-    
+
     public BlogCommentService(BlogCommentRepository blogCommentRepository, BlogUserRepository blogUserRepository,
                               BlogPageRepository blogPageRepository, BlogPostRepository blogPostRepository) {
         this.blogCommentRepository = blogCommentRepository;
@@ -82,7 +82,7 @@ public class BlogCommentService {
             .map(blogComment -> {
                 BlogComment parentBlogComment = null;
                 if (blogComment.getParentId() != null) {
-                    parentBlogComment = blogCommentRepository.findById(blogComment.getParentId()).get();
+                    parentBlogComment = blogCommentRepository.findById(blogComment.getParentId()).orElse(null);
                 }
                 Object blogObject;
                 if (blogComment.getObjectType() == BlogEnumsConstants.COMMENT_OBJECT_TYPE.PAGE) {

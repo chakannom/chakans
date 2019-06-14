@@ -1,45 +1,45 @@
-<div class="blog-editor-header">
-    <div class="blog-editor-nav-info">
-        <span>My Blog</span>
-        <span>|</span>
-        <span jhiTranslate="blog.sidebar.sub-menu.manage.pages" *ngIf="editorType === 'page'">Posts</span>
-        <span jhiTranslate="blog.sidebar.sub-menu.manage.posts" *ngIf="editorType === 'post'">Posts</span>
+<div class="blog-editor-main">
+    <div class="blog-editor-header">
+        <div class="blog-editor-nav-info">
+            <span>My Blog</span>
+            <span>|</span>
+            <span jhiTranslate="blog.sidebar.sub-menu.manage.pages" *ngIf="editorType === 'page'">Posts</span>
+            <span jhiTranslate="blog.sidebar.sub-menu.manage.posts" *ngIf="editorType === 'post'">Posts</span>
+        </div>
+        <div class="blog-editor-header-control" *ngIf="content" [ngSwitch]="content.status">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="update()" *ngSwitchCase="'PUBLISHED'">
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon icon="sync-alt"></fa-icon>
+                </fa-layers>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="moveToDraft()" *ngSwitchCase="'PUBLISHED'">
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon icon="level-down-alt"></fa-icon>
+                </fa-layers>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="publish()" *ngSwitchCase="'DRAFT'">
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon [icon]="['far','newspaper']"></fa-icon>
+                </fa-layers>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="save()" *ngSwitchCase="'DRAFT'">
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon icon="save"></fa-icon>
+                </fa-layers>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="preview()">
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon icon="eye"></fa-icon>
+                </fa-layers>
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="close()">
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon icon="times"></fa-icon>
+                </fa-layers>
+            </button>
+        </div>
     </div>
-    <div class="blog-editor-header-control" *ngIf="content" [ngSwitch]="content.status">
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="update()" *ngSwitchCase="'PUBLISHED'">
-            <fa-layers [fixedWidth]="true">
-                <fa-icon [icon]="'sync-alt'"></fa-icon>
-            </fa-layers>
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="moveToDraft()" *ngSwitchCase="'PUBLISHED'">
-            <fa-layers [fixedWidth]="true">
-                <fa-icon [icon]="'level-down-alt'"></fa-icon>
-            </fa-layers>
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="publish()" *ngSwitchCase="'DRAFT'">
-            <fa-layers [fixedWidth]="true">
-                <fa-icon [icon]="['far','newspaper']"></fa-icon>
-            </fa-layers>
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="save()" *ngSwitchCase="'DRAFT'">
-            <fa-layers [fixedWidth]="true">
-                <fa-icon [icon]="'save'"></fa-icon>
-            </fa-layers>
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="preview()">
-            <fa-layers [fixedWidth]="true">
-                <fa-icon [icon]="'eye'"></fa-icon>
-            </fa-layers>
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="close()">
-            <fa-layers [fixedWidth]="true">
-                <fa-icon [icon]="'times'"></fa-icon>
-            </fa-layers>
-        </button>
-    </div>
-</div>
-<div class="blog-main-container">
-    <div class="blog-editor-main" *ngIf="content">
+    <div class="blog-editor-content" *ngIf="content">
         <div class="blog-editor-title input-group input-group-lg">
             <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Title" [(ngModel)]="content.title">
         </div>
@@ -48,93 +48,91 @@
         </div>
     </div>
 </div>
-<div class="blog-editor-sidebar-container">
-    <div class="blog-editor-sidebar" *ngIf="content">
-        <div class="blog-editor-sidebar-header">
-            <span *ngIf="editorType === 'page'">Setting page</span>
-            <span *ngIf="editorType === 'post'">Setting post</span>
-        </div>
-        <div class="blog-editor-sidebar-content">
-            <ngb-accordion class="blog-editor-settings" [closeOthers]="true">
-                <ngb-panel *ngIf="editorType === 'post'">
-                    <ng-template ngbPanelTitle>
-                        <span>
-                            <fa-layers [fixedWidth]="true">
-                                <fa-icon [icon]="'tag'"></fa-icon>
-                            </fa-layers>
-                            <span>Tag</span>
-                        </span>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                        <div class="input-tags mb-2">
-                            <span class="item">
-                                <span class="tag">Tag1</span>
-                                <button type="button" class="btn btn-remove">
-                                    <fa-layers [fixedWidth]="true">
-                                        <fa-icon [icon]="'times'"></fa-icon>
-                                    </fa-layers>
-                                </button>
-                            </span>
-                            <span class="item">
-                                <span class="tag">Tag1tetsasdsadasdadsatset</span>
-                                <button type="button" class="btn btn-remove">
-                                    <fa-layers [fixedWidth]="true">
-                                        <fa-icon [icon]="'times'"></fa-icon>
-                                    </fa-layers>
-                                </button>
-                            </span>
-                        </div>
-                        <input type="text" class="tag-inputbox" (focus)="expandSuggestionTags($event)" (focusout)="collapseSuggestionTags($event)">
-                        <ul class="suggestion-tags">
-                            <li class="tag" (click)="addTag($event)">Tag2</li>
-                            <li class="tag">Tag3</li>
-                            <li class="tag">Tag4</li>
-                            <li class="tag">Tag5</li>
-                            <li class="tag">Tag6</li>
-                            <li class="tag">Tag7-long-Tag7-long-Tag7-long-Tag7-long</li>
-                        </ul>
-                    </ng-template>
-                </ngb-panel>
-                <ngb-panel *ngIf="editorType === 'post'">
-                    <ng-template ngbPanelTitle>
-                        <span>
-                            <fa-layers [fixedWidth]="true">
-                                <fa-icon [icon]="['far', 'clock']"></fa-icon>
-                            </fa-layers>
-                            <span>Opening Schedule</span>
-                        </span>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                        <div></div>
-                        <ngb-datepicker class="opening-datepicker" [(ngModel)]="openingDate"></ngb-datepicker>
-                        <ngb-timepicker class="opening-timepicker" [(ngModel)]="openingTime" [spinners]="false" [meridian]="true"></ngb-timepicker>
-                    </ng-template>
-                </ngb-panel>
-                <ngb-panel>
-                    <ng-template ngbPanelTitle>
-                        <span>
-                            <fa-layers [fixedWidth]="true">
-                                <fa-icon [icon]="'cog'"></fa-icon>
-                            </fa-layers>
-                            <span>More Options</span>
-                        </span>
-                    </ng-template>
-                    <ng-template ngbPanelContent>
-                        <fieldset class="more-option">
-                            <legend class="more-option-legend">Comment</legend>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="permitComment" id="commentOn" [value]="true" [(ngModel)]="content.permitComment">
-                                <label class="form-check-label" for="commentOn">Permit</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="permitComment" id="commentOff" [value]="false" [(ngModel)]="content.permitComment">
-                                <label class="form-check-label" for="commentOff">No permit</label>
-                            </div>
-                        </fieldset>
-                    </ng-template>
-                </ngb-panel>
-            </ngb-accordion>
-        </div>
-        <div class="blog-editor-sidebar-footer"></div>
+<div class="blog-editor-sidebar" *ngIf="content">
+    <div class="blog-editor-sidebar-header">
+        <span *ngIf="editorType === 'page'">Setting page</span>
+        <span *ngIf="editorType === 'post'">Setting post</span>
     </div>
+    <div class="blog-editor-sidebar-content">
+        <ngb-accordion class="blog-editor-settings" [closeOthers]="true">
+            <ngb-panel *ngIf="editorType === 'post'">
+                <ng-template ngbPanelTitle>
+                    <span>
+                        <fa-layers [fixedWidth]="true">
+                            <fa-icon icon="tag"></fa-icon>
+                        </fa-layers>
+                        <span>Tag</span>
+                    </span>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div class="input-tags mb-2">
+                        <span class="item">
+                            <span class="tag">Tag1</span>
+                            <button type="button" class="btn btn-remove">
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon icon="times"></fa-icon>
+                                </fa-layers>
+                            </button>
+                        </span>
+                        <span class="item">
+                            <span class="tag">Tag1tetsasdsadasdadsatset</span>
+                            <button type="button" class="btn btn-remove">
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon icon="times"></fa-icon>
+                                </fa-layers>
+                            </button>
+                        </span>
+                    </div>
+                    <input type="text" class="tag-inputbox" (focus)="expandSuggestionTags($event)" (focusout)="collapseSuggestionTags($event)">
+                    <ul class="suggestion-tags">
+                        <li class="tag" (click)="addTag($event)">Tag2</li>
+                        <li class="tag">Tag3</li>
+                        <li class="tag">Tag4</li>
+                        <li class="tag">Tag5</li>
+                        <li class="tag">Tag6</li>
+                        <li class="tag">Tag7-long-Tag7-long-Tag7-long-Tag7-long</li>
+                    </ul>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel *ngIf="editorType === 'post'">
+                <ng-template ngbPanelTitle>
+                    <span>
+                        <fa-layers [fixedWidth]="true">
+                            <fa-icon [icon]="['far', 'clock']"></fa-icon>
+                        </fa-layers>
+                        <span>Opening Schedule</span>
+                    </span>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <div></div>
+                    <ngb-datepicker class="opening-datepicker" [(ngModel)]="openingDate"></ngb-datepicker>
+                    <ngb-timepicker class="opening-timepicker" [(ngModel)]="openingTime" [spinners]="false" [meridian]="true"></ngb-timepicker>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel>
+                <ng-template ngbPanelTitle>
+                    <span>
+                        <fa-layers [fixedWidth]="true">
+                            <fa-icon icon="cog"></fa-icon>
+                        </fa-layers>
+                        <span>More Options</span>
+                    </span>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                    <fieldset class="more-option">
+                        <legend class="more-option-legend">Comment</legend>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="permitComment" id="commentOn" [value]="true" [(ngModel)]="content.permitComment">
+                            <label class="form-check-label" for="commentOn">Permit</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="permitComment" id="commentOff" [value]="false" [(ngModel)]="content.permitComment">
+                            <label class="form-check-label" for="commentOff">No permit</label>
+                        </div>
+                    </fieldset>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+    <div class="blog-editor-sidebar-footer"></div>
 </div>

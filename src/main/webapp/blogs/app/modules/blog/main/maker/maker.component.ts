@@ -1,129 +1,129 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
 import { Subscription } from 'rxjs';
 import { BlogSidebarService } from '../../sidebar/sidebar.service';
-import { ITheme, ThemeService, LanguageHelper, BlogService, IBlog, MyBlog } from '../../../../core';
+import { ITheme, ThemeService, LanguageHelper, IBlog, BlogService } from '../../../../core';
 import { BLANK_IMAGE, createImgproxySignatureUrl } from '../../../../shared';
 
 @Component({
-    selector: 'cks-blogs-blog-maker',
-    templateUrl: './maker.component.html',
-    styleUrls: ['../main.css', './maker.css']
+  selector: 'cks-blog-maker',
+  templateUrl: './maker.component.html',
+  styleUrls: ['../main.scss', './maker.scss']
 })
 export class BlogMakerComponent implements OnInit, OnDestroy {
-    langKey: string;
-    themes: ITheme[];
-    currTheme: ITheme;
-    isEnteringSubdomain: boolean;
-    isAvailableSubdomain: boolean;
-    blog: any;
-    subscribes: Subscription[] = [];
+  langKey: string;
+  themes: ITheme[];
+  currTheme: ITheme;
+  isEnteringSubdomain: boolean;
+  isAvailableSubdomain: boolean;
+  subscriptions: Subscription[];
+  makerForm = this.fb.group({
+    title: ['', [Validators.minLength(1), Validators.maxLength(100), Validators.required]],
+    subDomain: ['', [Validators.maxLength(100), Validators.pattern('^([A-Za-z0-9][A-Za-z0-9-]*)*[A-Za-z0-9]$')]]
+  });
 
-    constructor(
-        private languageHelper: LanguageHelper,
-        private sidebarService: BlogSidebarService,
-        private themeService: ThemeService,
-        private blogService: BlogService,
-        private myBlog: MyBlog,
-        private alertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private router: Router
-    ) {
-        this.sidebarService.setSidebarViewed(false);
-    }
+  constructor(
+    private languageHelper: LanguageHelper,
+    private sidebarService: BlogSidebarService,
+    private themeService: ThemeService,
+    private blogService: BlogService,
+    private alertService: JhiAlertService,
+    private eventManager: JhiEventManager,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.subscriptions = [];
+    this.sidebarService.setSidebarViewed(false);
+  }
 
-    ngOnInit() {
-        this.isEnteringSubdomain = false;
-        this.isAvailableSubdomain = false;
-        this.blog = {};
-        const languageSub = this.languageHelper.language.subscribe((langKey: string) => {
-            this.langKey = langKey;
-            this.themeService
-                .getThemes(this.langKey)
-                .subscribe(
-                    (res: HttpResponse<ITheme[]>) => this.onSuccessGetThemes(res.body, res.headers),
-                    (res: HttpResponse<any>) => this.onError(res.body)
-                );
-        });
-        this.subscribes.push(languageSub);
-    }
+  ngOnInit() {
+    this.isEnteringSubdomain = false;
+    this.isAvailableSubdomain = false;
+    const languageSubscription = this.languageHelper.language.subscribe((langKey: string) => {
+      this.langKey = langKey;
+      this.themeService
+        .getThemes(this.langKey)
+        .subscribe(
+          (res: HttpResponse<ITheme[]>) => this.onSuccessGetThemes(res.body, res.headers),
+          (res: HttpResponse<any>) => this.onError(res.body)
+        );
+    });
+    this.subscriptions.push(languageSubscription);
+  }
 
-    ngOnDestroy() {
-        this.sidebarService.setSidebarViewed(true);
-        this.subscribes.forEach(subscribe => subscribe.unsubscribe());
-        this.subscribes.splice(0, this.subscribes.length);
-    }
+  ngOnDestroy() {
+    this.sidebarService.setSidebarViewed(true);
+    this.subscriptions.filter(subscription => subscription).forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.splice(0, this.subscriptions.length);
+  }
 
-    enterSubdomain() {
-        this.isEnteringSubdomain = true;
-        this.isAvailableSubdomain = false;
-    }
+  enterSubdomain() {
+    this.isEnteringSubdomain = true;
+    this.isAvailableSubdomain = false;
+  }
 
-    checkSubdomain(subdomain) {
-        this.isEnteringSubdomain = false;
-        if (subdomain && subdomain.length > 1) {
-            this.blogService.checkSubdomainAvailability(subdomain).subscribe(res => {
-                this.isAvailableSubdomain = res.body.availability;
-            });
-        }
+  checkSubdomain(subdomain) {
+    this.isEnteringSubdomain = false;
+    if (subdomain && subdomain.length > 1) {
+      this.blogService.checkSubdomainAvailability(subdomain).subscribe(res => {
+        this.isAvailableSubdomain = res.body.availability;
+      });
     }
+  }
 
-    getThumbnailImageUrl(imageUrl) {
-        if (imageUrl) {
-            return createImgproxySignatureUrl('fit', 143, 90, 'ce', 0, imageUrl, 'png');
-        }
-        return BLANK_IMAGE;
+  getThumbnailImageUrl(imageUrl) {
+    if (imageUrl) {
+      return createImgproxySignatureUrl('fit', 143, 90, 'ce', 0, imageUrl, 'png');
     }
+    return BLANK_IMAGE;
+  }
 
-    previewTheme(themeId) {
-        this.themeService
-            .getTheme(themeId, this.langKey)
-            .subscribe(
-                (res: HttpResponse<ITheme>) => this.onSuccessGetTheme(res.body, res.headers),
-                (res: HttpResponse<any>) => this.onError(res.body)
-            );
-    }
+  previewTheme(themeId) {
+    this.currTheme = this.themes.find(theme => theme.id === themeId);
+  }
 
-    getPreviewImageUrl(imageUrl) {
-        if (imageUrl) {
-            return createImgproxySignatureUrl('fit', 450, 283, 'ce', 0, imageUrl, 'png');
-        }
-        return BLANK_IMAGE;
+  getPreviewImageUrl(imageUrl) {
+    if (imageUrl) {
+      return createImgproxySignatureUrl('fit', 450, 283, 'ce', 0, imageUrl, 'png');
     }
+    return BLANK_IMAGE;
+  }
 
-    create() {
-        this.blogService
-            .createBlog(this.blog)
-            .subscribe(
-                (res: HttpResponse<IBlog>) => this.onSuccessCreateBlog(res.body, res.headers),
-                (res: HttpResponse<any>) => this.onError(res.body)
-            );
-    }
+  create() {
+    const blog = {
+      themeId: this.currTheme.id,
+      title: this.makerForm.get(['title']).value,
+      subdomain: this.makerForm.get(['subDomain']).value
+    };
+    this.blogService
+      .createBlog(blog)
+      .subscribe(
+        (res: HttpResponse<IBlog>) => this.onSuccessCreateBlog(res.body, res.headers),
+        (res: HttpResponse<any>) => this.onError(res.body)
+      );
+  }
 
-    private onSuccessGetThemes(data, headers) {
-        this.themes = data;
-        if (this.themes.length > 0) {
-            this.previewTheme(this.themes[0].id);
-        }
+  private onSuccessGetThemes(data, headers) {
+    this.themes = data;
+    if (this.themes.length > 0) {
+      this.previewTheme(this.themes[0].id);
     }
+  }
 
-    private onSuccessGetTheme(data, headers) {
-        this.currTheme = data;
-        this.blog.themeId = this.currTheme.id;
-    }
+  private onSuccessCreateBlog(data, headers) {
+    this.blogService.list(true).then(blogs => {
+      this.eventManager.broadcast({
+        name: 'blogsChange',
+        content: 'Sending Blogs Change'
+      });
+      this.router.navigate(['/blog.cb'], { queryParams: { blogId: blogs[blogs.length - 1].id }, fragment: 'posts/published' });
+    });
+  }
 
-    private onSuccessCreateBlog(data, headers) {
-        this.myBlog.push(data);
-        this.eventManager.broadcast({
-            name: 'myBlogsChange',
-            content: 'Sending My Blogs Change'
-        });
-        this.router.navigate(['/blog.cb'], { queryParams: { blogId: data.id }, fragment: 'posts/published' });
-    }
-
-    private onError(error) {
-        this.alertService.error(error.error, error.message, null);
-    }
+  private onError(error) {
+    this.alertService.error(error.error, error.message, null);
+  }
 }

@@ -16,7 +16,7 @@ import java.util.Objects;
  * A file_upload_album.
  */
 @Entity
-@Table(name = "file_upload_album")
+@Table(name = "cks_file_upload_album")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class FileUploadAlbum implements Serializable {
 
@@ -51,12 +51,10 @@ public class FileUploadAlbum implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof FileUploadAlbum)) {
             return false;
         }
-
-        FileUploadAlbum fileUploadAlbum = (FileUploadAlbum) o;
-        return (directory != null ? Objects.equals(directory, fileUploadAlbum.getDirectory()) : fileUploadAlbum.getDirectory() != null);
+        return Objects.equals(directory, ((FileUploadAlbum) o).directory);
     }
 
     @Override
@@ -67,7 +65,7 @@ public class FileUploadAlbum implements Serializable {
     @Override
     public String toString() {
         return "BlogFileUpload{" +
-            "directory='" + directory + "'" +
+            "directory='" + directory + '\'' +
             "}";
     }
 }

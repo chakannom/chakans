@@ -1,21 +1,21 @@
 {
-    "sign-in": {
-        "title": "Sign in",
-        "form": {
-            "email": "Email",
-            "email.placeholder": "Your email",
-            "password": "Password",
-            "password.placeholder": "Your password",
-            "rememberme": "Remember me",
-            "button": "Sign in"
-        },
-        "messages": {
-            "error": {
-                "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
-            }
-        },
-        "password" : {
-            "forgot": "Forgot password?"
-        }
+  "sign-in": {
+    "title": "Sign in",
+    "form": {
+      "email": "Email",
+      "email.placeholder": "Your email",
+      "password": "Password",
+      "password.placeholder": "Your password",
+      "rememberme": "Remember me",
+      "button": "Sign in"
+    },
+    "messages": {
+      "error": {
+        "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again."
+      }
+    },
+    "password": {
+      "forgot": "Forgot password?"
     }
+  }
 }

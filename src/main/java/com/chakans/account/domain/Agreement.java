@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * An agreement.
  */
 @Entity
-@Table(name = "agreement")
+@Table(name = "cks_agreement")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Agreement implements Serializable {
 
@@ -54,12 +54,10 @@ public class Agreement implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Agreement)) {
             return false;
         }
-
-        Agreement agreement = (Agreement) o;
-        return (name != null ? Objects.equals(name, agreement.getName()) : agreement.getName() != null);
+        return Objects.equals(name, ((Agreement) o).name);
     }
 
     @Override

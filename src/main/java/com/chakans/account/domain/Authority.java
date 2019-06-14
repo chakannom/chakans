@@ -15,7 +15,7 @@ import java.util.Objects;
  * An authority (a security role) used by Spring Security.
  */
 @Entity
-@Table(name = "authority")
+@Table(name = "cks_authority")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authority implements Serializable {
 
@@ -40,13 +40,10 @@ public class Authority implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Authority)) {
             return false;
         }
-
-        Authority authority = (Authority) o;
-
-        return (name != null ? Objects.equals(name, authority.getName()) : authority.getName() == null);
+        return Objects.equals(name, ((Authority) o).name);
     }
 
     @Override
@@ -57,7 +54,7 @@ public class Authority implements Serializable {
     @Override
     public String toString() {
         return "Authority{" +
-            "name='" + name + "'" +
+            "name='" + name + '\'' +
             "}";
     }
 }

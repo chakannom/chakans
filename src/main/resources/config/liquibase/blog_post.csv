@@ -1,6 +1,0 @@
-id;blog_id;title;content;post_name;opened_date;viewed_count;comment_count;permit_comment;status;created_by;created_date;modified_by;modified_date
-1;1;POST_TITLE1;POST_CONTENT1;post_name1.ckb;2018-12-12T13:00:00;0;2;false;2;system;2018-12-12T13:00:00;system;2018-12-12T13:00:00
-2;1;POST_TITLE2;POST_CONTENT2;post_name2.ckb;2019-01-14T13:00:00;0;0;false;1;system;2019-01-14T13:00:00;system;2019-01-14T13:00:00
-3;1;POST_TITLE3;POST_CONTENT3;post_name3.ckb;2018-12-12T13:00:00;0;0;false;2;system;2018-12-12T13:00:00;system;2018-12-12T13:00:00
-4;1;POST_TITLE4;POST_CONTENT4;post_name4.ckb;2018-12-12T13:00:00;0;0;false;3;system;2018-12-12T13:00:00;system;2018-12-12T13:00:00
-5;1;POST_TITLE5;POST_CONTENT5;post_name5.ckb;2018-12-12T13:00:00;0;0;false;0;system;2018-12-12T13:00:00;system;2018-12-12T13:00:00

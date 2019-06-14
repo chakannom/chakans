@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.List;
 
 /**
- * Spring Data JPA repository for the FileUploadTheme entity.
+ * Spring Data JPA repository for the {@link FileUploadTheme} entity.
  */
 public interface FileUploadThemeRepository extends JpaRepository<FileUploadTheme, String> {
 

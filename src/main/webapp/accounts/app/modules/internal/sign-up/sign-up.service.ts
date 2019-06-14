@@ -7,10 +7,10 @@ import { HEADER_ACCEPT_ACCOUNT_ANONYMOUS } from '../../../shared/constants/http.
 
 @Injectable({ providedIn: 'root' })
 export class SignUpService {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    save(account: any): Observable<any> {
-        const headers = new HttpHeaders().set('Accept', HEADER_ACCEPT_ACCOUNT_ANONYMOUS);
-        return this.http.post(SERVER_API_URL + 'apis/register', account, { headers: headers });
-    }
+  save(account: any): Observable<any> {
+    const headerOptions = new HttpHeaders().set('Accept', HEADER_ACCEPT_ACCOUNT_ANONYMOUS);
+    return this.http.post(SERVER_API_URL + 'apis/register', account, { headers: headerOptions });
+  }
 }

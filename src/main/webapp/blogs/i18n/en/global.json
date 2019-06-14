@@ -1,49 +1,54 @@
 {
-    "global": {
-        "title": "C.Blog",
-        "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
-        "menu": {
-            "sign": {
-                "in": "Sign in",
-                "out": "Sign out"
-            },
-            "account": {
-                "main": "Account",
-                "settings": "Settings",
-                "login": "Sign in",
-                "logout": "Sign out",
-                "password": "Password"
-            },
-            "language": "Language"
-        },
-        "messages": {
-            "validate": {
-                "email": {
-                    "required": "Your email is required.",
-                    "invalid": "Your email is invalid.",
-                    "minlength": "Your email is required to be at least 5 characters.",
-                    "maxlength": "Your email cannot be longer than 254 characters."
-                },
-                "nickname": {
-                    "required": "Your nickname is required.",
-                    "minlength": "Your nickname is required to be at least 3 characters.",
-                    "maxlength": "Your nickname cannot be longer than 100 characters."
-                }
-            }
-        },
-        "ribbon": {
-            "dev": "Development"
+  "global": {
+    "title": "C.Blog",
+    "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
+    "menu": {
+      "sign": {
+        "in": "Sign in",
+        "out": "Sign out",
+        "up": "Sign up"
+      },
+      "account": {
+        "main": "Account",
+        "settings": "Settings",
+        "password": "Password",
+        "sessions": "Sessions",
+        "sign": {
+          "in": "Sign in",
+          "out": "Sign out"
         }
+      },
+      "language": "Language"
     },
-    "error": {
-        "internalServerError": "Internal server error",
-        "server.not.reachable": "Server not reachable",
-        "url.not.found": "Not found",
-        "NotNull": "Field {{ fieldName }} cannot be empty!",
-        "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
-        "userexists": "Login name already used!",
-        "emailexists": "Email is already in use!",
-        "idexists": "A new {{ entityName }} cannot already have an ID"
+    "messages": {
+      "validate": {
+        "email": {
+          "required": "Your email is required.",
+          "invalid": "Your email is invalid.",
+          "minlength": "Your email is required to be at least 5 characters.",
+          "maxlength": "Your email cannot be longer than 254 characters."
+        },
+        "nickname": {
+          "required": "Your nickname is required.",
+          "minlength": "Your nickname is required to be at least 3 characters.",
+          "maxlength": "Your nickname cannot be longer than 100 characters."
+        }
+      }
     },
-    "footer": "© Chakans"
+    "ribbon": {
+      "dev": "Development"
+    }
+  },
+  "error": {
+    "internalServerError": "Internal server error",
+    "server.not.reachable": "Server not reachable",
+    "url.not.found": "Not found",
+    "NotNull": "Field {{ fieldName }} cannot be empty!",
+    "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+    "userexists": "Login name already used!",
+    "emailexists": "Email is already in use!",
+    "idexists": "A new {{ entityName }} cannot already have an ID",
+    "idnull": "Invalid ID"
+  },
+  "footer": "@ Chakans"
 }

@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 @Entity
 @IdClass(BlogUserId.class)
-@Table(name = "blog_user")
+@Table(name = "cks_blog_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogUser implements Serializable {
 
@@ -63,7 +63,7 @@ public class BlogUser implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BlogUser)) return false;
 
         BlogUser blogUser = (BlogUser) o;
         return Objects.equals(blogId, blogUser.getBlogId())
@@ -81,6 +81,6 @@ public class BlogUser implements Serializable {
             "blogId=" + blogId +
             ", userLogin='" + userLogin + '\'' +
             ", blogAuthority=" + blogAuthority +
-            '}';
+            "}";
     }
 }

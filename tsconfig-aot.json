@@ -1,32 +1,30 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "es2015",
-        "moduleResolution": "node",
-        "sourceMap": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "skipLibCheck": true,
-        "outDir": "build/www",
-        "lib": ["es7", "dom"],
-        "typeRoots": ["node_modules/@types"],
-        "baseUrl": "./",
-        "paths": {
-            "index/app/*": ["src/main/webapp/index/app/*"],
-            "accounts/app/*": ["src/main/webapp/accounts/app/*"],
-            "blogs/app/*": ["src/main/webapp/blogs/app/*"],
-            "drives/app/*": ["src/main/webapp/drives/app/*"],
-            "admin/app/*": ["src/main/webapp/admin/app/*"]
-        },
-        "importHelpers": true
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "skipLibCheck": true,
+    "outDir": "build/resources/main/static",
+    "lib": ["es7", "dom"],
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "index/app/*": ["src/main/webapp/index/app/*"],
+      "accounts/app/*": ["src/main/webapp/accounts/app/*"],
+      "admin/app/*": ["src/main/webapp/admin/app/*"]
     },
-    "angularCompilerOptions": {
-        "genDir": "build/aot",
-        "skipMetadataEmit": true,
-        "fullTemplateTypeCheck": true,
-        "preserveWhitespaces": true
-    }
+    "importHelpers": true
+  },
+  "angularCompilerOptions": {
+    "genDir": "build/resources/main/aot",
+    "skipMetadataEmit": true,
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true
+  }
 }

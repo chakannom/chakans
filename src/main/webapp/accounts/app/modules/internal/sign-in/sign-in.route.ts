@@ -1,14 +1,14 @@
 import { Route } from '@angular/router';
 
-import { ContinueParamValidatorService } from '../../../core';
+import { ContinueParamAccessService } from '../../../core';
 import { SignInComponent } from './sign-in.component';
 
-export const signInRoute: Route = {
-    path: 'signin',
-    component: SignInComponent,
-    data: {
-        authorities: [],
-        pageTitle: 'global.menu.sign.in'
-    },
-    canActivate: [ContinueParamValidatorService]
+export const SIGN_IN_ROUTE: Route = {
+  path: 'signin',
+  component: SignInComponent,
+  data: {
+    authorities: [],
+    pageTitle: 'global.menu.sign.in'
+  },
+  canActivate: [ContinueParamAccessService]
 };

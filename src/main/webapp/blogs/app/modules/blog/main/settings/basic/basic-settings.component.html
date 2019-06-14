@@ -1,130 +1,131 @@
-<div class="blog-main-header">
-    <div class="blog-main-header-title">
-        <span jhiTranslate="blog.sidebar.sub-menu.settings.basic">Basic</span>
+<div class="blog-main">
+    <div class="blog-main-header">
+        <div class="blog-main-header-title">
+            <span jhiTranslate="blog.sidebar.sub-menu.settings.basic">Basic</span>
+        </div>
     </div>
-</div>
-<div class="blog-main-content" *ngIf="blog">
-    <div class="card settings-border mb-3">
-        <form name="informationForm" role="form" (ngSubmit)="saveInformation()">
-            <div class="card-header settings-header">
-                <div class="settings-title" jhiTranslate="blog.settings.basic.blog_info.title">Blog Information</div>
-                <div class="settings-action">
-                    <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+    <div class="blog-main-content">
+        <div class="card settings-border mb-3">
+            <form name="informationForm" role="form" (ngSubmit)="saveInformation()" [formGroup]="informationForm">
+                <div class="card-header settings-header">
+                    <div class="settings-title" jhiTranslate="blog.settings.basic.blog_info.title">Blog Information</div>
+                    <div class="settings-action">
+                        <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                    </div>
                 </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label jhiTranslate="blog.settings.basic.blog_info.form.title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                               placeholder="{{'blog.settings.basic.blog_info.form.title.placeholder' | translate}}"
+                               formControlName="title" autocomplete="off" required>
+                    </div>
+                    <div class="form-group">
+                        <label jhiTranslate="blog.settings.basic.blog_info.form.description">Description</label>
+                        <textarea class="form-control" id="description" name="description"
+                                  placeholder="{{'blog.settings.basic.blog_info.form.description.placeholder' | translate}}"
+                                  formControlName="description"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card settings-border mb-3">
+            <div class="card-header settings-header">
+                <div class="settings-title" jhiTranslate="blog.settings.basic.blog_addr.title">Blog Address</div>
             </div>
             <div class="card-body">
                 <div class="form-group">
-                    <label jhiTranslate="blog.settings.basic.blog_info.form.title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" #title="ngModel"
-                           [(ngModel)]="blog.title" minlength=3 maxlength=100 required
-                           placeholder="{{'blog.settings.basic.blog_info.form.title.placeholder' | translate}}">
-                </div>
-                <div class="form-group">
-                    <label jhiTranslate="blog.settings.basic.blog_info.form.description">Description</label>
-                    <textarea class="form-control"
-                              id="description" name="description" #description="ngModel" [(ngModel)]="blog.description"
-                              placeholder="{{'blog.settings.basic.blog_info.form.description.placeholder' | translate}}"></textarea>
-                </div>
-            </div>
-        </form>
-    </div>
-    <div class="card settings-border mb-3">
-        <div class="card-header settings-header">
-            <div class="settings-title" jhiTranslate="blog.settings.basic.blog_addr.title">Blog Address</div>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label jhiTranslate="blog.settings.basic.blog_addr.form.address">Address</label>
-                <div *ngIf="!blog.customUrl && !isShowEditCustomUrl">
-                    <div class="display-area" *ngIf="!isShowEditBasicUrl">
-                        <div class="basic-url mb-1">{{blog.url}}</div>
-                        <div class="action">
-                            <a (click)="showEditCustomUrl(true)">
-                                <small class="text-muted">
-                                    +&nbsp;<span jhiTranslate="blog.settings.basic.blog_addr.labels.owned.url">Setting your owned URL</span>
-                                </small>
-                            </a>
-                            <button type="button" class="btn btn-primary btn-sm" (click)="showEditBasicUrl(true)"
-                                    jhiTranslate="blog.settings.form.buttons.modify">Modify</button>
+                    <label jhiTranslate="blog.settings.basic.blog_addr.form.address">Address</label>
+                    <div *ngIf="!customDomain && !isShowEditCustomUrl">
+                        <div class="display-area" *ngIf="!isShowEditBasicUrl">
+                            <div class="basic-url mb-1">{{subDomain + mainDomain}}</div>
+                            <div class="action">
+                                <a (click)="showEditCustomUrl(true)">
+                                    <small class="text-muted">
+                                        +&nbsp;<span jhiTranslate="blog.settings.basic.blog_addr.labels.owned.url">Setting your owned URL</span>
+                                    </small>
+                                </a>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="showEditBasicUrl(true)"
+                                        jhiTranslate="blog.settings.form.buttons.modify">Modify</button>
+                            </div>
+                        </div>
+                        <div class="edit-area" *ngIf="isShowEditBasicUrl">
+                            <form name="basicUrlForm" role="form" (ngSubmit)="saveBasicUrl()" [formGroup]="basicUrlForm">
+                                <div class="input-group mb-1">
+                                    <input type="text" class="form-control" id="subDomain" name="subDomain"
+                                           placeholder="{{'blog.settings.basic.blog_addr.form.address.placeholder' | translate}}"
+                                           formControlName="subDomain" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">{{mainDomain}}</span>
+                                    </div>
+                                </div>
+                                <div class="action">
+                                    <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="showEditBasicUrl(false)"
+                                            jhiTranslate="blog.settings.form.buttons.cancel">Cancel</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="edit-area" *ngIf="isShowEditBasicUrl">
-                        <form name="basicUrlForm" role="form" (ngSubmit)="saveBasicUrl()">
-                            <div class="input-group mb-1">
-                                <input type="text" class="form-control" id="sub_domain" name="sub_domain" #sub_domain="ngModel"
-                                       [(ngModel)]="subDomain"  autocomplete="off" maxlength="100" pattern="^([A-Za-z0-9][A-Za-z0-9-]*)*[A-Za-z0-9]$"
-                                       placeholder="{{'blog.settings.basic.blog_addr.form.address.placeholder' | translate}}">
-                                <div class="input-group-append">
-                                    <span class="input-group-text">{{mainDomain}}</span>
+                    <div *ngIf="customDomain || isShowEditCustomUrl">
+                        <div class="display-area" *ngIf="!isShowEditCustomUrl">
+                            <div class="basic-url mb-1">
+                                <div>
+                                    <small class="text-muted" jhiTranslate="blog.settings.basic.blog_addr.labels.my.owned.url">My owned URL</small>
+                                    <div>{{customDomain}}</div>
+                                </div>
+                                <div>
+                                    <small class="text-muted" jhiTranslate="blog.settings.basic.blog_addr.labels.original.url">Original URL</small>
+                                    <div>{{subDomain + mainDomain}}</div>
                                 </div>
                             </div>
                             <div class="action">
-                                <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
-                                <button type="button" class="btn btn-primary btn-sm" (click)="showEditBasicUrl(false)"
-                                        jhiTranslate="blog.settings.form.buttons.cancel">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div *ngIf="blog.customUrl || isShowEditCustomUrl">
-                    <div class="display-area" *ngIf="!isShowEditCustomUrl">
-                        <div class="basic-url mb-1">
-                            <div>
-                                <small class="text-muted" jhiTranslate="blog.settings.basic.blog_addr.labels.my.owned.url">My owned URL</small>
-                                <div>{{blog.customUrl}}</div>
-                            </div>
-                            <div>
-                                <small class="text-muted" jhiTranslate="blog.settings.basic.blog_addr.labels.original.url">Original URL</small>
-                                <div>{{blog.url}}</div>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="showEditCustomUrl(true)"
+                                        jhiTranslate="blog.settings.form.buttons.modify">Modify</button>
+                                <button type="button" class="btn btn-primary btn-sm" (click)="deleteCustomUrl()"
+                                        jhiTranslate="blog.settings.form.buttons.delete">Delete</button>
                             </div>
                         </div>
-                        <div class="action">
-                            <button type="button" class="btn btn-primary btn-sm" (click)="showEditCustomUrl(true)"
-                                    jhiTranslate="blog.settings.form.buttons.modify">Modify</button>
-                            <button type="button" class="btn btn-primary btn-sm" (click)="deleteCustomUrl()"
-                                    jhiTranslate="blog.settings.form.buttons.delete">Delete</button>
-                        </div>
-                    </div>
-                    <div class="edit-area" *ngIf="isShowEditCustomUrl">
-                        <form name="customUrlForm" role="form" (ngSubmit)="saveCustomUrl()">
-                            <label><small class="text-muted" jhiTranslate="blog.settings.basic.blog_addr.labels.owned.url">Setting Your owned URL</small></label>
-                            <div class="input-group mb-1">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">http://</span>
+                        <div class="edit-area" *ngIf="isShowEditCustomUrl">
+                            <form name="customUrlForm" role="form" (ngSubmit)="saveCustomUrl()" [formGroup]="customUrlForm">
+                                <label><small class="text-muted" jhiTranslate="blog.settings.basic.blog_addr.labels.owned.url">Setting Your owned URL</small></label>
+                                <div class="input-group mb-1">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">http://</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="customDomain" name="customDomain"
+                                           formControlName="customDomain" autocomplete="off">
                                 </div>
-                                <input type="text" class="form-control"
-                                    id="custom_domain" name="custom_domain" #custom_domain="ngModel" [(ngModel)]="customDomain"
-                                    autocomplete="off" maxlength="253" pattern="^([a-zA-Z0-9-_]+.)*[a-zA-Z0-9][a-zA-Z0-9-_]+.[a-zA-Z]{2,11}?$">
-                            </div>
-                            <div class="action">
-                                <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
-                                <button type="button" class="btn btn-primary btn-sm" (click)="showEditCustomUrl(false)"
-                                        jhiTranslate="blog.settings.form.buttons.cancel">Cancel</button>
-                            </div>
-                        </form>
+                                <div class="action">
+                                    <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="showEditCustomUrl(false)"
+                                            jhiTranslate="blog.settings.form.buttons.cancel">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card settings-border">
-        <form name="blogReaderForm" role="form" (ngSubmit)="saveBlogReader()">
-            <div class="card-header settings-header">
-                <div class="settings-title" jhiTranslate="blog.settings.basic.blog_readers.title">Blog Readers</div>
-                <div class="settings-action">
-                    <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+        <div class="card settings-border">
+            <form name="blogReaderForm" role="form" (ngSubmit)="saveBlogReader()" [formGroup]="blogReaderForm">
+                <div class="card-header settings-header">
+                    <div class="settings-title" jhiTranslate="blog.settings.basic.blog_readers.title">Blog Readers</div>
+                    <div class="settings-action">
+                        <button type="submit" class="btn btn-primary btn-sm" jhiTranslate="blog.settings.form.buttons.save">Save</button>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" name="readers" id="readers_all" [(ngModel)]="blog.status" value="OPENED">
-                    <label class="form-check-label" for="readers_all" jhiTranslate="blog.settings.basic.blog_readers.form.readers_all">Public</label>
+                <div class="card-body">
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="status" id="readers_all" value="OPENED" formControlName="status">
+                        <label class="form-check-label" for="readers_all" jhiTranslate="blog.settings.basic.blog_readers.form.readers_all">Public</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" name="status" id="readers_author" value="CLOSED" formControlName="status">
+                        <label class="form-check-label" for="readers_author" jhiTranslate="blog.settings.basic.blog_readers.form.readers_author">Private - Open to only author</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input type="radio" class="form-check-input" name="readers" id="readers_author" [(ngModel)]="blog.status" value="CLOSED">
-                    <label class="form-check-label" for="readers_author" jhiTranslate="blog.settings.basic.blog_readers.form.readers_author">Private - Open to only author</label>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

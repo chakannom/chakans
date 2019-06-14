@@ -1,30 +1,39 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserProfileService, UserProfile } from '../../core';
+import { UserProfileService } from '../../core';
 
 @Component({
-    selector: 'cks-blogs-initial',
-    templateUrl: './initial.component.html',
-    styleUrls: ['initial.css']
+  selector: 'cks-initial',
+  templateUrl: './initial.component.html',
+  styleUrls: ['initial.scss']
 })
 export class InitialComponent implements OnInit {
-    error: string;
-    userProfile: UserProfile = {};
+  error: string;
+  registerUserProfileForm = this.fb.group({
+    nickname: ['', [Validators.minLength(3), Validators.maxLength(100), Validators.required]]
+  });
 
-    constructor(private userProfileService: UserProfileService, private router: Router) {}
+  constructor(private userProfileService: UserProfileService, private router: Router, private fb: FormBuilder) {}
 
-    ngOnInit() {}
+  ngOnInit() {}
 
-    start() {
-        this.error = null;
-        const userProfile = { nickname: this.userProfile.nickname };
-        this.userProfileService
-            .patchMyProfile(userProfile, ['nickname'])
-            .subscribe(() => this.router.navigate(['/blog.cb']), response => this.processError(response));
+  registerUserProfile() {
+    if (this.registerUserProfileForm.valid) {
+      this.error = null;
+      const userProfile = { nickname: this.registerUserProfileForm.get(['nickname']).value };
+      this.userProfileService.createMyProfile(userProfile).subscribe(() => this.onSuccess(), response => this.onError(response));
     }
+  }
 
-    private processError(response) {
-        this.error = 'ERROR';
-    }
+  private onSuccess() {
+    this.userProfileService.identity(true).then(() => {
+      this.router.navigate(['/blog.cb']);
+    });
+  }
+
+  private onError(response) {
+    this.error = 'ERROR';
+  }
 }

@@ -3,14 +3,14 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="autoIncrement" value="true"/>
 
     <changeSet id="00000000000001" author="chakannom">
         <!-- Blog User Profile -->
-        <createTable tableName="blog_user_profile">
+        <createTable tableName="cks_blog_user_profile">
             <column name="user_login" type="varchar(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -35,26 +35,26 @@
             <column name="deleted_date" type="timestamp"/>
         </createTable>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_user_profile.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_user_profile.csv"
                   separator=";"
-                  tableName="blog_user_profile">
+                  tableName="cks_blog_user_profile">
             <column name="opened_profile" type="boolean"/>
             <column name="opened_email" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
 
-        <dropDefaultValue tableName="blog_user_profile" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="cks_blog_user_profile" columnName="created_date" columnDataType="datetime"/>
 
         <!-- Blog -->
-        <createTable tableName="blog">
+        <createTable tableName="cks_blog">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="text"/>
+            <column name="description" type="varchar(max)"/>
             <column name="url" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
@@ -79,25 +79,25 @@
             <column name="deleted_date" type="timestamp"/>
         </createTable>
 
-        <createIndex indexName="idx_blog_url" tableName="blog" unique="true">
+        <createIndex indexName="idx_blog_url" tableName="cks_blog" unique="true">
             <column name="url" type="varchar(255)"/>
         </createIndex>
 
-        <createIndex indexName="idx_blog_custom_url" tableName="blog" unique="true">
+        <createIndex indexName="idx_blog_custom_url" tableName="cks_blog" unique="true">
             <column name="custom_url" type="varchar(255)"/>
         </createIndex>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog.csv"
                   separator=";"
-                  tableName="blog">
+                  tableName="cks_blog">
             <column name="created_date" type="timestamp"/>
         </loadData>
 
-        <dropDefaultValue tableName="blog" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="cks_blog" columnName="created_date" columnDataType="datetime"/>
 
         <!-- Blog Design -->
-        <createTable tableName="blog_design">
+        <createTable tableName="cks_blog_design">
             <column name="blog_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -110,7 +110,7 @@
             <column name="rightbar_width" type="int" valueNumeric="180">
                 <constraints nullable="false"/>
             </column>
-            <column name="theme" type="text">
+            <column name="theme" type="varchar(max)">
                 <constraints nullable="false"/>
             </column>
             <column name="top_bar" type="boolean" valueBoolean="true">
@@ -118,27 +118,27 @@
             </column>
         </createTable>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_design.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_design.csv"
                   separator=";"
-                  tableName="blog_design">
+                  tableName="cks_blog_design">
             <column name="top_bar" type="boolean"/>
         </loadData>
 
         <!-- Blog Authority -->
-        <createTable tableName="blog_authority">
+        <createTable tableName="cks_blog_authority">
             <column name="name" type="varchar(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>
-
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_authority.csv"
+ 
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_authority.csv"
                   separator=";"
-                  tableName="blog_authority"/>
+                  tableName="cks_blog_authority"/>
 
         <!-- Blog User -->
-        <createTable tableName="blog_user">
+        <createTable tableName="cks_blog_user">
             <column name="blog_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -150,21 +150,21 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="blog_id, user_login" tableName="blog_user"/>
+        <addPrimaryKey columnNames="blog_id, user_login" tableName="cks_blog_user"/>
 
         <addForeignKeyConstraint baseColumnNames="blog_authority_name"
-                                 baseTableName="blog_user"
+                                 baseTableName="cks_blog_user"
                                  constraintName="fk_blog_user_blog_a_name"
                                  referencedColumnNames="name"
-                                 referencedTableName="blog_authority"/>
+                                 referencedTableName="cks_blog_authority"/>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_user.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_user.csv"
                   separator=";"
-                  tableName="blog_user"/>
-                  
+                  tableName="cks_blog_user"/>
+
         <!-- Blog Page -->
-        <createTable tableName="blog_page">
+        <createTable tableName="cks_blog_page">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -174,7 +174,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="text"/>
+            <column name="content" type="varchar(max)"/>
             <column name="page_name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
@@ -199,19 +199,19 @@
             <column name="deleted_by" type="varchar(50)"/>
             <column name="deleted_date" type="timestamp"/>
         </createTable>
-        
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_page.csv"
+
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_page.csv"
                   separator=";"
-                  tableName="blog_page">
+                  tableName="cks_blog_page">
             <column name="permit_comment" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
 
-        <dropDefaultValue tableName="blog_page" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="cks_blog_page" columnName="created_date" columnDataType="datetime"/>
 
         <!-- Blog Page History -->
-        <createTable tableName="blog_page_history">
+        <createTable tableName="cks_blog_page_history">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -224,7 +224,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="text"/>
+            <column name="content" type="varchar(max)"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -232,75 +232,75 @@
         </createTable>
 
         <!-- Blog Post -->
-		<createTable tableName="blog_post">
-		    <column name="id" type="bigint" autoIncrement="${autoIncrement}">
-		        <constraints primaryKey="true" nullable="false"/>
-		    </column>
-		    <column name="blog_id" type="bigint">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="title" type="varchar(255)">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="content" type="text"/>
-		    <column name="post_name" type="varchar(255)">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="opened_date" type="timestamp">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="viewed_count" type="bigint">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="comment_count" type="bigint">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="permit_comment" type="boolean" valueBoolean="false">
-		        <constraints nullable="false" />
-		    </column>
-		    <column name="status" type="int">
-		        <constraints nullable="false" />
-		    </column>
-		    <column name="created_by" type="varchar(50)">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="created_date" type="timestamp"/>
-		    <column name="modified_by" type="varchar(50)"/>
-		    <column name="modified_date" type="timestamp"/>
-		    <column name="deleted_by" type="varchar(50)"/>
-		    <column name="deleted_date" type="timestamp"/>
-		</createTable>
-		
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_post.csv"
+        <createTable tableName="cks_blog_post">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="blog_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="varchar(max)"/>
+            <column name="post_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="opened_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="viewed_count" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment_count" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permit_comment" type="boolean" valueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="modified_by" type="varchar(50)"/>
+            <column name="modified_date" type="timestamp"/>
+            <column name="deleted_by" type="varchar(50)"/>
+            <column name="deleted_date" type="timestamp"/>
+        </createTable>
+
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_post.csv"
                   separator=";"
-                  tableName="blog_post">
+                  tableName="cks_blog_post">
             <column name="permit_comment" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
+
+        <dropDefaultValue tableName="cks_blog_post" columnName="created_date" columnDataType="datetime"/>
         
-        <dropDefaultValue tableName="blog_post" columnName="created_date" columnDataType="datetime"/>
-		
-		<!-- Blog Post Tag -->
-		<createTable tableName="blog_post_tag">
-		    <column name="post_id" type="bigint">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="blog_id" type="bigint">
-		        <constraints nullable="false"/>
-		    </column>
-		    <column name="name" type="varchar(255)">
-		        <constraints nullable="false"/>
-		    </column>
-		</createTable>
-		
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_post_tag.csv"
+        <!-- Blog Post Tag -->
+        <createTable tableName="cks_blog_post_tag">
+            <column name="post_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="blog_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_post_tag.csv"
                   separator=";"
-                  tableName="blog_post_tag"/>
+                  tableName="cks_blog_post_tag"/>
 
         <!-- Blog Post History -->
-        <createTable tableName="blog_post_history">
+        <createTable tableName="cks_blog_post_history">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -313,7 +313,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="text"/>
+            <column name="content" type="varchar(max)"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -321,7 +321,7 @@
         </createTable>
 
         <!-- Blog Comment -->
-        <createTable tableName="blog_comment">
+        <createTable tableName="cks_blog_comment">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -357,17 +357,17 @@
             <column name="deleted_date" type="timestamp"/>
         </createTable>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_comment.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_comment.csv"
                   separator=";"
-                  tableName="blog_comment">
+                  tableName="cks_blog_comment">
             <column name="created_date" type="timestamp"/>
         </loadData>
 
-        <dropDefaultValue tableName="blog_comment" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="cks_blog_comment" columnName="created_date" columnDataType="datetime"/>
 
         <!-- Blog Theme -->
-        <createTable tableName="blog_theme">
+        <createTable tableName="cks_blog_theme">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -385,38 +385,38 @@
             <column name="deleted_date" type="timestamp"/>
         </createTable>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_theme.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_theme.csv"
                   separator=";"
-                  tableName="blog_theme">
+                  tableName="cks_blog_theme">
             <column name="created_date" type="timestamp"/>
         </loadData>
 
-        <dropDefaultValue tableName="blog_theme" columnName="created_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="cks_blog_theme" columnName="created_date" columnDataType="datetime"/>
 
         <!-- Blog Theme Template -->
-        <createTable tableName="blog_theme_template">
+        <createTable tableName="cks_blog_theme_template">
             <column name="theme_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="content" type="text">
+            <column name="content" type="varchar(max)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="theme_id"
-                                 baseTableName="blog_theme_template"
+                                 baseTableName="cks_blog_theme_template"
                                  constraintName="fk_blog_theme_temp_theme_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="blog_theme"/>
+                                 referencedTableName="cks_blog_theme"/>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_theme_template.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_theme_template.csv"
                   separator=";"
-                  tableName="blog_theme_template"/>
+                  tableName="cks_blog_theme_template"/>
 
         <!-- Blog Theme Description -->
-        <createTable tableName="blog_theme_description">
+        <createTable tableName="cks_blog_theme_description">
             <column name="theme_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -426,22 +426,21 @@
             <column name="name" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="text"/>
+            <column name="description" type="varchar(max)"/>
         </createTable>
 
-        <addPrimaryKey columnNames="theme_id, lang_key" tableName="blog_theme_description"/>
+        <addPrimaryKey columnNames="theme_id, lang_key" tableName="cks_blog_theme_description"/>
 
         <addForeignKeyConstraint baseColumnNames="theme_id"
-                                 baseTableName="blog_theme_description"
+                                 baseTableName="cks_blog_theme_description"
                                  constraintName="fk_blog_theme_desc_theme_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="blog_theme"/>
+                                 referencedTableName="cks_blog_theme"/>
 
-        <loadData encoding="UTF-8"
-                  file="config/liquibase/blog_theme_description.csv"
+        <loadData
+                  file="config/liquibase/data/00000000000003/blog_theme_description.csv"
                   separator=";"
-                  tableName="blog_theme_description"/>
-
+                  tableName="cks_blog_theme_description"/>
     </changeSet>
 
 </databaseChangeLog>

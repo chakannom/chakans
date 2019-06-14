@@ -1,62 +1,92 @@
-<div class="blog-main-header">
-    <div class="blog-main-header-title">
-        <span jhiTranslate="blog.maker.title">Create New Blog</span>
+<div class="blog-maker-main">
+    <div class="blog-main-header">
+        <div class="blog-main-header-title">
+            <span jhiTranslate="blog.maker.title">Create New Blog</span>
+        </div>
     </div>
-</div>
-<div class="blog-main-container">
-    <form name="form" role="form" (ngSubmit)="create()" #makerForm="ngForm">
-        <div class="form-group">
-            <label for="title" jhiTranslate="blog.maker.form.title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" [(ngModel)]="blog.title" #title="ngModel" placeholder="{{'blog.maker.form.title.placeholder' | translate}}" autocomplete="off" minlength="1" maxlength="100">
-        </div>
-        <div class="form-group">
-            <label for="address" jhiTranslate="blog.maker.form.address">Address</label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="address" name="address" [(ngModel)]="blog.subdomain" #address="ngModel" (focus)="enterSubdomain()" (blur)="!(address.dirty && address.invalid) ? checkSubdomain($event.target.value) : ''" placeholder="{{'blog.maker.form.address.placeholder' | translate}}" autocomplete="off" maxlength="100" pattern="^([A-Za-z0-9][A-Za-z0-9-]*)*[A-Za-z0-9]$">
-                <div class="input-group-append">
-                    <span class="input-group-text">{{'blog.maker.form.address.postfix' | translate}}</span>
+    <div class="blog-main-content">
+        <form name="makerForm" role="form" (ngSubmit)="create()" [formGroup]="makerForm">
+            <div class="form-group">
+                <label for="title" jhiTranslate="blog.maker.form.title">Title</label>
+                <input type="text" class="form-control" id="title" name="title"
+                    placeholder="{{'blog.maker.form.title.placeholder' | translate}}" formControlName="title"
+                    autocomplete="off" required>
+                <div
+                    *ngIf="makerForm.get('title').invalid && (makerForm.get('title').dirty || makerForm.get('title').touched)">
+                    <small class="form-text text-danger" *ngIf="makerForm.get('title').errors.required"
+                        jhiTranslate="blog.messages.validate.title.required">
+                        Blog's title is required.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="makerForm.get('title').errors.minlength"
+                        jhiTranslate="blog.messages.validate.title.minlength">
+                        Blog's title is required to be at least 1 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="makerForm.get('title').errors.maxlength"
+                        jhiTranslate="blog.messages.validate.title.maxlength">
+                        Blog's title cannot be longer than 100 characters.
+                    </small>
                 </div>
             </div>
-            <div *ngIf="!(address.dirty && address.invalid)">
-                <small class="form-text" *ngIf="!isEnteringSubdomain && !isAvailableSubdomain && (!blog.subdomain || blog.subdomain.length < 1)"
-                       jhiTranslate="blog.maker.form.messages.address.enter">
-                    Enter blog address.
-                </small>
-
-                <small class="form-text" *ngIf="isEnteringSubdomain" jhiTranslate="blog.maker.form.messages.address.entering">
-                    Entering...
-                </small>
-
-                <small class="form-text" *ngIf="!isEnteringSubdomain && isAvailableSubdomain" jhiTranslate="blog.maker.form.messages.address.available">
-                    This blog address is available.
-                </small>
-
-                <small class="form-text text-danger" *ngIf="!isEnteringSubdomain && !isAvailableSubdomain && blog.subdomain"
-                       jhiTranslate="blog.maker.form.messages.address.unavailable">
-                    Unavailable blog address.
-                </small>
-            </div>
-            <div *ngIf="address.dirty && address.invalid">
-                <small class="form-text text-danger" *ngIf="address.errors.maxlength || address.errors.pattern"
-                       jhiTranslate="blog.maker.form.messages.address.invalid">
-                    Invalid blog address.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label jhiTranslate="blog.maker.form.theme">Theme</label>
-            <div class="theme-list-group">
-                <div class="theme-list-item" [ngClass]="{'selected': (currTheme ? currTheme.id === theme.id : false)}" *ngFor="let theme of themes" (click)="previewTheme(theme.id)">
-                    <img class="img-theme-thumbnail" [ngClass]="{'no-image': !theme.imageUrl}" [src]="getThumbnailImageUrl(theme.imageUrl)">
-                    <div>{{theme.name}}</div>
+            <div class="form-group">
+                <label for="subDomain" jhiTranslate="blog.maker.form.address">Address</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="subDomain" name="subDomain" (focus)="enterSubdomain()"
+                        (blur)="!(makerForm.get('subDomain').invalid && (makerForm.get('subDomain').dirty || makerForm.get('subDomain').touched)) ? checkSubdomain($event.target.value) : ''"
+                        placeholder="{{'blog.maker.form.address.placeholder' | translate}}" formControlName="subDomain"
+                        autocomplete="off" required>
+                    <div class="input-group-append">
+                        <span class="input-group-text">{{'blog.maker.form.address.postfix' | translate}}</span>
+                    </div>
+                </div>
+                <div *ngIf="!(makerForm.get('subDomain').invalid && (makerForm.get('subDomain').dirty || makerForm.get('subDomain').touched))">
+                    <small class="form-text"
+                        *ngIf="!isEnteringSubdomain && !isAvailableSubdomain && !makerForm.get('subDomain').value"
+                        jhiTranslate="blog.maker.form.messages.address.enter">
+                        Enter blog address.
+                    </small>
+                    <small class="form-text" *ngIf="isEnteringSubdomain"
+                        jhiTranslate="blog.maker.form.messages.address.entering">
+                        Entering...
+                    </small>
+                    <small class="form-text" *ngIf="!isEnteringSubdomain && isAvailableSubdomain"
+                        jhiTranslate="blog.maker.form.messages.address.available">
+                        This blog address is available.
+                    </small>
+                    <small class="form-text text-danger"
+                        *ngIf="!isEnteringSubdomain && !isAvailableSubdomain && makerForm.get('subDomain').value"
+                        jhiTranslate="blog.maker.form.messages.address.unavailable">
+                        Unavailable blog address.
+                    </small>
+                </div>
+                <div
+                    *ngIf="makerForm.get('subDomain').invalid && (makerForm.get('subDomain').dirty || makerForm.get('subDomain').touched)">
+                    <small class="form-text text-danger"
+                        *ngIf="makerForm.get('subDomain').errors.maxlength || makerForm.get('subDomain').errors.pattern"
+                        jhiTranslate="blog.maker.form.messages.address.invalid">
+                        Invalid blog address.
+                    </small>
                 </div>
             </div>
-        </div>
-        <div class="float-right">
-            <button type="submit" class="btn btn-primary" [disabled]="!(blog.title && isAvailableSubdomain)" jhiTranslate="blog.maker.form.buttons.create">Create</button>
-            <button type="button" class="btn btn-outline-secondary" [routerLink]="['/blog.cb']" fragment="welcome" jhiTranslate="blog.maker.form.buttons.cancel">Cancel</button>
-        </div>
-    </form>
+            <div class="form-group">
+                <label jhiTranslate="blog.maker.form.theme">Theme</label>
+                <div class="theme-list-group">
+                    <div class="theme-list-item"
+                        [ngClass]="{'selected': (currTheme ? currTheme.id === theme.id : false)}"
+                        *ngFor="let theme of themes" (click)="previewTheme(theme.id)">
+                        <img class="img-theme-thumbnail" [ngClass]="{'no-image': !theme.imageUrl}"
+                            [src]="getThumbnailImageUrl(theme.imageUrl)">
+                        <div>{{theme.name}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="makerForm.invalid && !isAvailableSubdomain"
+                    jhiTranslate="blog.maker.form.buttons.create">Create</button>
+                <button type="button" class="btn btn-outline-secondary" [routerLink]="['/blog.cb']" fragment="welcome"
+                    jhiTranslate="blog.maker.form.buttons.cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
 </div>
 <div class="blog-maker-sidebar-container">
     <div class="blog-maker-theme-detail">
@@ -64,7 +94,8 @@
             Theme Preview
         </div>
         <div class="card" *ngIf="currTheme">
-            <img class="card-img-top" [ngClass]="{'no-image': !currTheme.imageUrl}" [src]="getPreviewImageUrl(currTheme.imageUrl)">
+            <img class="card-img-top" [ngClass]="{'no-image': !currTheme.imageUrl}"
+                [src]="getPreviewImageUrl(currTheme.imageUrl)">
             <div class="card-body">
                 <h5 class="card-title">{{currTheme.name}}</h5>
                 <p class="card-text">{{currTheme.description}}</p>

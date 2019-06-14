@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { AccountService, Account } from '../../core';
 
 @Component({
-    selector: 'cks-blogs-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['home.css']
+  selector: 'cks-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['home.scss']
 })
 export class HomeComponent implements OnInit {
-    constructor(private accountService: AccountService, private router: Router) {}
+  constructor() {}
 
-    ngOnInit() {
-        this.accountService.identity().then((account: Account) => {
-            if (account) {
-                this.router.navigate(['/blog.cb']);
-            }
-        });
-    }
+  ngOnInit() {}
 }

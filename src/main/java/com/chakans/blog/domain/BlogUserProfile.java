@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A blog_user_profile.
  */
 @Entity
-@Table(name = "blog_user_profile")
+@Table(name = "cks_blog_user_profile")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogUserProfile extends AbstractAuditingEntity implements Serializable {
 
@@ -104,12 +104,10 @@ public class BlogUserProfile extends AbstractAuditingEntity implements Serializa
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogUserProfile)) {
             return false;
         }
-
-        BlogUserProfile blogUserProfile = (BlogUserProfile) o;
-        return Objects.equals(userLogin, blogUserProfile.getUserLogin());
+        return Objects.equals(userLogin, ((BlogUserProfile) o).userLogin);
     }
 
     @Override
@@ -126,6 +124,6 @@ public class BlogUserProfile extends AbstractAuditingEntity implements Serializa
             ", imageUrl='" + imageUrl + '\'' +
             ", openedProfile=" + openedProfile +
             ", openedEmail=" + openedEmail +
-            '}';
+            "}";
     }
 }

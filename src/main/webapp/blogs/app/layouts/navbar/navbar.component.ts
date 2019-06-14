@@ -4,88 +4,79 @@ import { Observable } from 'rxjs';
 import { JhiLanguageService } from 'ng-jhipster';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { LanguageHelper, AccountService, SignInService, SignOutService } from '../../core';
+import { VERSION } from '../../app.constants';
 import { NavbarService } from './navbar.service';
+import { LanguageHelper, AccountService, RedirectService, SignOutService } from '../../core';
 import { ProfileService } from '../profiles/profile.service';
 
-import { VERSION } from '../../app.constants';
-
 @Component({
-    selector: 'cks-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['navbar.css']
+  selector: 'cks-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['navbar.scss']
 })
 export class NavbarComponent implements OnInit {
-    isNavbarViewed: Observable<boolean>;
-    inProduction: boolean;
-    isNavbarCollapsed: boolean;
-    languages: any[];
-    swaggerEnabled: boolean;
-    version: string;
+  inProduction: boolean;
+  isNavbarViewed: Observable<boolean>;
+  isNavbarCollapsed: boolean;
+  languages: any[];
+  swaggerEnabled: boolean;
+  version: string;
 
-    constructor(
-        private navbarService: NavbarService,
-        private signInService: SignInService,
-        private signOutService: SignOutService,
-        private languageService: JhiLanguageService,
-        private languageHelper: LanguageHelper,
-        private sessionStorage: SessionStorageService,
-        private accountService: AccountService,
-        private profileService: ProfileService,
-        private router: Router
-    ) {
-        this.version = VERSION ? 'v' + VERSION : '';
-        this.isNavbarCollapsed = true;
-        this.isNavbarViewed = this.navbarService.isNavbarViewed;
-    }
+  constructor(
+    private navbarService: NavbarService,
+    private signOutService: SignOutService,
+    private languageService: JhiLanguageService,
+    private languageHelper: LanguageHelper,
+    private sessionStorage: SessionStorageService,
+    private accountService: AccountService,
+    private redirectService: RedirectService,
+    private profileService: ProfileService,
+    private router: Router
+  ) {
+    this.version = VERSION ? 'v' + VERSION : '';
+    this.isNavbarCollapsed = true;
+    this.isNavbarViewed = this.navbarService.isNavbarViewed;
+  }
 
-    ngOnInit() {
-        this.languageHelper.getAll().then(languages => {
-            this.languages = languages;
-        });
+  ngOnInit() {
+    this.languageHelper.getAll().then(languages => {
+      this.languages = languages;
+    });
 
-        this.profileService.getProfileInfo().then(profileInfo => {
-            this.inProduction = profileInfo.inProduction;
-            this.swaggerEnabled = profileInfo.swaggerEnabled;
-        });
-    }
+    this.profileService.getProfileInfo().then(profileInfo => {
+      this.inProduction = profileInfo.inProduction;
+      this.swaggerEnabled = profileInfo.swaggerEnabled;
+    });
+  }
 
-    home() {
-        if (this.router.url === '/') {
-            this.router.navigate(['']);
-        } else {
-            this.router.navigate(['/blog.cb']);
-        }
-    }
+  changeLanguage(languageKey: string) {
+    this.sessionStorage.store('locale', languageKey);
+    this.languageService.changeLanguage(languageKey);
+  }
 
-    changeLanguage(languageKey: string) {
-        this.sessionStorage.store('locale', languageKey);
-        this.languageService.changeLanguage(languageKey);
-    }
+  collapseNavbar() {
+    this.isNavbarCollapsed = true;
+  }
 
-    collapseNavbar() {
-        this.isNavbarCollapsed = true;
-    }
+  isAuthenticated() {
+    return this.accountService.isAuthenticated();
+  }
 
-    isAuthenticated() {
-        return this.accountService.isAuthenticated();
-    }
+  signIn() {
+    this.redirectService.goAccountsSignIn();
+  }
 
-    signIn() {
-        this.signInService.do();
-    }
+  signOut() {
+    this.collapseNavbar();
+    this.signOutService.signOut();
+    this.router.navigate(['']);
+  }
 
-    logout() {
-        this.collapseNavbar();
-        this.signOutService.do();
-        this.router.navigate(['']);
-    }
+  toggleNavbar() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
 
-    toggleNavbar() {
-        this.isNavbarCollapsed = !this.isNavbarCollapsed;
-    }
-
-    getImageUrl() {
-        return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
-    }
+  getImageUrl() {
+    return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
+  }
 }

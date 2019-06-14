@@ -1,12 +1,14 @@
 package com.chakans.core.security;
 
-import com.chakans.core.config.constants.AuthoritiesConstants;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.chakans.core.config.constants.AuthoritiesConstants;
+import com.chakans.core.security.SecurityUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,14 +17,12 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test class for the SecurityUtils utility class.
- *
- * @see SecurityUtils
+ * Test class for the {@link SecurityUtils} utility class.
  */
 public class SecurityUtilsUnitTest {
 
     @Test
-    public void testgetCurrentUserLogin() {
+    public void testGetCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
         SecurityContextHolder.setContext(securityContext);

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.chakans.drive.domain.FileUploadDrive;
 
 /**
- * Spring Data JPA repository for the FileUploadDrive entity.
+ * Spring Data JPA repository for the {@link FileUploadDrive} entity.
  */
 public interface FileUploadDriveRepository extends JpaRepository<FileUploadDrive, String> {
 

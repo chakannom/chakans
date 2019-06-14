@@ -1,7 +1,0 @@
-id;user_login;name;mime_type;sizeof;permission;etag;created_by;modified_by
-user;user;/;application/vnd.chakans.folder;0;755;null;system;system
-user-1;user;folder1;application/vnd.chakans.folder;0;755;null;system;system
-user-2;user;folder2;application/vnd.chakans.folder;0;755;null;system;system
-user-3;user;folder3;application/vnd.chakans.folder;0;755;null;system;system
-user-2-1;user;folder2-1;application/vnd.chakans.folder;0;755;null;system;system
-user-2-2;user;folder2-2;application/vnd.chakans.folder;0;755;null;system;system

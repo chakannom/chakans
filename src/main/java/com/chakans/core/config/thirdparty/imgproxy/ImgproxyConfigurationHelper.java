@@ -15,16 +15,16 @@
  */
 package com.chakans.core.config.thirdparty.imgproxy;
 
-import com.chakans.core.tools.RunProcess;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.transaction.SystemException;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import com.chakans.core.config.thirdparty.docker.DockerHelper;
+import com.github.dockerjava.api.exception.DockerClientException;
 
 /**
  * Utility class to configure Imgproxy in development.
@@ -36,52 +36,39 @@ public class ImgproxyConfigurationHelper {
 
     private static final Logger log = LoggerFactory.getLogger(ImgproxyConfigurationHelper.class);
 
-    public static RunProcess createServer() {
-        return createServer(9001);
-    }
+    private static final String imageName = "darthsim/imgproxy";
+    
+    private static final String tag = "v2.2.13";
+    
+    private static final String containerName = "dev-imgproxy";
+    
+    private static final Integer hostPort = 9001;
+    
+    private static final String imgproxyKey = "3a8f347756fa5013430a1a3d0ebe2ad6";
+    
+    private static final String imgproxySalt = "19b63d683008e7b88bb4427d9c0b45b3";
+    
+    private static final String imgproxyMaxClients = "5";
 
-    public static RunProcess createServer(int port) {
+    public static boolean createServer() {
         try {
-            log.debug("Starting Imgproxy storage server");
-            String workingDirectory = Paths.get(System.getProperty("user.dir"), "thirdparty/imgproxy").toString();
-            String imgproxyCommend = getCommend(workingDirectory);
-            String keyFile = Paths.get(workingDirectory, "config/key").toString();
-            String saltFile = Paths.get(workingDirectory, "config/salt").toString();
-            Map<String, String> env = new HashMap<>();
-            env.put("PORT", Integer.toString(port, 10));
-            RunProcess imgproxyProcess = new RunProcess(imgproxyCommend);
-            imgproxyProcess.run(false, env, "-keypath", keyFile, "-saltpath", saltFile);
-            imgproxyProcess.getRunningProcess().waitFor(5, TimeUnit.SECONDS);
-            log.debug("Started Imgproxy storage server");
-            return imgproxyProcess;
-        } catch (SystemException e) {
-            throw new RuntimeException("It can not run imgproxy storage server under your operation system", e);
-        }  catch (InterruptedException e) {
-            throw new RuntimeException("The imgproxy's thread is interrupted", e);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to create imgproxy server", e);
-        }
-    }
-
-    private static String getCommend(String workingDirectory) throws SystemException {
-        String osFolderName;
-        String imgproxyexe;
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.indexOf("win") >= 0) {
-            osFolderName = "windows";
-            imgproxyexe = "imgproxy.exe";
-        } else if (osName.indexOf("nix") >= 0 || osName.indexOf("nux") >= 0) {
-            osFolderName = "linux";
-            imgproxyexe = "imgproxy";
-        } else if (osName.indexOf("mac") >= 0) {
-            osFolderName = "mac";
-            imgproxyexe = "imgproxy";
-            // It need an executable file for the Mac.
-            // It need to compile imgproxy on your Mac.
-            throw new SystemException(osName);
-        } else {
-            throw new SystemException(osName);
-        }
-        return Paths.get(workingDirectory, osFolderName, imgproxyexe).toString();
+            log.debug("Starting Imgproxy's docker container");
+            DockerHelper dockerHelper = new DockerHelper(imageName, tag);
+    		if (!dockerHelper.isExistedImage()) {
+    			dockerHelper.pullImage();
+    		}
+    		if (!dockerHelper.isExistedRunningContainer(containerName)) {
+    			List<String> environments = Arrays.asList("IMGPROXY_KEY=" + imgproxyKey, "IMGPROXY_SALT=" + imgproxySalt, "IMGPROXY_MAX_CLIENTS=" + imgproxyMaxClients);
+    			Map<Integer, Integer> ports = new HashMap<>();
+    			ports.put(hostPort, 8080);
+    			dockerHelper.runContainer(environments, null, ports, containerName, null);
+    		}
+    		dockerHelper.waitStarted(containerName);
+            log.debug("Started Imgproxy's docker container");
+		} catch (DockerClientException e) {
+			log.debug("Failed to start Imgproxy's docker container");
+			return false;
+		}
+        return true;
     }
 }

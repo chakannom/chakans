@@ -15,16 +15,9 @@
  */
 package com.chakans.core.config.thirdparty.minio;
 
-import com.chakans.core.tools.RunProcess;
-import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.*;
+import com.google.common.collect.ImmutableMap;
 
 /**
  * Test class for the MinioConfigurationHelper.
@@ -34,33 +27,7 @@ import static org.junit.Assert.*;
 public class MinioConfigurationHelperIntTest {
 
     @Test
-    public void testCreateServerWithBuckets() {
-        RunProcess process = MinioConfigurationHelper.createServer(ImmutableMap.of("test", "test"));
-        assertNotNull(process.getRunningProcess());
-        assertTrue(process.getRunningProcess().isAlive());
-        process.kill();
-    }
-
-    @Test
     public void testCreateServerWithEndPointAndAccessKeyAndSecretKeyAndSecureAndBuckets() {
-        RunProcess process = MinioConfigurationHelper.createServer("http://localhost:9000/","storage1", "storage1", false, ImmutableMap.of("test", "test"));
-        assertNotNull(process.getRunningProcess());
-        assertTrue(process.getRunningProcess().isAlive());
-        process.kill();
-    }
-
-    @Test
-    public void testGetCommend() {
-        String workingDirectory = Paths.get(System.getProperty("user.dir"), "thirdparty/minio").toString();
-        String commend = ReflectionTestUtils.invokeMethod(new MinioConfigurationHelper(), "getCommend", workingDirectory);
-
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.indexOf("win") >= 0) {
-            assertEquals(commend, workingDirectory + "\\windows\\minio.exe");
-        } else if (osName.indexOf("nix") >= 0 || osName.indexOf("nux") >= 0) {
-            assertEquals(commend, workingDirectory + "/linux/minio");
-        } else if (osName.indexOf("mac") >= 0) {
-            assertEquals(commend, workingDirectory + "/mac/minio");
-        }
+        MinioConfigurationHelper.createServer("http://localhost:9000/","storage1", "storage1", false, ImmutableMap.of("test", "test"));
     }
 }

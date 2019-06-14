@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -11,29 +11,30 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
-    imports: [
-        NgbModule.forRoot(),
-        InfiniteScrollModule,
-        CookieModule.forRoot(),
-        FontAwesomeModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: translatePartialLoader,
-                deps: [HttpClient]
-            }
-        })
-    ],
-    exports: [FormsModule, HttpClientModule, CommonModule, NgbModule, NgJhipsterModule, InfiniteScrollModule, FontAwesomeModule]
+  imports: [
+    NgbModule,
+    InfiniteScrollModule,
+    CookieModule.forRoot(),
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: translatePartialLoader,
+        deps: [HttpClient]
+      }
+    })
+  ],
+  exports: [FormsModule, CommonModule, NgbModule, NgJhipsterModule, InfiniteScrollModule, FontAwesomeModule, ReactiveFormsModule]
 })
 export class IndexSharedLibsModule {
-    static forRoot() {
-        return {
-            ngModule: IndexSharedLibsModule
-        };
-    }
+  static forRoot() {
+    return {
+      ngModule: IndexSharedLibsModule
+    };
+  }
 }
 
 export function translatePartialLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, 'index/i18n/', '.json');
+  return new TranslateHttpLoader(http, 'index/i18n/', '.json');
 }

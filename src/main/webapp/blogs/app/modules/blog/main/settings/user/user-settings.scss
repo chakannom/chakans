@@ -1,0 +1,22 @@
+/* ==========================================================================
+Blog user settings styles
+========================================================================== */
+.img-profile {
+  max-width: 7.5em;
+  max-height: 7.5em;
+  width: auto;
+  height: auto;
+}
+.img-control {
+  display: inline-block;
+}
+.upload {
+  label {
+    margin-bottom: 0;
+  }
+  input {
+    &[type='file'] {
+      display: none;
+    }
+  }
+}

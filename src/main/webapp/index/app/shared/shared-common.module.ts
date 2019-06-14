@@ -1,21 +1,10 @@
 import { NgModule } from '@angular/core';
 
-import { IndexSharedLibsModule, FindLanguageFromKeyPipe, JhiAlertComponent, JhiAlertErrorComponent } from './';
+import { IndexSharedLibsModule, FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent } from './';
 
 @NgModule({
-    imports: [
-        IndexSharedLibsModule
-    ],
-    declarations: [
-        FindLanguageFromKeyPipe,
-        JhiAlertComponent,
-        JhiAlertErrorComponent
-    ],
-    exports: [
-        IndexSharedLibsModule,
-        FindLanguageFromKeyPipe,
-        JhiAlertComponent,
-        JhiAlertErrorComponent
-    ]
+  imports: [IndexSharedLibsModule],
+  declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent],
+  exports: [IndexSharedLibsModule, FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent]
 })
 export class IndexSharedCommonModule {}

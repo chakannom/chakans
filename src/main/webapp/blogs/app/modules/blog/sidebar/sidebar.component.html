@@ -1,181 +1,175 @@
-<div class="sidebar-container" *ngIf="isSidebarViewed | async">
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div ngbDropdown class="dropdown pointer">
-                <button class="btn btn-select-blog dropdown-toggle" id="selectBlogDropdown" ngbDropdownToggle>
-                    <span class="btn-select-blog-content" jhiTranslate="blog.sidebar.dropdown.my_blog">My Blog</span>
-                </button>
-                <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li *ngIf="blogs.length > 0">
-                        <span class="dropdown-item subject disabled" jhiTranslate="blog.sidebar.dropdown.my_blog">My Blog</span>
-                    </li>
-                    <li *ngFor="let blog of blogs">
-                        <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blog.id }" fragment="posts/published" (click)="changeBlog(blog.id)">
-                            <span class="ml-2">{{blog.title}}</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="maker">
-                            <span jhiTranslate="blog.sidebar.dropdown.new_blog">New Blog...</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-menu" [ngSwitch]="blogs.length > 0">
-                <li *ngSwitchCase="false">
-                    <a [routerLink]="['/blog.cb']" fragment="welcome">
-                        <span>
-                            <fa-layers class="fa-fw">
-                                <fa-icon [icon]="['far','smile']"></fa-icon>
-                            </fa-layers>
-                            <span jhiTranslate="blog.sidebar.menu.welcome">Welcome</span>
-                        </span>
-                    </a>
-                </li>
-                <li *ngSwitchCase="true">
-                    <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="viewblog">
-                        <span>
-                            <fa-layers class="fa-fw">
-                                <fa-icon [icon]="'tv'"></fa-icon>
-                            </fa-layers>
-                            <span jhiTranslate="blog.sidebar.menu.viewblog">View Blog</span>
-                        </span>
-                    </a>
-                </li>
-    <!--
-                <li *ngSwitchCase="true">
-                    <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="stats">
-                        <span>
-                            <fa-layers class="fa-fw">
-                                <fa-icon [icon]="'chart-bar'"></fa-icon>
-                            </fa-layers>
-                            <span jhiTranslate="blog.sidebar.menu.stats">Stats</span>
-                        </span>
-                    </a>
-                </li>
-    -->
-                <li *ngSwitchCase="true">
-                    <a>
-                        <span jhiTranslate="blog.sidebar.menu.manage">Manage</span>
-                    </a>
-                    <ul class="sidebar-sub-menu">
-                        <li>
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="pages/published">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="['far', 'file']"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.manage.pages">Pages</span>
-                                </span>
-                            </a>
-                            <a class="btn btn-secondary btn-sm" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=page">
-                                <span>
-                                    <fa-layers>
-                                        <fa-icon [icon]="'plus'"></fa-icon>
-                                    </fa-layers>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="posts/published">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="['far', 'file-alt']"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.manage.posts">Posts</span>
-                                </span>
-                            </a>
-                            <a class="btn btn-secondary btn-sm" [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="editor/type=post">
-                                <span>
-                                    <fa-layers>
-                                        <fa-icon [icon]="'plus'"></fa-icon>
-                                    </fa-layers>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="comments/published">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="['far', 'comment']"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.manage.comments">Comments</span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-    <!--
-                <li *ngSwitchCase="true">
-                    <a>
-                        <span jhiTranslate="blog.sidebar.menu.design">Design</span>
-                    </a>
-                    <ul class="sidebar-sub-menu">
-                        <li>
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="layout">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="'columns'"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.design.layout">Layout</span>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="theme">
-                                <span>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.design.theme">Theme</span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
--->
+<div class="sidebar" *ngIf="isSidebarViewed | async">
+    <div class="sidebar-header">
+        <div ngbDropdown class="dropdown pointer">
+            <button class="btn btn-select-blog dropdown-toggle" id="selectBlogDropdown" ngbDropdownToggle>
+                <span class="btn-select-blog-content" jhiTranslate="blog.sidebar.dropdown.my_blog">My Blog</span>
+            </button>
+            <ul class="dropdown-menu" ngbDropdownMenu>
                 <li>
-                    <a>
-                        <span jhiTranslate="blog.sidebar.menu.settings">Settings</span>
+                    <span class="dropdown-item subject disabled" jhiTranslate="blog.sidebar.dropdown.my_blog">My Blog</span>
+                </li>
+                <li *ngFor="let blog of blogs">
+                    <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blog.id }" fragment="posts/published" (click)="changeBlog(blog.id)">
+                        <span class="ml-2">{{blog.title}}</span>
                     </a>
-                    <ul class="sidebar-sub-menu">
-                        <li *ngSwitchCase="true">
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="basicsettings">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="'cog'"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.settings.basic">Basic</span>
-                                </span>
-                            </a>
-                        </li>
-                        <li *ngSwitchCase="true">
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="othersettings">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="'cogs'"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.settings.other">Other</span>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a [routerLink]="['/blog.cb']" [queryParams]="{ 'blogId': blogId }" fragment="usersettings">
-                                <span>
-                                    <fa-layers class="fa-fw">
-                                        <fa-icon [icon]="['far', 'user']"></fa-icon>
-                                    </fa-layers>
-                                    <span jhiTranslate="blog.sidebar.sub-menu.settings.user">User</span>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li>
+                    <div class="dropdown-divider"></div>
+                </li>
+                <li>
+                    <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="maker">
+                        <span jhiTranslate="blog.sidebar.dropdown.new_blog">New Blog...</span>
+                    </a>
                 </li>
             </ul>
         </div>
-        <div class="sidebar-footer">
-        </div>
+    </div>
+    <div class="sidebar-content">
+        <ul class="sidebar-menu" [ngSwitch]="blogs.length > 0">
+            <li *ngSwitchCase="false">
+                <a [routerLink]="['/blog.cb']" fragment="welcome">
+                    <span>
+                        <fa-layers [fixedWidth]="true">
+                            <fa-icon [icon]="['far','smile']"></fa-icon>
+                        </fa-layers>
+                        <span jhiTranslate="blog.sidebar.menu.welcome">Welcome</span>
+                    </span>
+                </a>
+            </li>
+            <li *ngSwitchCase="true">
+                <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="viewblog">
+                    <span>
+                        <fa-layers [fixedWidth]="true">
+                            <fa-icon icon="tv"></fa-icon>
+                        </fa-layers>
+                        <span jhiTranslate="blog.sidebar.menu.viewblog">View Blog</span>
+                    </span>
+                </a>
+            </li>
+<!--
+            <li *ngSwitchCase="true">
+                <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="stats">
+                    <span>
+                        <fa-layers [fixedWidth]="true">
+                            <fa-icon icon="chart-bar"></fa-icon>
+                        </fa-layers>
+                        <span jhiTranslate="blog.sidebar.menu.stats">Stats</span>
+                    </span>
+                </a>
+            </li>
+-->
+            <li *ngSwitchCase="true">
+                <a>
+                    <span jhiTranslate="blog.sidebar.menu.manage">Manage</span>
+                </a>
+                <ul class="sidebar-sub-menu">
+                    <li>
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="pages/published">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="['far', 'file']"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.manage.pages">Pages</span>
+                            </span>
+                        </a>
+                        <a class="btn btn-secondary btn-sm" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="editor/type=page">
+                            <fa-layers>
+                                <fa-icon [icon]="'plus'"></fa-icon>
+                            </fa-layers>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="posts/published">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="['far', 'file-alt']"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.manage.posts">Posts</span>
+                            </span>
+                        </a>
+                        <a class="btn btn-secondary btn-sm" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="editor/type=post">
+                            <fa-layers>
+                                <fa-icon [icon]="'plus'"></fa-icon>
+                            </fa-layers>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="comments/published">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="['far', 'comment']"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.manage.comments">Comments</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+<!--
+            <li *ngSwitchCase="true">
+                <a>
+                    <span jhiTranslate="blog.sidebar.menu.design">Design</span>
+                </a>
+                <ul class="sidebar-sub-menu">
+                    <li>
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="layout">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="'columns'"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.design.layout">Layout</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="theme">
+                            <span>
+                                <span jhiTranslate="blog.sidebar.sub-menu.design.theme">Theme</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+-->
+            <li>
+                <a>
+                    <span jhiTranslate="blog.sidebar.menu.settings">Settings</span>
+                </a>
+                <ul class="sidebar-sub-menu">
+                    <li *ngSwitchCase="true">
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="basicsettings">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="'cog'"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.settings.basic">Basic</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li *ngSwitchCase="true">
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="othersettings">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="'cogs'"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.settings.other">Other</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="usersettings">
+                            <span>
+                                <fa-layers [fixedWidth]="true">
+                                    <fa-icon [icon]="['far', 'user']"></fa-icon>
+                                </fa-layers>
+                                <span jhiTranslate="blog.sidebar.sub-menu.settings.user">User</span>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar-footer">
     </div>
 </div>

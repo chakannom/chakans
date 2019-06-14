@@ -1,9 +1,9 @@
 {
-    "home": {
-        "title": "Home - C.Blog",
-        "info": "Now, It's developing.",
-        "button": {
-            "start_blog": "Start Blog"
-        }
+  "home": {
+    "title": "Home - C.Blog",
+    "info": "Now, It's developing.",
+    "button": {
+      "start_blog": "Start Blog"
     }
+  }
 }

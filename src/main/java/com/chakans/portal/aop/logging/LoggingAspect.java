@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 
 import java.util.Arrays;
 
@@ -43,8 +44,8 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all Spring beans in the application's portal packages.
      */
-    @Pointcut("within(com.chakans.portal.repository..*)" +
-        " || within(com.chakans.portal.service..*)" +
+    @Pointcut("within(com.chakans.portal.repository..*)"+
+        " || within(com.chakans.portal.service..*)"+
         " || within(com.chakans.portal.web.rest..*)")
     public void applicationPortalPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
@@ -69,7 +70,7 @@ public class LoggingAspect {
     public void applicationBlogPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }
-    
+
     /**
      * Pointcut that matches all Spring beans in the application's drive packages.
      */
@@ -83,8 +84,8 @@ public class LoggingAspect {
     /**
      * Advice that logs methods throwing exceptions.
      *
-     * @param joinPoint join point for advice
-     * @param e exception
+     * @param joinPoint join point for advice.
+     * @param e exception.
      */
     @AfterThrowing(pointcut = "springBeanPointcut()" +
             " && applicationPortalPackagePointcut()" +
@@ -92,7 +93,7 @@ public class LoggingAspect {
             " && applicationBlogPackagePointcut()" +
             " && applicationDrivePackagePointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
+        if (env.acceptsProfiles(Profiles.of(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT))) {
             log.error("Exception in {}.{}() with cause = \'{}\' and exception = \'{}\'", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), e.getCause() != null? e.getCause() : "NULL", e.getMessage(), e);
 
@@ -105,9 +106,9 @@ public class LoggingAspect {
     /**
      * Advice that logs when a method is entered and exited.
      *
-     * @param joinPoint join point for advice
-     * @return result
-     * @throws Throwable throws IllegalArgumentException
+     * @param joinPoint join point for advice.
+     * @return result.
+     * @throws Throwable throws {@link IllegalArgumentException}.
      */
     @Around("springBeanPointcut()" +
             " && applicationPortalPackagePointcut()" +

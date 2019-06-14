@@ -1,7 +1,8 @@
 package com.chakans.account.web.rest.anonymous.model.request;
 
-import com.chakans.account.service.dto.UserDTO;
 import javax.validation.constraints.Size;
+
+import com.chakans.account.service.dto.UserDTO;
 
 /**
  * Request Model extending the UserDTO, which is meant to be used in the user management UI.

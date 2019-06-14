@@ -75,7 +75,7 @@ public class DrivePersonalTree implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DrivePersonalTree)) {
             return false;
         }
 
@@ -96,6 +96,6 @@ public class DrivePersonalTree implements Serializable {
             ", userLogin='" + userLogin + '\'' +
             ", level=" + level +
             ", parentId='" + parentId + '\'' +
-            '}';
+            "}";
     }
 }

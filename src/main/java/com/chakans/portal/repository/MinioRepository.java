@@ -37,7 +37,7 @@ import io.minio.errors.NoResponseException;
 @Repository
 public class MinioRepository {
 
-	private final Logger log = LoggerFactory.getLogger(MinioRepository.class);
+    private final Logger log = LoggerFactory.getLogger(MinioRepository.class);
     // default expiration for a presigned URL is 10 seconds
     private final int DEFAULT_EXPIRY_TIME = 10;
 
@@ -45,43 +45,43 @@ public class MinioRepository {
 
     private final String SUB_FOLDER_LIST_QUERY = "{\"id\":1,\"jsonrpc\":\"2.0\",\"params\":{\"bucketName\":\"%s\",\"prefix\":\"%s\",\"marker\":\"\"},\"method\":\"Web.ListObjects\"}";;
 
-	private final MinioClient minioClient;
+    private final MinioClient minioClient;
 
-	private final RestTemplate minioRpcClient;
+    private final RestTemplate minioRpcClient;
 
-	private final ApplicationProperties applicationProperties;
+    private final ApplicationProperties applicationProperties;
 
-	public MinioRepository(MinioClient minioClient, @Qualifier("minioRpcClient") RestTemplate minioRpcClient,
+    public MinioRepository(MinioClient minioClient, @Qualifier("minioRpcClient") RestTemplate minioRpcClient,
                            ApplicationProperties applicationProperties) {
-		this.minioClient = minioClient;
-		this.minioRpcClient = minioRpcClient;
-		this.applicationProperties = applicationProperties;
-	}
+        this.minioClient = minioClient;
+        this.minioRpcClient = minioRpcClient;
+        this.applicationProperties = applicationProperties;
+    }
 
-	public String getPresignedPutUrl(String bucketName, String objectName) {
+    public String getPresignedPutUrl(String bucketName, String objectName) {
         try {
-			return minioClient.presignedPutObject(bucketName, objectName, DEFAULT_EXPIRY_TIME);
-		} catch (InvalidKeyException | InvalidBucketNameException | NoSuchAlgorithmException
-				| InsufficientDataException | NoResponseException | ErrorResponseException | InternalException
-				| InvalidExpiresRangeException | IOException | XmlPullParserException e) {
-			e.printStackTrace();
-		}
+            return minioClient.presignedPutObject(bucketName, objectName, DEFAULT_EXPIRY_TIME);
+        } catch (InvalidKeyException | InvalidBucketNameException | NoSuchAlgorithmException
+                | InsufficientDataException | NoResponseException | ErrorResponseException | InternalException
+                | InvalidExpiresRangeException | IOException | XmlPullParserException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     public ObjectStat getStatObject(String bucketName, String objectName) {
-    	try {
-			return minioClient.statObject(bucketName, objectName);
-		} catch (InvalidKeyException | InvalidBucketNameException | NoSuchAlgorithmException | InsufficientDataException
-				| NoResponseException | ErrorResponseException | InternalException | IOException
-				| XmlPullParserException e) {
-			e.printStackTrace();
-		}
-    	return null;
+        try {
+            return minioClient.statObject(bucketName, objectName);
+        } catch (InvalidKeyException | InvalidBucketNameException | NoSuchAlgorithmException | InsufficientDataException
+                | NoResponseException | ErrorResponseException | InternalException | IOException
+                | XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String getFileFolder(String bucketName, String parentPath) {
-	    String webRpcUrl = applicationProperties.getMinio().getWebRpcUrl();
+        String webRpcUrl = applicationProperties.getMinio().getWebRpcUrl();
         for (int i = 0; i < 5; i++) {
             String fileFolder = UUID.randomUUID().toString().replaceAll("-", "");
             for (int j = 0; j < RANDOM_FOLDER_LIST.length; j++) {
@@ -93,11 +93,11 @@ public class MinioRepository {
                 }
             }
         }
-	    return null;
+        return null;
     }
 
     public List<String> getFileList(String bucketName, String prefix, boolean recursive) {
-	    List<String> fileList = new ArrayList<>();
+        List<String> fileList = new ArrayList<>();
         try {
             Iterable<Result<Item>> files = minioClient.listObjects(bucketName, prefix, recursive);
             for (Result<Item> file : files) {
@@ -112,6 +112,6 @@ public class MinioRepository {
     }
 
     private String generateFileUri(String bucketName, String objectName) {
-	    return UriComponentsBuilder.fromUriString(applicationProperties.getMinio().getEndPoint()).pathSegment(bucketName).path(objectName).toUriString();
+        return UriComponentsBuilder.fromUriString(applicationProperties.getMinio().getEndPoint()).pathSegment(bucketName).path(objectName).toUriString();
     }
 }

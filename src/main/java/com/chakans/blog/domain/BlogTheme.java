@@ -16,7 +16,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A theme.
  */
 @Entity
-@Table(name = "blog_theme")
+@Table(name = "cks_blog_theme")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogTheme extends AbstractAuditingEntity implements Serializable {
 
@@ -64,12 +64,10 @@ public class BlogTheme extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogTheme)) {
             return false;
         }
-
-        BlogTheme blogTheme = (BlogTheme) o;
-        return Objects.equals(id, blogTheme.getId());
+        return id != null && id.equals(((BlogTheme) o).id);
     }
 
     @Override
@@ -83,6 +81,6 @@ public class BlogTheme extends AbstractAuditingEntity implements Serializable {
             "id=" + id +
             ", imageUrl='" + imageUrl + '\'' +
             ", status=" + status +
-            '}';
+            "}";
     }
 }

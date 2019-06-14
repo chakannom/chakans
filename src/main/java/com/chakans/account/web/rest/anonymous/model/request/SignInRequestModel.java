@@ -44,7 +44,7 @@ public class SignInRequestModel {
 
     @Override
     public String toString() {
-        return "SignInVM{" +
+        return "SignInRequestModel{" +
             "username='" + username + '\'' +
             ", rememberMe=" + rememberMe +
             "}";

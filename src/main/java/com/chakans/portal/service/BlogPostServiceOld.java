@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.chakans.portal.repository.BlogPostRepositoryOld;
-
 /**
  * Service class for managing blogPosts.
  */
@@ -21,11 +19,11 @@ public class BlogPostServiceOld {
 
     private final Logger log = LoggerFactory.getLogger(BlogPostServiceOld.class);
 
-    private final BlogPostRepositoryOld blogPostRepository;
-      
-    public BlogPostServiceOld(BlogPostRepositoryOld blogPostRepository) {
-        this.blogPostRepository = blogPostRepository;
-    }       
+//    private final BlogPostRepositoryOld blogPostRepository;
+//      
+//    public BlogPostServiceOld(BlogPostRepositoryOld blogPostRepository) {
+//        this.blogPostRepository = blogPostRepository;
+//    }       
 /*
     @Transactional(readOnly = true)
     public Page<BlogPostDTO> getBlogPostDTOsByBlogId(Long blogId, Pageable pageable) {

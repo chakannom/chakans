@@ -8,11 +8,10 @@ import javax.validation.Valid;
 
 import com.chakans.blog.config.constants.BlogEnumsConstants;
 import com.chakans.blog.service.BlogThemeService;
+import com.chakans.blog.web.rest.errors.BlogAddressAlreadyUsedException;
 import com.chakans.blog.web.rest.errors.BlogStatusNotFoundException;
+import com.chakans.blog.web.rest.errors.BlogThemeNotFoundException;
 import com.chakans.core.config.constants.Constants;
-import com.chakans.core.util.PaginationUtil;
-import com.chakans.core.web.rest.errors.BlogAddressAlreadyUsedException;
-import com.chakans.core.web.rest.errors.ThemeNotFoundException;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.chakans.blog.service.BlogService;
 import com.chakans.blog.service.dto.BlogDTO;
@@ -31,6 +32,7 @@ import com.chakans.blog.web.rest.user.model.request.BlogRequestModel;
 import com.chakans.blog.web.rest.user.model.response.BlogResponseModel;
 import com.chakans.core.config.constants.AuthoritiesConstants;
 
+import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController("blog-v1-user-blog-resource")
@@ -51,56 +53,51 @@ public class BlogResource {
 
     @PostMapping("/blogs")
     @ResponseStatus(HttpStatus.CREATED)
-    public BlogResponseModel createBlog(@Valid @RequestBody BlogMakerRequestModel bmRequestModel) {
+    public void createBlog(@Valid @RequestBody BlogMakerRequestModel bmRequestModel) {
         log.debug("REST request to create My Blog : {}", bmRequestModel);
-
         if (blogService.getBlogBySubdomain(bmRequestModel.getSubdomain()).isPresent()) {
             throw new BlogAddressAlreadyUsedException();
         } else if (!blogThemeService.getBlogThemeByThemeId(bmRequestModel.getThemeId()).isPresent()) {
-            throw new ThemeNotFoundException();
+            throw new BlogThemeNotFoundException();
         }
-        
-        BlogDTO newBlogDTO = blogService.createMyBlog(bmRequestModel.getTitle(), bmRequestModel.getSubdomain(), bmRequestModel.getThemeId()).get();
-        return new BlogResponseModel(newBlogDTO);
+
+        blogService.createMyBlog(bmRequestModel.getTitle(), bmRequestModel.getSubdomain(), bmRequestModel.getThemeId());
     }
 
     @PutMapping("/blogs")
-    @ResponseStatus(HttpStatus.OK)
-    public BlogResponseModel updateMyBlog(@Valid @RequestBody BlogRequestModel bRequestModel) {
+    public void updateMyBlog(@Valid @RequestBody BlogRequestModel bRequestModel) {
         log.debug("REST request to update My Blog : {}", bRequestModel);
         BlogEnumsConstants.BLOG_SATAUS status = Optional.of(bRequestModel.getStatus()).map(BlogEnumsConstants.BLOG_SATAUS::getEnum).orElseThrow(BlogStatusNotFoundException::new);
 
-        BlogDTO updatedBlogDTO = blogService.updateMyBlog(bRequestModel.getId(), bRequestModel.getTitle(), bRequestModel.getDescription(), bRequestModel.getUrl(),
+        blogService.updateMyBlog(bRequestModel.getId(), bRequestModel.getTitle(), bRequestModel.getDescription(), bRequestModel.getUrl(),
                 bRequestModel.getCustomUrl(), bRequestModel.getLangKey(), status,
-                bRequestModel.getDesign().getWidth(), bRequestModel.getDesign().getLeftbarWidth(), 
-                bRequestModel.getDesign().getRightbarWidth(), bRequestModel.getDesign().getTheme(), bRequestModel.getDesign().isTopBar()).get();
-        return new BlogResponseModel(updatedBlogDTO);
+                bRequestModel.getDesign().getWidth(), bRequestModel.getDesign().getLeftbarWidth(),
+                bRequestModel.getDesign().getRightbarWidth(), bRequestModel.getDesign().getTheme(), bRequestModel.getDesign().isTopBar());
     }
 
     @PatchMapping("/blogs")
-    @ResponseStatus(HttpStatus.OK)
-    public BlogResponseModel patchMyBlog(
+    public void patchMyBlog(
             @RequestHeader("fields") String fields,
             @Valid @RequestBody BlogRequestModel bRequestModel) {
         log.debug("REST request to patch up My Blog : {}, {}", fields, bRequestModel);
         BlogEnumsConstants.BLOG_SATAUS status = Optional.ofNullable(bRequestModel.getStatus()).map(BlogEnumsConstants.BLOG_SATAUS::getEnum).orElse(null);
 
-        BlogDTO patchedBlogDTO = blogService.patchMyBlog(bRequestModel.getId(), bRequestModel.getTitle(), bRequestModel.getDescription(), bRequestModel.getUrl(),
+        blogService.patchMyBlog(bRequestModel.getId(), bRequestModel.getTitle(), bRequestModel.getDescription(), bRequestModel.getUrl(),
                 bRequestModel.getCustomUrl(), bRequestModel.getLangKey(), status,
-                bRequestModel.getDesign().getWidth(), bRequestModel.getDesign().getLeftbarWidth(), 
-                bRequestModel.getDesign().getRightbarWidth(), bRequestModel.getDesign().getTheme(), bRequestModel.getDesign().isTopBar(), fields.split(",")).get();
-        return new BlogResponseModel(patchedBlogDTO);
+                bRequestModel.getDesign().getWidth(), bRequestModel.getDesign().getLeftbarWidth(),
+                bRequestModel.getDesign().getRightbarWidth(), bRequestModel.getDesign().getTheme(), bRequestModel.getDesign().isTopBar(), fields.split(","));
     }
 
     @GetMapping("/blogs")
     public ResponseEntity<List<BlogResponseModel>> getAllMyBlogs(
             @RequestParam(value = "unpaged", defaultValue = "false") boolean unpaged,
+            @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder,
             Pageable pageable) {
         log.debug("REST request to get My Blogs");
         if (unpaged) pageable = Pageable.unpaged();
 
         final Page<BlogResponseModel> page = blogService.getMyBlogs(pageable).map(BlogResponseModel::new);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/apis/blog/v1/blogs");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

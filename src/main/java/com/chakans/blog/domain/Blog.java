@@ -19,7 +19,7 @@ import com.chakans.portal.domain.AbstractAuditingEntity;
  * A blog.
  */
 @Entity
-@Table(name = "blog")
+@Table(name = "cks_blog")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Blog extends AbstractAuditingEntity implements Serializable {
 
@@ -34,7 +34,6 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
     @Column(length = 100, nullable = false)
     private String title;
 
-    @Lob
     private String description;
 
     @NotNull
@@ -44,8 +43,8 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
     private String url;
 
     @Pattern(regexp = Constants.BLOG_CUSTOM_URL_REGEX)
-    @Size(min = 4, max = 253)
-    @Column(name = "custom_url",length = 253, nullable = false)
+    @Size(max = 253)
+    @Column(name = "custom_url",length = 253)
     private String customUrl;
 
     @NotNull
@@ -143,12 +142,10 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Blog)) {
             return false;
         }
-
-        Blog blog = (Blog) o;
-        return Objects.equals(id, blog.getId());
+        return id != null && id.equals(((Blog) o).id);
     }
 
     @Override
@@ -168,6 +165,6 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
             ", postCount=" + postCount +
             ", pageCount=" + pageCount +
             ", status=" + status +
-            '}';
+            "}";
     }
 }

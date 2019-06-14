@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 /**
- * Spring Data JPA repository for the DrivePersonalNode entity.
+ * Spring Data JPA repository for the {@link DrivePersonalNode} entity.
  */
 public interface DrivePersonalNodeRepository extends JpaRepository<DrivePersonalNode, DrivePersonalNodeId> {
 

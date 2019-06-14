@@ -17,7 +17,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A language
  */
 @Entity
-@Table(name = "language")
+@Table(name = "cks_language")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Language implements Serializable {
 
@@ -42,12 +42,10 @@ public class Language implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Language)) {
             return false;
         }
-
-        Language language = (Language) o;
-        return (key != null ? Objects.equals(key, language.getKey()) : language.getKey() != null);
+        return Objects.equals(key, ((Language) o).key);
     }
 
     @Override

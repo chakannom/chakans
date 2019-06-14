@@ -23,8 +23,7 @@ public final class ErrorConstants {
     public static final URI BLOG_INVALID_COMMENT_STATUS_TYPE = URI.create(PROBLEM_BASE_URL + "/blog-invalid-comment-status");
     public static final URI BLOG_INVALID_COMMENT_OBJECT_TYPE = URI.create(PROBLEM_BASE_URL + "/blog-invalid-comment-object");
     public static final URI BLOG_INVALID_THEME_STATUS_TYPE = URI.create(PROBLEM_BASE_URL + "/blog-invalid-theme-status");
-    public static final URI THEME_NOT_FOUND_TYPE = URI.create(PROBLEM_BASE_URL + "/theme-not-found");
-    public static final URI BOARD_KEY_ALREADY_USED_TYPE  = URI.create(PROBLEM_BASE_URL + "/board-key-already-used");
+    public static final URI BLOG_THEME_NOT_FOUND_TYPE = URI.create(PROBLEM_BASE_URL + "/blog-theme-not-found");
     public static final URI DRIVE_PARENT_NODE_NOT_FOUND_TYPE  = URI.create(PROBLEM_BASE_URL + "/drive-parent-node-not-found");
 
     private ErrorConstants() {

@@ -1,5 +1,25 @@
 {
-    "initial": {
-        "title": "First time user - C.Blog"
+  "initial": {
+    "title": "First time user - C.Blog",
+    "sub_title": "User profile",
+    "form": {
+      "nickname": "Nickname",
+      "nickname.placeholder": "Your nickname",
+      "buttons": {
+        "continue": "Continue to C.Blog"
+      }
+    },
+    "messages": {
+      "validate": {
+        "nickname": {
+          "required": "Your nickname is required.",
+          "minlength": "Your nickname is required to be at least 3 characters.",
+          "maxlength": "Your nickname cannot be longer than 100 characters."
+        }
+      },
+      "error": {
+        "fail": "<strong>Registration failed!</strong> Please try again later."
+      }
     }
+  }
 }

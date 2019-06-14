@@ -1,0 +1,20 @@
+/* ==========================================================================
+Settings
+========================================================================== */
+.list-group-item {
+  padding: 0 0.75rem;
+}
+
+.list-agree-item {
+  > .cks-checkbox {
+    position: absolute;
+    top: 50%;
+    margin-top: -12px;
+  }
+  > label {
+    display: inline-block;
+    margin-top: 0.5rem;
+    margin-left: 2rem;
+    margin-bottom: 0.5rem;
+  }
+}

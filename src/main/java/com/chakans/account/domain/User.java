@@ -7,9 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.validation.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -21,7 +21,7 @@ import java.time.Instant;
  * A user.
  */
 @Entity
-@Table(name = "user")
+@Table(name = "cks_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
@@ -53,8 +53,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Email
-    @Size(min = 5, max = 191)
-    @Column(length = 191, unique = true, nullable = false)
+    @Size(min = 5, max = 254)
+    @Column(length = 254, unique = true, nullable = false)
     private String email;
 
     @NotNull
@@ -85,7 +85,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "user_authority",
+        name = "cks_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -96,7 +96,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "agreement_name")
     @Column(name = "agreed")
-    @CollectionTable(name = "user_agreement", joinColumns = {@JoinColumn(name="user_id")})
+    @CollectionTable(name = "cks_user_agreement", joinColumns = {@JoinColumn(name="user_id")})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Map<String, Boolean> agreements = new HashMap<>();
 
@@ -218,12 +218,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof User)) {
             return false;
         }
-
-        User user = (User) o;
-        return (id != null ? Objects.equals(id, user.getId()) : user.getId() == null);
+        return id != null && id.equals(((User) o).id);
     }
 
     @Override
@@ -234,14 +232,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-            "login='" + login + "'" +
-            ", firstName='" + firstName + "'" +
-            ", lastName='" + lastName + "'" +
-            ", email='" + email + "'" +
-            ", imageUrl='" + imageUrl + "'" +
-            ", activated=" + activated +
-            ", langKey='" + langKey + "'" +
-            ", activationKey='" + activationKey + "'" +
+            "login='" + login + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", imageUrl='" + imageUrl + '\'' +
+            ", activated='" + activated + '\'' +
+            ", langKey='" + langKey + '\'' +
+            ", activationKey='" + activationKey + '\'' +
             "}";
     }
 }

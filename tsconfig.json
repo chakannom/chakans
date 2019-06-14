@@ -1,36 +1,27 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": false,
-        "skipLibCheck": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "outDir": "build/www",
-        "lib": ["es7", "dom"],
-        "typeRoots": ["node_modules/@types"],
-        "baseUrl": "./",
-        "paths": {
-            "index/app/*": ["src/main/webapp/index/app/*"],
-            "accounts/app/*": ["src/main/webapp/accounts/app/*"],
-            "blogs/app/*": ["src/main/webapp/blogs/app/*"],
-            "drives/app/*": ["src/main/webapp/drives/app/*"],
-            "admin/app/*": ["src/main/webapp/admin/app/*"]
-        },
-        "importHelpers": true,
-        "allowJs": true
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "outDir": "build/resources/main/static",
+    "lib": ["es7", "dom"],
+    "typeRoots": ["node_modules/@types"],
+    "baseUrl": "./",
+    "paths": {
+      "index/app/*": ["src/main/webapp/index/app/*"],
+      "accounts/app/*": ["src/main/webapp/accounts/app/*"],
+      "admin/app/*": ["src/main/webapp/admin/app/*"]
     },
-    "include": [
-        "src/main/webapp/index/app",
-        "src/main/webapp/accounts/app",
-        "src/main/webapp/blogs/app",
-        "src/main/webapp/drives/app",
-        "src/main/webapp/admin/app",
-        "src/test/javascript/"
-    ],
-    "exclude": ["node_modules"]
+    "importHelpers": true,
+    "allowJs": true
+  },
+  "include": ["src/main/webapp/index/app", "src/main/webapp/accounts/app", "src/main/webapp/admin/app", "src/test/javascript/"],
+  "exclude": ["node_modules"]
 }

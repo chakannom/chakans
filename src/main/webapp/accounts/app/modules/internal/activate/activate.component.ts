@@ -4,31 +4,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ActivateService } from './activate.service';
 
 @Component({
-    selector: 'jhi-activate',
-    templateUrl: './activate.component.html'
+  selector: 'cks-activate',
+  templateUrl: './activate.component.html'
 })
 export class ActivateComponent implements OnInit {
-    error: string;
-    success: string;
+  error: string;
+  success: string;
 
-    constructor(private activateService: ActivateService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private activateService: ActivateService, private route: ActivatedRoute, private router: Router) {}
 
-    ngOnInit() {
-        this.route.queryParams.subscribe(params => {
-            this.activateService.get(params['key']).subscribe(
-                () => {
-                    this.error = null;
-                    this.success = 'OK';
-                },
-                () => {
-                    this.success = null;
-                    this.error = 'ERROR';
-                }
-            );
-        });
-    }
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.activateService.get(params['key']).subscribe(
+        () => {
+          this.error = null;
+          this.success = 'OK';
+        },
+        () => {
+          this.success = null;
+          this.error = 'ERROR';
+        }
+      );
+    });
+  }
 
-    signIn() {
-        this.router.navigate(['/signin']);
-    }
+  signIn() {
+    this.router.navigate(['/signin']);
+  }
 }

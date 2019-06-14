@@ -1,15 +1,13 @@
 package com.chakans.core.config.thirdparty.webdriver;
 
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
-
-import javax.transaction.SystemException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.chakans.core.tools.RunProcess;
+import com.chakans.core.config.thirdparty.docker.DockerHelper;
+import com.github.dockerjava.api.exception.DockerClientException;
 
 /**
  * Utility class to configure WebDriver in development.
@@ -20,47 +18,41 @@ import com.chakans.core.tools.RunProcess;
 public class WebDriverConfigurationHelper {
     
     private static final Logger log = LoggerFactory.getLogger(WebDriverConfigurationHelper.class);
+
+    private static final String imageName = "selenium/standalone-{browserName}-debug";
     
-    public static RunProcess createServer() {
+    private static final String tag = "3.141.59";
+    
+    private static final String containerName = "dev-webdriver-{browserName}";
+    
+    private static final Integer hostPort = 9002;
+    
+    private static final Integer hostVncPort = 5990;
+    
+    public static boolean createServer() {
         return createServer("chrome");
     }
     
-    public static RunProcess createServer(String browserName) {
+    public static boolean createServer(String browserName) {
         try {
-            log.debug("Starting {} headless server", browserName);
-            String workingDirectory =  Paths.get(System.getProperty("user.dir"), "thirdparty/webdriver").toString();
-            String webdriverCommend = getCommend(workingDirectory, browserName);
-            RunProcess webdriverProcess = new RunProcess(webdriverCommend);
-            webdriverProcess.run(false);
-            webdriverProcess.getRunningProcess().waitFor(5, TimeUnit.SECONDS);
-            log.debug("Started {} headless server", browserName);
-            return webdriverProcess;
-        } catch (SystemException e) {
-            throw new RuntimeException("It can not run " + browserName +" headless server under your operation system", e);
-        }  catch (InterruptedException e) {
-            throw new RuntimeException("The " + browserName + "'s thread is interrupted", e);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to create " + browserName + " headless server", e);
-        }
+            log.debug("Starting {} webdriver's docker container", browserName);
+            DockerHelper dockerHelper = new DockerHelper(imageName.replace("{browserName}", browserName), tag) {};
+    		if (!dockerHelper.isExistedImage()) {
+    			dockerHelper.pullImage();
+    		}
+    		if (!dockerHelper.isExistedRunningContainer(containerName.replace("{browserName}", browserName))) {
+    			Map<String, String> volumes = new HashMap<>();
+    			volumes.put("/dev/shm", "/dev/shm");
+    			Map<Integer, Integer> ports = new HashMap<>();
+    			ports.put(hostPort, 4444);
+    			ports.put(hostVncPort, 5900);
+    			dockerHelper.runContainer(null, volumes, ports, containerName.replace("{browserName}", browserName), null);
+    		}
+            log.debug("Started {} webdriver's docker container", browserName);
+		} catch (DockerClientException e) {
+			log.debug("Failed to start {} webdriver's docker container", browserName);
+			return false;
+		}
+        return true;
     }
-    
-    private static String getCommend(String workingDirectory, String browserName) throws SystemException {
-        String osFolderName;
-        String webdriverexe;
-        String osName = System.getProperty("os.name").toLowerCase();
-        if (osName.indexOf("win") >= 0) {
-            osFolderName = "windows";
-            webdriverexe = "chromedriver.exe";
-        } else if (osName.indexOf("nix") >= 0 || osName.indexOf("nux") >= 0) {
-            osFolderName = "linux";
-            webdriverexe = "chromedriver";
-        } else if (osName.indexOf("mac") >= 0) {
-            osFolderName = "mac";
-            webdriverexe = "chromedriver";
-        } else {
-            throw new SystemException(osName);
-        }
-        return Paths.get(workingDirectory, osFolderName, webdriverexe).toString();
-    }
-
 }

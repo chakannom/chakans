@@ -1,17 +1,10 @@
 import { NgModule } from '@angular/core';
 
-import {
-    BlogsSharedLibsModule,
-    FindLanguageFromKeyPipe,
-    PrettyDatePipe,
-    EllipsisPipe,
-    JhiAlertComponent,
-    JhiAlertErrorComponent
-} from './';
+import { BlogsSharedLibsModule, EllipsisPipe, FindLanguageFromKeyPipe, PrettyDatePipe, AlertComponent, AlertErrorComponent } from './';
 
 @NgModule({
-    imports: [BlogsSharedLibsModule],
-    declarations: [FindLanguageFromKeyPipe, PrettyDatePipe, EllipsisPipe, JhiAlertComponent, JhiAlertErrorComponent],
-    exports: [BlogsSharedLibsModule, FindLanguageFromKeyPipe, PrettyDatePipe, EllipsisPipe, JhiAlertComponent, JhiAlertErrorComponent]
+  imports: [BlogsSharedLibsModule],
+  declarations: [EllipsisPipe, FindLanguageFromKeyPipe, PrettyDatePipe, AlertComponent, AlertErrorComponent],
+  exports: [BlogsSharedLibsModule, EllipsisPipe, FindLanguageFromKeyPipe, PrettyDatePipe, AlertComponent, AlertErrorComponent]
 })
 export class BlogsSharedCommonModule {}

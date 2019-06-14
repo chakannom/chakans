@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.chakans.portal.domain.Language;
 
 /**
- * Spring Data JPA repository for the Language entity.
+ * Spring Data JPA repository for the {@link Language} entity.
  */
 public interface LanguageRepository extends JpaRepository<Language, String> {
 }

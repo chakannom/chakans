@@ -1,21 +1,21 @@
 {
-    "sign-in": {
-        "title": "인증",
-        "form": {
-            "email": "이메일",
-            "email.placeholder": "당신의 이메일",
-            "password": "비밀번호",
-            "password.placeholder": "당신의 비밀번호",
-            "rememberme": "자동 로그인",
-            "button": "인증하기"
-        },
-        "messages": {
-            "error": {
-                "authentication": "<strong>인증 실패!</strong> credential을 확인하고 다시 시도해 주세요."
-            }
-        },
-        "password" : {
-            "forgot": "비밀번호 재설정"
-        }
+  "sign-in": {
+    "title": "인증",
+    "form": {
+      "email": "이메일",
+      "email.placeholder": "당신의 이메일",
+      "password": "비밀번호",
+      "password.placeholder": "당신의 비밀번호",
+      "rememberme": "자동 로그인",
+      "button": "인증하기"
+    },
+    "messages": {
+      "error": {
+        "authentication": "<strong>인증 실패!</strong> credential을 확인하고 다시 시도해 주세요."
+      }
+    },
+    "password": {
+      "forgot": "비밀번호 재설정"
     }
+  }
 }

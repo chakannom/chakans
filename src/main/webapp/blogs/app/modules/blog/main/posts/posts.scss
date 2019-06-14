@@ -1,0 +1,42 @@
+/* ==========================================================================
+Blog posts styles
+========================================================================== */
+.post-item-detail {
+  position: relative;
+  width: 100%;
+  margin-right: auto;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+.post-item-title {
+  font-size: 1.125em;
+}
+.post-item-title-link {
+  display: block;
+  color: #212529;
+  &:visited {
+    display: block;
+    color: #212529;
+  }
+}
+.post-item-meta {
+  font-size: 0.75em;
+  color: #537994;
+}
+.post-item-meta-datetime {
+  display: inline-block;
+  margin-right: 0.9375em;
+}
+.post-item-meta-datetime-link {
+  color: #537994;
+  &:visited {
+    color: #537994;
+  }
+}
+.post-item-meta-count {
+  display: inline-block;
+  margin-right: 0.9375em;
+  > span {
+    margin-left: 0.1875em;
+  }
+}

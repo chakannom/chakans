@@ -44,15 +44,6 @@ public class BlogThemeService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<BlogThemeDTO> getBlogThemeByThemeIdAndLangKey(Long themeId, String langKey) {
-        return blogThemeRepository.findOneByIdAndStatusAndDeletedDateIsNull(themeId, BlogEnumsConstants.THEME_SATAUS.PUBLISHED)
-            .map(blogTheme -> {
-                BlogThemeDescription blogThemeDescription = blogThemeDescriptionRepository.findOneByThemeIdAndLangKey(blogTheme.getId(), langKey).get();
-                return new BlogThemeDTO(blogTheme, blogThemeDescription);
-            });
-    }
-
-    @Transactional(readOnly = true)
     public Optional<BlogThemeDTO> getBlogThemeByThemeId(Long themeId) {
         return blogThemeRepository.findOneByIdAndStatusAndDeletedDateIsNull(themeId, BlogEnumsConstants.THEME_SATAUS.PUBLISHED)
             .map(blogTheme -> new BlogThemeDTO(blogTheme, null));

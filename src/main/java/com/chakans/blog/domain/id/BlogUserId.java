@@ -33,7 +33,7 @@ public class BlogUserId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BlogUserId)) return false;
 
         BlogUserId blogUserId = (BlogUserId) o;
         return Objects.equals(blogId, blogUserId.getBlogId())

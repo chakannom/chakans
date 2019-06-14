@@ -2,16 +2,13 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class RedirectService {
+  constructor() {}
 
-    constructor(
-    ) {
-    }
+  go(url: string) {
+    window.location.href = url;
+  }
 
-    go(url: string) {
-        window.location.href = url;
-    }
-
-    goAccountsSignIn() {
-        window.location.href = '/accounts/signin?continue=' + encodeURIComponent(window.location.href);
-    }
+  goAccountsSignIn() {
+    this.go('/accounts/signin?continue=' + encodeURIComponent(window.location.href));
+  }
 }

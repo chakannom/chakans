@@ -10,6 +10,6 @@ public class ExceptionConfiguration {
 
     @Bean
     public ExceptionTranslator exceptionTranslator() {
-    	return new ExceptionTranslator();
+        return new ExceptionTranslator();
     }
 }

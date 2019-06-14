@@ -115,7 +115,7 @@ public class DrivePersonalNode extends AbstractAuditingEntity implements Seriali
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof DrivePersonalNode)) {
             return false;
         }
 
@@ -139,6 +139,6 @@ public class DrivePersonalNode extends AbstractAuditingEntity implements Seriali
             ", size=" + size +
             ", permission='" + permission + '\'' +
             ", etag='" + etag + '\'' +
-            '}';
+            "}";
     }
 }

@@ -31,32 +31,18 @@ public class BlogUserProfileService {
 		this.userRepository = userRepository;
 	}
 
-    public Optional<BlogUserProfileDTO> createMyProfile() {
+    public Optional<BlogUserProfileDTO> createMyProfile(String nickname) {
         return SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .map(user -> {
                 BlogUserProfile blogUserProfile = new BlogUserProfile();
                 blogUserProfile.setUserLogin(user.getLogin());
-                blogUserProfile.setNickname(null);
+                blogUserProfile.setNickname(nickname);
                 blogUserProfile.setEmail(user.getEmail());
                 blogUserProfile.setOpenedProfile(false);
                 blogUserProfile.setOpenedEmail(false);
                 blogUserProfileRepository.save(blogUserProfile);
                 log.debug("Created Information for BlogUserProfile: {}", blogUserProfile);
-                return new BlogUserProfileDTO(blogUserProfile);
-            });
-    }
-
-    public Optional<BlogUserProfileDTO> updateMyProfile(String nickname, String email, String imageUrl, Boolean openedProfile, Boolean openedEmail) {
-        return SecurityUtils.getCurrentUserLogin()
-            .flatMap(blogUserProfileRepository::findOneByUserLogin)
-            .map(blogUserProfile -> {
-                blogUserProfile.setNickname(nickname);
-                blogUserProfile.setEmail(email);
-                blogUserProfile.setImageUrl(imageUrl);
-                blogUserProfile.setOpenedProfile(openedProfile);
-                blogUserProfile.setOpenedEmail(openedEmail);
-                log.debug("Changed Information for UserProfile: {}", blogUserProfile);
                 return new BlogUserProfileDTO(blogUserProfile);
             });
     }

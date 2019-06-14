@@ -7,12 +7,11 @@ import { HEADER_ACCEPT_ACCOUNT_ANONYMOUS } from '../../../shared/constants/http.
 
 @Injectable({ providedIn: 'root' })
 export class ActivateService {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    get(key: string): Observable<any> {
-        return this.http.get(SERVER_API_URL + 'apis/activate', {
-            headers: new HttpHeaders().set('Accept', HEADER_ACCEPT_ACCOUNT_ANONYMOUS),
-            params: new HttpParams().set('key', key)
-        });
-    }
+  get(key: string): Observable<any> {
+    const headerOptions = new HttpHeaders().set('Accept', HEADER_ACCEPT_ACCOUNT_ANONYMOUS);
+    const paramOptions = new HttpParams().set('key', key);
+    return this.http.get(SERVER_API_URL + 'apis/activate', { headers: headerOptions, params: paramOptions });
+  }
 }

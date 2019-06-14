@@ -1,7 +1,0 @@
-id;user_login;level;parent_id
-user;user;0;null
-user-1;user;1;user
-user-2;user;1;user
-user-3;user;1;user
-user-2-1;user;2;user-2
-user-2-2;user;2;user-2

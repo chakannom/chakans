@@ -12,7 +12,7 @@ import java.util.Objects;
  * A blog_theme_template.
  */
 @Entity
-@Table(name = "blog_theme_template")
+@Table(name = "cks_blog_theme_template")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogThemeTemplate implements Serializable {
 
@@ -23,7 +23,6 @@ public class BlogThemeTemplate implements Serializable {
     private Long themeId;
 
     @NotNull
-    @Lob
     private String content;
 
     public Long getThemeId() {
@@ -47,12 +46,10 @@ public class BlogThemeTemplate implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogThemeTemplate)) {
             return false;
         }
-
-        BlogThemeTemplate blogThemeTemplate = (BlogThemeTemplate) o;
-        return Objects.equals(themeId, blogThemeTemplate.getThemeId());
+        return themeId != null && themeId.equals(((BlogThemeTemplate) o).themeId);
     }
 
     @Override
@@ -65,6 +62,6 @@ public class BlogThemeTemplate implements Serializable {
         return "BlogThemeTemplate{" +
             "themeId=" + themeId +
             ", content='" + content + '\'' +
-            '}';
+            "}";
     }
 }

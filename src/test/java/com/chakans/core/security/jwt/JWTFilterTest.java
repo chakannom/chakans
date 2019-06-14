@@ -1,12 +1,11 @@
 package com.chakans.core.security.jwt;
 
-import com.chakans.core.config.constants.AuthoritiesConstants;
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -15,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import com.chakans.core.config.constants.AuthoritiesConstants;
 
 import java.util.Collections;
 
@@ -26,14 +27,17 @@ public class JWTFilterTest {
 
     private JWTFilter jwtFilter;
 
-    @Before
+    @BeforeEach
     public void setup() {
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
         tokenProvider = new TokenProvider(jHipsterProperties.getSecurity().getAuthentication().getJwt().getSecret(),
                 jHipsterProperties.getSecurity().getAuthentication().getJwt().getBase64Secret(),
                 jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds(),
                 jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe());
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", "test secret");
+        ReflectionTestUtils.setField(tokenProvider, "key",
+            Keys.hmacShaKeyFor(Decoders.BASE64
+                .decode("fd54a45s65fds737b9aafcb3412e07ed99b267f33413274720ddbb7f6c5e64e9f14075f2d7ed041592f0b7657baf8")));
+
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", 60000);
         jwtFilter = new JWTFilter(tokenProvider);
         SecurityContextHolder.getContext().setAuthentication(null);

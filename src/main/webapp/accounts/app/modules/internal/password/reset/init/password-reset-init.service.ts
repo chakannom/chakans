@@ -7,10 +7,10 @@ import { HEADER_ACCEPT_ACCOUNT_ANONYMOUS } from '../../../../../shared/constants
 
 @Injectable({ providedIn: 'root' })
 export class PasswordResetInitService {
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    save(mail: string): Observable<any> {
-        const headers = new HttpHeaders().set('Accept', HEADER_ACCEPT_ACCOUNT_ANONYMOUS);
-        return this.http.post(SERVER_API_URL + 'apis/account/reset-password/init', mail, { headers: headers });
-    }
+  save(mail: string): Observable<any> {
+    const headerOptions = new HttpHeaders().set('Accept', HEADER_ACCEPT_ACCOUNT_ANONYMOUS);
+    return this.http.post(SERVER_API_URL + 'apis/account/reset-password/init', mail, { headers: headerOptions });
+  }
 }

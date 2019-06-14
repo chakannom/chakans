@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.List;
 
 /**
- * Spring Data JPA repository for the FileUploadAlbum entity.
+ * Spring Data JPA repository for the {@link FileUploadAlbum} entity.
  */
 public interface FileUploadAlbumRepository extends JpaRepository<FileUploadAlbum, String> {
 

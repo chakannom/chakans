@@ -73,8 +73,8 @@ public class UserDTO {
         this.modifiedBy = user.getModifiedBy();
         this.modifiedDate = user.getModifiedDate();
         this.authorities = user.getAuthorities().stream()
-                .map(Authority::getName)
-                .collect(Collectors.toSet());
+            .map(Authority::getName)
+            .collect(Collectors.toSet());
         this.agreements = user.getAgreements();
     }
 

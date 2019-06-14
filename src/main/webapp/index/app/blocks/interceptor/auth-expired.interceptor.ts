@@ -6,20 +6,20 @@ import { SignOutService } from '../../core/sign-out/sign-out.service';
 
 @Injectable()
 export class AuthExpiredInterceptor implements HttpInterceptor {
-    constructor(private signOutService: SignOutService) {}
+  constructor(private signOutService: SignOutService) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(
-            tap(
-                (event: HttpEvent<any>) => {},
-                (err: any) => {
-                    if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
-                            this.signOutService.do();
-                        }
-                    }
-                }
-            )
-        );
-    }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request).pipe(
+      tap(
+        (event: HttpEvent<any>) => {},
+        (err: any) => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 401) {
+              this.signOutService.signOut();
+            }
+          }
+        }
+      )
+    );
+  }
 }

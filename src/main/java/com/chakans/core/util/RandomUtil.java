@@ -1,12 +1,12 @@
 package com.chakans.core.util;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * Utility class for generating random Strings.
@@ -23,7 +23,7 @@ public final class RandomUtil {
     /**
      * Generate a password.
      *
-     * @return the generated password
+     * @return the generated password.
      */
     public static String generatePassword() {
         return RandomStringUtils.randomAlphanumeric(DEF_COUNT);
@@ -32,7 +32,7 @@ public final class RandomUtil {
     /**
      * Generate an activation key.
      *
-     * @return the generated activation key
+     * @return the generated activation key.
      */
     public static String generateActivationKey() {
         return RandomStringUtils.randomNumeric(DEF_COUNT);
@@ -41,7 +41,7 @@ public final class RandomUtil {
     /**
      * Generate a reset key.
      *
-     * @return the generated reset key
+     * @return the generated reset key.
      */
     public static String generateResetKey() {
         return RandomStringUtils.randomNumeric(DEF_COUNT);

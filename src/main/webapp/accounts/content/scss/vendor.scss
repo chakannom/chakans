@@ -1,0 +1,9 @@
+/* after changing this file run 'npm run webpack:build' */
+
+/***************************
+put Sass variables here:
+eg $input-color: red;
+****************************/
+// Override Boostrap variables
+// Import Bootstrap source files from node_modules
+@import '../../../../../../node_modules/bootstrap/scss/bootstrap';

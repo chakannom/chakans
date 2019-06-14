@@ -29,9 +29,9 @@ public class ImgproxyConfiguration {
      * @throws RuntimeException if unprocessed operation system
      * @throws IOException if the server failed to start
      */
-    @Bean(destroyMethod = "kill")
+    @Bean
     @Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
-    public Object imgproxyStorageServer() {
-        return ImgproxyConfigurationHelper.createServer();
+    public void imgproxyStorageServer() {
+        ImgproxyConfigurationHelper.createServer();
     }
 }

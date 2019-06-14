@@ -18,7 +18,7 @@ import com.chakans.portal.domain.AbstractAuditingEntity;
  * A blog_comment.
  */
 @Entity
-@Table(name = "blog_comment")
+@Table(name = "cks_blog_comment")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class BlogComment extends AbstractAuditingEntity implements Serializable {
 
@@ -31,23 +31,23 @@ public class BlogComment extends AbstractAuditingEntity implements Serializable 
     @NotNull
     @Column(name = "blog_id", nullable = false, updatable = false)
     private Long blogId;
-    
+
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "object_type", nullable = false, updatable = false)
     private COMMENT_OBJECT_TYPE objectType;
-    
+
     @NotNull
     @Column(name = "object_id", nullable = false, updatable = false)
     private Long objectId;
-    
+
     @NotNull
     @Column(nullable = false, updatable = false)
     private Integer level;
-    
+
     @Column(name = "parent_id", updatable = false)
     private Long parentId;
-    
+
     @NotNull
     @Size(min = 1, max = 4096)
     @Column(length = 4096, nullable = false)
@@ -55,13 +55,13 @@ public class BlogComment extends AbstractAuditingEntity implements Serializable 
 
     @Column(name = "author_name")
     private String authorName;
-    
+
     @Column(name = "author_email")
     private String authorEmail;
-    
+
     @Column(name = "author_url")
     private String authorUrl;
-    
+
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
@@ -160,12 +160,10 @@ public class BlogComment extends AbstractAuditingEntity implements Serializable 
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof BlogComment)) {
             return false;
         }
-
-        BlogComment blogComment = (BlogComment) o;
-        return Objects.equals(id, blogComment.getId());
+        return id != null && id.equals(((BlogComment) o).id);
     }
 
     @Override
@@ -187,6 +185,6 @@ public class BlogComment extends AbstractAuditingEntity implements Serializable 
             ", authorEmail='" + authorEmail + '\'' +
             ", authorUrl='" + authorUrl + '\'' +
             ", status=" + status +
-            '}';
+            "}";
     }
 }

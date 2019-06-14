@@ -1,11 +1,11 @@
 package com.chakans.account.repository;
 
-import com.chakans.account.domain.Authority;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.chakans.account.domain.Authority;
+
 /**
- * Spring Data JPA repository for the Authority entity.
+ * Spring Data JPA repository for the {@link Authority} entity.
  */
 public interface AuthorityRepository extends JpaRepository<Authority, String> {
 }

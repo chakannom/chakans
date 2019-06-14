@@ -53,12 +53,10 @@ public class FileUploadDrive implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof FileUploadDrive)) {
             return false;
         }
-
-        FileUploadDrive fileUploadDrive = (FileUploadDrive) o;
-        return (directory != null ? Objects.equals(directory, fileUploadDrive.getDirectory()) : fileUploadDrive.getDirectory() != null);
+        return directory != null && directory.equals(((FileUploadDrive) o).directory);
     }
 
     @Override
@@ -69,7 +67,7 @@ public class FileUploadDrive implements Serializable {
     @Override
     public String toString() {
         return "FileUploadDrive{" +
-            "directory='" + directory + "'" +
+            "directory='" + directory + '\'' +
             "}";
     }
 

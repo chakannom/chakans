@@ -1,18 +1,18 @@
 package com.chakans.core.security.jwt;
 
-import com.chakans.core.config.constants.AuthoritiesConstants;
-
 import java.security.Key;
 import java.util.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import com.chakans.core.config.constants.AuthoritiesConstants;
 
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.Jwts;
@@ -24,12 +24,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TokenProviderTest {
 
-    private final long ONE_MINUTE = 60000;
+    private static final long ONE_MINUTE = 60000;
+
     private Key key;
     private JHipsterProperties jHipsterProperties;
     private TokenProvider tokenProvider;
 
-    @Before
+    @BeforeEach
     public void setup() {
         jHipsterProperties = Mockito.mock(JHipsterProperties.class);
         tokenProvider = new TokenProvider(jHipsterProperties.getSecurity().getAuthentication().getJwt().getSecret(),
