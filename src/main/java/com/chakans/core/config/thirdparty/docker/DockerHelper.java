@@ -74,7 +74,7 @@ public class DockerHelper {
 			return isPullImage;
 		} catch (InterruptedException e) {
 			throw new DockerClientException("It failed to pull image (" + imageName + ":" + tag + ") .", e);
-		} 
+		}
 	}
 
 	public List<Container> getListContainers(String name) {
@@ -118,6 +118,10 @@ public class DockerHelper {
 		dockerClient.startContainerCmd(container.getId()).exec();
 		return true;
 	}
+
+    public void removeContainer(String name) {
+	    getListContainers(name).forEach(container -> dockerClient.removeContainerCmd(container.getId()).exec());
+    }
 
 	public void waitStarted(String name) throws DockerClientException {
 		while (true) {

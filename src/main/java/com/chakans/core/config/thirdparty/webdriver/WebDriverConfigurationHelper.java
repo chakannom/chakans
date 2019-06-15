@@ -16,23 +16,23 @@ import com.github.dockerjava.api.exception.DockerClientException;
  * actually need it, so we have to load / invoke things at runtime through reflection.
  */
 public class WebDriverConfigurationHelper {
-    
+
     private static final Logger log = LoggerFactory.getLogger(WebDriverConfigurationHelper.class);
 
     private static final String imageName = "selenium/standalone-{browserName}-debug";
-    
+
     private static final String tag = "3.141.59";
-    
+
     private static final String containerName = "dev-webdriver-{browserName}";
-    
+
     private static final Integer hostPort = 9002;
-    
+
     private static final Integer hostVncPort = 5990;
-    
+
     public static boolean createServer() {
         return createServer("chrome");
     }
-    
+
     public static boolean createServer(String browserName) {
         try {
             log.debug("Starting {} webdriver's docker container", browserName);
@@ -41,6 +41,7 @@ public class WebDriverConfigurationHelper {
     			dockerHelper.pullImage();
     		}
     		if (!dockerHelper.isExistedRunningContainer(containerName.replace("{browserName}", browserName))) {
+                dockerHelper.removeContainer(containerName.replace("{browserName}", browserName));
     			Map<String, String> volumes = new HashMap<>();
     			volumes.put("/dev/shm", "/dev/shm");
     			Map<Integer, Integer> ports = new HashMap<>();

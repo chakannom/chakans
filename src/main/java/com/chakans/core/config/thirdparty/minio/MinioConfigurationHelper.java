@@ -53,13 +53,13 @@ public class MinioConfigurationHelper {
     private static final Logger log = LoggerFactory.getLogger(MinioConfigurationHelper.class);
 
     private static final String imageName = "minio/minio";
-    
+
     private static final String tag = "RELEASE.2019-06-13T01-41-13Z";
-    
+
     private static final String containerName = "dev-minio";
-    
+
     private static final Integer hostPort = 9000;
-    
+
     public static boolean createServer(String endPoint, String accessKey, String secretKey, boolean secure, Map<String, String> buckets) {
     	try {
     		log.debug("Starting Minio's docker container");
@@ -68,6 +68,7 @@ public class MinioConfigurationHelper {
     			dockerHelper.pullImage();
     		}
     		if (!dockerHelper.isExistedRunningContainer(containerName)) {
+                dockerHelper.removeContainer(containerName);
     			List<String> environments = Arrays.asList("MINIO_ACCESS_KEY=" + accessKey, "MINIO_SECRET_KEY=" + secretKey, "MINIO_WORM=on");
     			Map<String, String> volumes = new HashMap<>();
     			volumes.put(Paths.get(System.getProperty("user.dir"), "build/minio").toString(), "/data");

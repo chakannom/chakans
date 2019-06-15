@@ -12,6 +12,7 @@ import { createImgproxySignatureUrl } from '../../../../../shared';
 })
 export class BlogUserSettingsComponent implements OnInit {
   isSaving: boolean;
+  profileImageFile: File;
   profileImageUrl: string;
   privacyForm = this.fb.group({
     openedProfile: [false],
@@ -49,9 +50,9 @@ export class BlogUserSettingsComponent implements OnInit {
 
   saveProfileImage() {
     this.isSaving = true;
-    if (!this.profileImageUrl && this.profileImageUrl.startsWith('data:image/')) {
+    if (this.profileImageUrl && this.profileImageUrl.startsWith('data:image/')) {
       this.storageService
-        .uploadImageFile(this.profileImageForm.get(['profileImage']).value)
+        .uploadImageFile(this.profileImageFile)
         .pipe(
           map((response: any) => response.url.split('?')[0]),
           map((imgFileUrl: string) => createImgproxySignatureUrl('fit', 120, 120, 'ce', 0, imgFileUrl, 'png')),
@@ -76,14 +77,14 @@ export class BlogUserSettingsComponent implements OnInit {
     const reader = new FileReader();
     reader.onload = (e: ProgressEvent & { target: { result: string } }) => {
       this.profileImageUrl = e.target.result;
-      this.profileImageForm.setValue({ profileImage: event.target.files[0] });
+      this.profileImageFile = event.target.files[0];
     };
     reader.readAsDataURL(event.target.files[0]);
   }
 
   removeImage() {
     this.profileImageUrl = '';
-    this.profileImageForm.setValue({ profileImage: null });
+    this.profileImageFile = null;
   }
 
   private onSuccessSave() {

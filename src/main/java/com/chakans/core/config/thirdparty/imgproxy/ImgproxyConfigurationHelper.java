@@ -37,17 +37,17 @@ public class ImgproxyConfigurationHelper {
     private static final Logger log = LoggerFactory.getLogger(ImgproxyConfigurationHelper.class);
 
     private static final String imageName = "darthsim/imgproxy";
-    
+
     private static final String tag = "v2.2.13";
-    
+
     private static final String containerName = "dev-imgproxy";
-    
+
     private static final Integer hostPort = 9001;
-    
+
     private static final String imgproxyKey = "3a8f347756fa5013430a1a3d0ebe2ad6";
-    
+
     private static final String imgproxySalt = "19b63d683008e7b88bb4427d9c0b45b3";
-    
+
     private static final String imgproxyMaxClients = "5";
 
     public static boolean createServer() {
@@ -58,6 +58,7 @@ public class ImgproxyConfigurationHelper {
     			dockerHelper.pullImage();
     		}
     		if (!dockerHelper.isExistedRunningContainer(containerName)) {
+    		    dockerHelper.removeContainer(containerName);
     			List<String> environments = Arrays.asList("IMGPROXY_KEY=" + imgproxyKey, "IMGPROXY_SALT=" + imgproxySalt, "IMGPROXY_MAX_CLIENTS=" + imgproxyMaxClients);
     			Map<Integer, Integer> ports = new HashMap<>();
     			ports.put(hostPort, 8080);
