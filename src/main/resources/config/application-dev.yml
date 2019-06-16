@@ -139,12 +139,12 @@ application:
   filters:
     html-render:
       remote-addresses:
-        chrome-driver: http://localhost:9515
+        chrome-driver: http://localhost:9902
       token: devToken
   graceful-shutdown:
     shutdown-timeout-seconds: 5
   minio:
-    end-point: http://localhost:9000
+    end-point: http://localhost:9900
     access-key: storage1
     secret-key: storage1
     secure: false
@@ -157,6 +157,6 @@ application:
       album-blog-default: default
       album-blog-blog: blog
       theme-blog: blog
-    web-rpc-url: http://localhost:9000/minio/webrpc
+    web-rpc-url: http://localhost:9900/minio/webrpc
   blog:
     domain: blog.localhost:8080

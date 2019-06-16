@@ -28,6 +28,6 @@ public class MinioConfigurationHelperIntTest {
 
     @Test
     public void testCreateServerWithEndPointAndAccessKeyAndSecretKeyAndSecureAndBuckets() {
-        MinioConfigurationHelper.createServer("http://localhost:9000/","storage1", "storage1", false, ImmutableMap.of("test", "test"));
+        MinioConfigurationHelper.createServer("http://localhost:9900/","storage1", "storage1", false, ImmutableMap.of("test", "test"));
     }
 }

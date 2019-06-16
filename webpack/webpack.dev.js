@@ -14,7 +14,7 @@ const commonIndexAppConfig = require('./webpack.common.index-app.js');
 const commonNonIndexAppConfig = require('./webpack.common.non-index-app.js');
 
 const ENV = 'development';
-const IMGPROXY = { url: 'http://localhost:9001' ,key: '3a8f347756fa5013430a1a3d0ebe2ad6', salt: '19b63d683008e7b88bb4427d9c0b45b3' };
+const IMGPROXY = { url: 'http://localhost:9901' ,key: '3a8f347756fa5013430a1a3d0ebe2ad6', salt: '19b63d683008e7b88bb4427d9c0b45b3' };
 
 module.exports = [
     // Index

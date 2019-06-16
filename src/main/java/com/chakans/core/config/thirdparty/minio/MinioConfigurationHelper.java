@@ -58,7 +58,7 @@ public class MinioConfigurationHelper {
 
     private static final String containerName = "dev-minio";
 
-    private static final Integer hostPort = 9000;
+    private static final Integer hostPort = 9900;
 
     public static boolean createServer(String endPoint, String accessKey, String secretKey, boolean secure, Map<String, String> buckets) {
     	try {

@@ -25,7 +25,7 @@ public class WebDriverConfigurationHelper {
 
     private static final String containerName = "dev-webdriver-{browserName}";
 
-    private static final Integer hostPort = 9002;
+    private static final Integer hostPort = 9902;
 
     private static final Integer hostVncPort = 5990;
 

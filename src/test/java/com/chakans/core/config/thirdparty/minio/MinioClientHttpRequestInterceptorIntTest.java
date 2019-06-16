@@ -20,8 +20,8 @@ public class MinioClientHttpRequestInterceptorIntTest {
 
     @BeforeClass
     public static void beforeClass() {
-        MinioConfigurationHelper.createServer("http://localhost:9000/", "storage1", "storage1", false, null);
-        minioClientHttpRequestInterceptor = new MinioClientHttpRequestInterceptor("http://localhost:9000/minio/webrpc", "storage1", "storage1");
+        MinioConfigurationHelper.createServer("http://localhost:9900/", "storage1", "storage1", false, null);
+        minioClientHttpRequestInterceptor = new MinioClientHttpRequestInterceptor("http://localhost:9900/minio/webrpc", "storage1", "storage1");
         ReflectionTestUtils.setField(minioClientHttpRequestInterceptor, "restTemplate", new RestTemplate());
     }
 

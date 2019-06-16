@@ -42,7 +42,7 @@ public class ImgproxyConfigurationHelper {
 
     private static final String containerName = "dev-imgproxy";
 
-    private static final Integer hostPort = 9001;
+    private static final Integer hostPort = 9901;
 
     private static final String imgproxyKey = "3a8f347756fa5013430a1a3d0ebe2ad6";
 

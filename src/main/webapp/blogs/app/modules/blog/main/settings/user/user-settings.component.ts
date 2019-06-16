@@ -18,9 +18,7 @@ export class BlogUserSettingsComponent implements OnInit {
     openedProfile: [false],
     openedEmail: [false]
   });
-  profileImageForm = this.fb.group({
-    profileImage: []
-  });
+  profileImageForm = this.fb.group({});
   userInfoForm = this.fb.group({
     email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email, Validators.required]],
     nickname: ['', [Validators.minLength(3), Validators.maxLength(100), Validators.required]]
@@ -49,6 +47,7 @@ export class BlogUserSettingsComponent implements OnInit {
   }
 
   saveProfileImage() {
+    console.log('1');
     this.isSaving = true;
     if (this.profileImageUrl && this.profileImageUrl.startsWith('data:image/')) {
       this.storageService

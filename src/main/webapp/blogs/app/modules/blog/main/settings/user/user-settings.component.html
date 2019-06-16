@@ -38,7 +38,7 @@
                     <div class="img-control">
                         <div class="upload" *ngIf="!profileImageUrl">
                             <label class="btn btn-primary btn-sm" for="profileImage" jhiTranslate="blog.settings.user.profile_image.form.buttons.upload">Upload</label>
-                            <input type="file" id="profileImage" accept="image/*" (change)="previewImage($event)" formControlName="profileImage">
+                            <input type="file" id="profileImage" accept="image/*" (change)="previewImage($event)">
                         </div>
                         <div *ngIf="profileImageUrl">
                             <button type="button" class="btn btn-primary btn-sm" (click)="removeImage()" jhiTranslate="blog.settings.user.profile_image.form.buttons.remove">Remove</button>
