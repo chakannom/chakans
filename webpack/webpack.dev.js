@@ -34,7 +34,8 @@ module.exports = [
             watchOptions: {
                 ignored: /node_modules/
             },
-            https: options.tls
+            https: options.tls,
+            historyApiFallback: true
         },
         entry: {
             polyfills: './src/main/webapp/index/app/polyfills',
@@ -151,7 +152,8 @@ module.exports = [
             watchOptions: {
                 ignored: /node_modules/
             },
-            https: options.tls
+            https: options.tls,
+            historyApiFallback: true
         },
         entry: {
             polyfills: './src/main/webapp/accounts/app/polyfills',
@@ -268,7 +270,8 @@ module.exports = [
             watchOptions: {
                 ignored: /node_modules/
             },
-            https: options.tls
+            https: options.tls,
+            historyApiFallback: true
         },
         entry: {
             polyfills: './src/main/webapp/blogs/app/polyfills',
@@ -385,7 +388,8 @@ module.exports = [
             watchOptions: {
                 ignored: /node_modules/
             },
-            https: options.tls
+            https: options.tls,
+            historyApiFallback: true
         },
         entry: {
             polyfills: './src/main/webapp/admin/app/polyfills',

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { AccountService } from '../auth/account.service';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
 

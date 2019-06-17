@@ -14,7 +14,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         (event: HttpEvent<any>) => {},
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
-            if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('/apis/account'))))) {
+            if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('apis/account'))))) {
               this.eventManager.broadcast({ name: 'blogsApp.httpError', content: err });
             }
           }

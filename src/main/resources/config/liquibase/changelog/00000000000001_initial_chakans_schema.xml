@@ -11,7 +11,7 @@
     <changeSet id="00000000000001" author="chakannom">
         <!-- Language -->
         <createTable tableName="cks_language">
-            <column name="key" type="varchar(6)">
+            <column name="key" type="varchar(10)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>

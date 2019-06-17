@@ -26,7 +26,8 @@ public class BlogThemeDescription implements Serializable {
     private Long themeId;
 
     @Id
-    @Column(name = "lang_key", updatable = false)
+    @Size(max = 10)
+    @Column(name = "lang_key", length = 10, updatable = false)
     private String langKey;
 
     @Size(min = 1, max = 100)

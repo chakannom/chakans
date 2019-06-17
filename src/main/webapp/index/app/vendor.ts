@@ -30,7 +30,7 @@ import {
   faHdd,
   faFlag,
   faWrench,
-  faClock,
+  faLock,
   faCloud,
   faSignOutAlt,
   faSignInAlt,
@@ -70,7 +70,7 @@ library.add(faBook);
 library.add(faHdd);
 library.add(faFlag);
 library.add(faWrench);
-library.add(faClock);
+library.add(faLock);
 library.add(faCloud);
 library.add(faSignOutAlt);
 library.add(faSignInAlt);

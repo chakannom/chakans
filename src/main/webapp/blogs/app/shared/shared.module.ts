@@ -1,8 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { BlogsSharedLibsModule, BlogsSharedCommonModule, HasAnyAuthorityDirective } from './';
+import { BlogsSharedCommonModule, HasAnyAuthorityDirective } from './';
 
 @NgModule({
-  imports: [BlogsSharedLibsModule, BlogsSharedCommonModule],
+  imports: [BlogsSharedCommonModule],
   declarations: [HasAnyAuthorityDirective],
   entryComponents: [],
   exports: [BlogsSharedCommonModule, HasAnyAuthorityDirective],

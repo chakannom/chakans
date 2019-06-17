@@ -1,8 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IndexSharedLibsModule, IndexSharedCommonModule, HasAnyAuthorityDirective } from './';
+import { IndexSharedCommonModule, HasAnyAuthorityDirective } from './';
 
 @NgModule({
-  imports: [IndexSharedLibsModule, IndexSharedCommonModule],
+  imports: [IndexSharedCommonModule],
   declarations: [HasAnyAuthorityDirective],
   entryComponents: [],
   exports: [IndexSharedCommonModule, HasAnyAuthorityDirective],

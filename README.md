@@ -2,7 +2,7 @@
 
 We aim to serve various services.
 
--   Development: https://dev.chakans.com
+- Development: https://dev.chakans.com
 
 ## Development
 
@@ -106,7 +106,7 @@ Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
 To package your application as a war in order to deploy it to an application server, run:
 
-    ./gradlew -Pprod clean bootWar
+    ./gradlew -Pprod -Pwar clean bootWar
 
 ## Testing
 

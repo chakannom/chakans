@@ -21,7 +21,8 @@
       },
       "data": {
         "remoteAddress": "원격 주소:"
-      }
+      },
+      "notFound": "No audit found"
     }
   }
 }

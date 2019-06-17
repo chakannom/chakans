@@ -99,15 +99,6 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: false,
-            splitChunks: {
-                cacheGroups: {
-                    commons: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all'
-                    }
-                }
-            },
             minimizer: [
                 new TerserPlugin({
                     parallel: true,
@@ -264,15 +255,6 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: false,
-            splitChunks: {
-                cacheGroups: {
-                    commons: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all'
-                    }
-                }
-            },
             minimizer: [
                 new TerserPlugin({
                     parallel: true,
@@ -429,15 +411,6 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: false,
-            splitChunks: {
-                cacheGroups: {
-                    commons: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all'
-                    }
-                }
-            },
             minimizer: [
                 new TerserPlugin({
                     parallel: true,
@@ -594,15 +567,6 @@ module.exports = [
         },
         optimization: {
             runtimeChunk: false,
-            splitChunks: {
-                cacheGroups: {
-                    commons: {
-                        test: /[\\/]node_modules[\\/]/,
-                        name: 'vendors',
-                        chunks: 'all'
-                    }
-                }
-            },
             minimizer: [
                 new TerserPlugin({
                     parallel: true,

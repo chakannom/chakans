@@ -48,8 +48,8 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
     private String customUrl;
 
     @NotNull
-    @Size(min = 2, max = 6)
-    @Column(name = "lang_key", length = 6)
+    @Size(min = 2, max = 10)
+    @Column(name = "lang_key", length = 10)
     private String langKey;
 
     @NotNull

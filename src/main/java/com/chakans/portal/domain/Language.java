@@ -24,9 +24,9 @@ public class Language implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @Size(max = 6)
+    @Size(max = 10)
     @Id
-    @Column(length = 6)
+    @Column(length = 10)
     private String key;
 
     public String getKey() {
