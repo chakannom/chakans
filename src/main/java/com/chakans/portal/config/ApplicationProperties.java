@@ -108,7 +108,7 @@ public class ApplicationProperties {
 
         private boolean secure = false;
 
-        private final Map<String, String> buckets = new HashMap<>();
+        private final Map<String, Map<String, String>> buckets = new HashMap<>();
 
         private final Map<String, String> folders = new HashMap<>();
 
@@ -146,7 +146,7 @@ public class ApplicationProperties {
             this.secure = secure;
         }
 
-        public Map<String, String> getBuckets() {
+        public Map<String, Map<String, String>> getBuckets() {
             return buckets;
         }
 

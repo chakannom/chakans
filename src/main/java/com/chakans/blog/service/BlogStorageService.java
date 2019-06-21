@@ -39,7 +39,7 @@ public class BlogStorageService {
     }
 
     public Optional<String> getPresignedPutUrl(Long blogId, String filename) {
-        String albumBucket = applicationProperties.getMinio().getBuckets().get(Constants.BUCKETS_ALBUM);
+        String albumBucket = applicationProperties.getMinio().getBuckets().get(Constants.BUCKETS_ALBUM).get("name");
         String prefixFolderPath = generatePrefixFolderPath(blogId);
         String fileFolder = getBlogFileFolder(albumBucket, prefixFolderPath);
         String objectName = Paths.get(prefixFolderPath, fileFolder, filename).toString().replaceAll("\\\\", "/");
@@ -61,7 +61,7 @@ public class BlogStorageService {
     }
 
     public List<String> getImageList(Long blogId) {
-        String albumBucket = applicationProperties.getMinio().getBuckets().get(Constants.BUCKETS_ALBUM);
+        String albumBucket = applicationProperties.getMinio().getBuckets().get(Constants.BUCKETS_ALBUM).get("name");
         String prefixFolderPath = generatePrefixFolderPath(blogId);
         return minioRepository.getFileList(albumBucket, prefixFolderPath, true);
     }

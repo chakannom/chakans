@@ -56,7 +56,7 @@ public class MinioConfiguration {
         String accessKey = applicationProperties.getMinio().getAccessKey();
         String secretKey = applicationProperties.getMinio().getSecretKey();
         boolean secure = applicationProperties.getMinio().isSecure();
-        Map<String, String> buckets =  applicationProperties.getMinio().getBuckets();
+        Map<String, Map<String, String>> buckets =  applicationProperties.getMinio().getBuckets();
         MinioConfigurationHelper.createServer(endPoint, accessKey, secretKey, secure, buckets);
     }
 
@@ -69,7 +69,7 @@ public class MinioConfiguration {
                 String accessKey = applicationProperties.getMinio().getAccessKey();
                 String secretKey = applicationProperties.getMinio().getSecretKey();
                 boolean secure = applicationProperties.getMinio().isSecure();
-                Map<String, String> buckets = applicationProperties.getMinio().getBuckets();
+                Map<String, Map<String, String>> buckets = applicationProperties.getMinio().getBuckets();
                 MinioConfigurationHelper.createBuckets(endPoint, accessKey, secretKey, secure, buckets);
             });
         }

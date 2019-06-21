@@ -24,10 +24,10 @@ import com.google.common.collect.ImmutableMap;
  *
  * @see MinioConfigurationHelper
  */
-public class MinioConfigurationHelperIntTest {
+public class MinioConfigurationHelperIT {
 
     @Test
     public void testCreateServerWithEndPointAndAccessKeyAndSecretKeyAndSecureAndBuckets() {
-        MinioConfigurationHelper.createServer("http://localhost:9900/","storage1", "storage1", false, ImmutableMap.of("test", "test"));
+        MinioConfigurationHelper.createServer("http://localhost:9900/","storage1", "storage1", false, ImmutableMap.of("test", ImmutableMap.of("name", "test")));
     }
 }

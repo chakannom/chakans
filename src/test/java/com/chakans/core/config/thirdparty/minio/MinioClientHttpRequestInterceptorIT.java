@@ -14,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @see  MinioClientHttpRequestInterceptor
  */
-public class MinioClientHttpRequestInterceptorIntTest {
+public class MinioClientHttpRequestInterceptorIT {
 
     private static MinioClientHttpRequestInterceptor minioClientHttpRequestInterceptor;
 

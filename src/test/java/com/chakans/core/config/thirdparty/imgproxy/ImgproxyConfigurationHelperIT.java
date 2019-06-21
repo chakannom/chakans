@@ -22,7 +22,7 @@ import org.junit.Test;
  *
  * @see ImgproxyConfigurationHelper
  */
-public class ImgproxyConfigurationHelperIntTest {
+public class ImgproxyConfigurationHelperIT {
 
     @Test
     public void testCreateServer() {

@@ -149,9 +149,13 @@ application:
     secret-key: storage1
     secure: false
     buckets:
-      album: album
-      theme: theme
-      drive: drive
+      album:
+        name: album
+        policy: read
+      theme:
+        name: theme
+      drive:
+        name: drive
     folders:
       album-blog: blog
       album-blog-default: default

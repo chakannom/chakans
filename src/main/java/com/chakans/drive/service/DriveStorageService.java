@@ -37,7 +37,7 @@ public class DriveStorageService {
     }
 
     public Optional<String> getPresignedPutUrl(String filename) {
-        String driveBucket = applicationProperties.getMinio().getBuckets().get(Constants.BUCKETS_DRIVE);
+        String driveBucket = applicationProperties.getMinio().getBuckets().get(Constants.BUCKETS_DRIVE).get("name");
         String prefixFolderPath = generatePrefixFolderPath();
         String fileFolder = getDriveFileFolder(driveBucket, prefixFolderPath);
         String objectName = Paths.get(prefixFolderPath, fileFolder, filename).toString().replaceAll("\\\\", "/");

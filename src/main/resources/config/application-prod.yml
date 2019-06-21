@@ -168,9 +168,13 @@ application:
     secret-key: #chakans.minio.secretkey#
     secure: #chakans.minio.secure#
     buckets:
-      album: #chakans.minio.buckets.album#
-      theme: #chakans.minio.buckets.theme#
-      drive: #chakans.minio.buckets.drive#
+      album:
+        name: #chakans.minio.buckets.album.name#
+        policy: read
+      theme:
+        name: #chakans.minio.buckets.theme.name#
+      drive:
+        name: #chakans.minio.buckets.drive.name#
     folders:
       album-blog: #chakans.minio.folders.album_blog#
       album-blog-default: #chakans.minio.folders.album_blog_default#

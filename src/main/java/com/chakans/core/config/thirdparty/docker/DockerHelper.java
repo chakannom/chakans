@@ -9,13 +9,13 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import org.apache.http.conn.HttpHostConnectException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.exception.DockerClientException;
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.Bind;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.ExposedPort;
@@ -74,6 +74,16 @@ public class DockerHelper {
 			return isPullImage;
 		} catch (InterruptedException e) {
 			throw new DockerClientException("It failed to pull image (" + imageName + ":" + tag + ") .", e);
+		}
+	}
+
+	public boolean removeImage(boolean force) throws DockerClientException {
+		try {
+			dockerClient.removeImageCmd(imageName + ":" + tag).withForce(force).exec();
+			log.debug("Removed image (" + imageName + ":" + tag + ")");
+			return true;
+		} catch (NotFoundException e) {
+			throw new DockerClientException("It failed to remove image (" + imageName + ":" + tag + ") .", e);
 		}
 	}
 
