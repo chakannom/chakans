@@ -8,14 +8,14 @@ import { NgbPopover, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
   providers: [NgbPopoverConfig]
 })
 export class PopoverComponent implements OnInit {
+  @ViewChild('popover', { static: true })
+  private popover: NgbPopover;
   @Input()
   type: string;
   @Input()
   cksPopover: any;
   @Input()
   cksValue: any;
-  @ViewChild('p')
-  p: NgbPopover;
 
   constructor(private config: NgbPopoverConfig, private elementRef: ElementRef) {
     config.placement = ['bottom-right', 'left', 'top-right', 'auto'];
@@ -28,22 +28,22 @@ export class PopoverComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   outsideClick(event) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.p.close();
+      this.popover.close();
     }
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    if (this.p.isOpen()) {
-      this.p.close();
+    if (this.popover.isOpen()) {
+      this.popover.close();
     }
   }
 
   changePopoverState() {
-    if (this.p.isOpen()) {
-      this.p.close();
+    if (this.popover.isOpen()) {
+      this.popover.close();
     } else {
-      this.p.open(this.cksValue);
+      this.popover.open(this.cksValue);
     }
   }
 }
