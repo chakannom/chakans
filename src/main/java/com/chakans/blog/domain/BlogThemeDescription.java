@@ -34,6 +34,7 @@ public class BlogThemeDescription implements Serializable {
     @Column(length = 100, nullable = false)
     private String name;
 
+    @Lob
     private String description;
 
     public Long getThemeId() {

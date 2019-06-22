@@ -12,7 +12,7 @@ import { FooterService } from '../../layouts/footer/footer.service';
   styleUrls: ['blog.scss']
 })
 export class BlogComponent implements OnInit, OnDestroy {
-  @ViewChild('blogMainContainer', { static: true })
+  @ViewChild('blogMainContainer', { read: ViewContainerRef, static: true })
   private blogMainContainer: ViewContainerRef;
   private subscriptions: Subscription[];
   private blogId: number;

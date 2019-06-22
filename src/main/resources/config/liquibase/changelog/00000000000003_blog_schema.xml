@@ -54,7 +54,7 @@
             <column name="title" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="varchar(max)"/>
+            <column name="description" type="${clobType}"/>
             <column name="url" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
@@ -110,7 +110,7 @@
             <column name="rightbar_width" type="int" valueNumeric="180">
                 <constraints nullable="false"/>
             </column>
-            <column name="theme" type="varchar(max)">
+            <column name="theme" type="${clobType}">
                 <constraints nullable="false"/>
             </column>
             <column name="top_bar" type="boolean" valueBoolean="true">
@@ -174,7 +174,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="varchar(max)"/>
+            <column name="content" type="${clobType}"/>
             <column name="page_name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
@@ -224,7 +224,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="varchar(max)"/>
+            <column name="content" type="${clobType}"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -242,7 +242,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="varchar(max)"/>
+            <column name="content" type="${clobType}"/>
             <column name="post_name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
@@ -313,7 +313,7 @@
             <column name="title" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="content" type="varchar(max)"/>
+            <column name="content" type="${clobType}"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -399,7 +399,7 @@
             <column name="theme_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="content" type="varchar(max)">
+            <column name="content" type="${clobType}">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -426,7 +426,7 @@
             <column name="name" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="varchar(max)"/>
+            <column name="description" type="${clobType}"/>
         </createTable>
 
         <addPrimaryKey columnNames="theme_id, lang_key" tableName="cks_blog_theme_description"/>

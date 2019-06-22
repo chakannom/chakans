@@ -34,6 +34,7 @@ public class Blog extends AbstractAuditingEntity implements Serializable {
     @Column(length = 100, nullable = false)
     private String title;
 
+    @Lob
     private String description;
 
     @NotNull

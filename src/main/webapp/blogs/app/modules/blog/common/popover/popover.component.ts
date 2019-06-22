@@ -8,7 +8,7 @@ import { NgbPopover, NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
   providers: [NgbPopoverConfig]
 })
 export class PopoverComponent implements OnInit {
-  @ViewChild('popover', { static: true })
+  @ViewChild('popover', { read: NgbPopover, static: true })
   private popover: NgbPopover;
   @Input()
   type: string;

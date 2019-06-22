@@ -45,6 +45,7 @@ public class BlogPost extends AbstractAuditingEntity implements Serializable {
     @Column(length = 255, nullable = false)
     private String title;
 
+    @Lob
     private String content;
 
     @NotNull

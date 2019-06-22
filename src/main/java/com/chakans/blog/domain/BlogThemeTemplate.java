@@ -23,6 +23,7 @@ public class BlogThemeTemplate implements Serializable {
     private Long themeId;
 
     @NotNull
+    @Lob
     private String content;
 
     public Long getThemeId() {

@@ -40,6 +40,7 @@ public class BlogDesign implements Serializable {
     private Integer rightbarWidth = 180;
 
     @NotNull
+    @Lob
     private String theme;
 
     @NotNull
