@@ -91,6 +91,7 @@
                   file="config/liquibase/data/00000000000003/blog.csv"
                   separator=";"
                   tableName="cks_blog">
+            <column name="description" type="string"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
 
@@ -122,6 +123,7 @@
                   file="config/liquibase/data/00000000000003/blog_design.csv"
                   separator=";"
                   tableName="cks_blog_design">
+            <column name="theme" type="string"/>
             <column name="top_bar" type="boolean"/>
         </loadData>
 
@@ -204,6 +206,7 @@
                   file="config/liquibase/data/00000000000003/blog_page.csv"
                   separator=";"
                   tableName="cks_blog_page">
+            <column name="content" type="string"/>
             <column name="permit_comment" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
@@ -275,6 +278,7 @@
                   file="config/liquibase/data/00000000000003/blog_post.csv"
                   separator=";"
                   tableName="cks_blog_post">
+            <column name="content" type="string"/>
             <column name="permit_comment" type="boolean"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
@@ -413,7 +417,9 @@
         <loadData
                   file="config/liquibase/data/00000000000003/blog_theme_template.csv"
                   separator=";"
-                  tableName="cks_blog_theme_template"/>
+                  tableName="cks_blog_theme_template">
+            <column name="content" type="string"/>
+        </loadData>
 
         <!-- Blog Theme Description -->
         <createTable tableName="cks_blog_theme_description">
@@ -440,7 +446,9 @@
         <loadData
                   file="config/liquibase/data/00000000000003/blog_theme_description.csv"
                   separator=";"
-                  tableName="cks_blog_theme_description"/>
+                  tableName="cks_blog_theme_description">
+            <column name="description" type="string"/>
+        </loadData>
     </changeSet>
 
 </databaseChangeLog>
