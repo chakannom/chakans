@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.chakans.portal",
+      "nativeLanguage": "ko"
+    },
+    "jhipsterVersion": "6.1.2",
+    "applicationType": "monolith",
+    "baseName": "chakans",
+    "packageName": "com.chakans.portal",
+    "packageFolder": "com/chakans/portal",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZDM5ZGE3YzlkZmYwYWU5YzFlN2VjMTdkNDgzNWJlZTYwMjRlZjNlODcxYmVkZTYyYjg3NDkwMDhmODk3YzczMzgzZjVkNzEzM2U0YTJlOWIzMzMwMzc1NzUwMjkxN2Y4ZTdmN2QwODFlNmJhZmJjNDZjZTkxZDAzYzM3ZDdkMDY=",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "ko",
+    "languages": [
+      "ko",
+      "en"
+    ]
+  }
+}
