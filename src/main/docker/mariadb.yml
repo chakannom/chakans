@@ -1,7 +1,7 @@
 version: '2'
 services:
   chakans-mariadb:
-    image: mariadb:10.4.5
+    image: mariadb:10.4.6
     # volumes:
     #     - ~/volumes/jhipster/chakans/mysql/:/var/lib/mysql/
     environment:
