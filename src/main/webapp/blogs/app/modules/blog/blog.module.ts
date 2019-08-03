@@ -6,8 +6,6 @@ import { BlogCommonModule } from './common';
 import {
   BLOG_ROUTE,
   BlogComponent,
-  BlogSidebarComponent,
-  BlogSidebarService,
   BlogMakerComponent,
   BlogWelcomeComponent,
   BlogViewBlogComponent,
@@ -25,7 +23,6 @@ import {
   imports: [EditorModule, BlogsSharedModule, BlogCommonModule, RouterModule.forChild([BLOG_ROUTE])],
   declarations: [
     BlogComponent,
-    BlogSidebarComponent,
     BlogMakerComponent,
     BlogWelcomeComponent,
     BlogViewBlogComponent,
@@ -51,7 +48,7 @@ import {
     BlogOtherSettingsComponent,
     BlogUserSettingsComponent
   ],
-  providers: [BlogSidebarService],
+  providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BlogsBlogModule {}

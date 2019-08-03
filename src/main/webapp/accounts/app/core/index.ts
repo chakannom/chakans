@@ -10,5 +10,4 @@ export * from './access/user-route-access-service';
 export * from './access/continue-param-access.service';
 export * from './sign-in/sign-in.service';
 export * from './user/user.service';
-export * from './redirect/redirect.service';
 export * from './core.module';

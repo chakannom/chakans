@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -27,6 +28,7 @@ import io.github.jhipster.config.JHipsterConstants;
  * Creates the beans necessary to manage Connections to minio services.
  */
 @Configuration
+@ConditionalOnProperty(name = "thirdparty.minio", matchIfMissing = true)
 public class MinioConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(MinioConfiguration.class);

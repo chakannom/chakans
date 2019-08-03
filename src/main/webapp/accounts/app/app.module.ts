@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
+import { NgChakansModule } from 'ng-chakans';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
@@ -16,9 +17,9 @@ import { AccountsCoreModule } from './core';
 import { AccountsAppRoutingModule } from './app-routing.module';
 import { AccountsHomeModule } from './modules/home/home.module';
 import { AccountsInternalModule } from './modules/internal/internal.module';
-import { AccountsSelfModule } from './modules/self/self.module';
+import { AccountsMyModule } from './modules/my/my.module';
 import * as moment from 'moment';
-import { MainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { MainComponent, NavbarComponent, FooterComponent, ErrorComponent } from './layouts';
 
 @NgModule({
   imports: [
@@ -31,14 +32,17 @@ import { MainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, A
       i18nEnabled: true,
       defaultI18nLang: 'ko'
     }),
+    NgChakansModule.forRoot({
+      serverApiUrl: '/'
+    }),
     AccountsSharedModule.forRoot(),
     AccountsCoreModule,
     AccountsHomeModule,
     AccountsInternalModule,
-    AccountsSelfModule,
+    AccountsMyModule,
     AccountsAppRoutingModule
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, FooterComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

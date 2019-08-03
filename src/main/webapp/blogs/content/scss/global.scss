@@ -206,9 +206,21 @@ body {
 }
 
 .cks-main {
-  position: relative;
-  padding: 0.625em;
+  min-height: calc(100vh - 6.625em);
 }
+
+.cks-container-with-sidebar {
+  .sidebar {
+    height: calc(100vh - 3.5em);
+  }
+  .cks-main {
+    margin-left: 15.625em;
+  }
+  .cks-footer {
+    margin-left: 15.625em;
+  }
+}
+
 /* Checkbox */
 .cks-checkbox {
   position: relative;

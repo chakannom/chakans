@@ -1,8 +1,6 @@
 <cks-page-ribbon></cks-page-ribbon>
-<div>
-    <router-outlet name="navbar"></router-outlet>
-</div>
-<div class="cks-container">
+<router-outlet name="navbar"></router-outlet>
+<div class="cks-container" [ngClass]="containerClasses">
     <div>
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>

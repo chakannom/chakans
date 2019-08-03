@@ -44,7 +44,7 @@
             </a>
             <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesFooterDropdown">
                 <li *ngFor="let language of languages">
-                    <a class="dropdown-item" [ngClass]="{'active': updateLanguageActiveMenu(language)}"  (click)="changeLanguage(language);">{{language | findLanguageFromKey}}</a>
+                    <a class="dropdown-item" [cksActiveLanguage]="language" (click)="changeLanguage(language);">{{language | findLanguageFromKey}}</a>
                 </li>
             </ul>
         </div>

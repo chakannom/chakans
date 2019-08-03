@@ -18,6 +18,8 @@ export * from './post/post.model';
 export * from './post/post.service';
 export * from './comment/comment.model';
 export * from './comment/comment.service';
+export * from './tag/post-tag.model';
+export * from './tag/post-tag.service';
 export * from './access/user-profile-route-access.service';
 export * from './access/home-module-access.service';
 export * from './access/blog-module-access.service';

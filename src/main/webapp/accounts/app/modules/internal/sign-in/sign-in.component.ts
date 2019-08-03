@@ -1,13 +1,12 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { JhiLanguageService } from 'ng-jhipster';
+import { CksNavbarService, CksRouteService } from 'ng-chakans';
 import { SessionStorageService } from 'ngx-webstorage';
 
-import { LanguageHelper, RedirectService, SignInService } from '../../../core';
-import { NavbarService } from '../../../layouts/navbar/navbar.service';
-import { FooterService } from '../../../layouts/footer/footer.service';
+import { LanguageHelper, SignInService } from '../../../core';
+import { FooterService } from '../../../layouts';
 
 @Component({
   selector: 'cks-sign-in',
@@ -26,13 +25,12 @@ export class SignInComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private signInService: SignInService,
-    private navbarService: NavbarService,
     private footerService: FooterService,
-    private redirectService: RedirectService,
     private languageService: JhiLanguageService,
+    private navbarService: CksNavbarService,
+    private routeService: CksRouteService,
     private languageHelper: LanguageHelper,
     private sessionStorage: SessionStorageService,
-    private translateService: TranslateService,
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -61,10 +59,6 @@ export class SignInComponent implements OnInit, AfterViewInit, OnDestroy {
     this.footerService.setFooterViewed(true);
   }
 
-  updateLanguageActiveMenu(languageKey: string): boolean {
-    return this.translateService.currentLang === languageKey;
-  }
-
   changeLanguage(languageKey: string) {
     this.sessionStorage.store('locale', languageKey);
     this.languageService.changeLanguage(languageKey);
@@ -83,7 +77,7 @@ export class SignInComponent implements OnInit, AfterViewInit, OnDestroy {
           this.router.navigate(['']);
         }
 
-        this.redirectService.go(this.continueUrl);
+        this.routeService.navigate(this.continueUrl);
       })
       .catch(() => {
         this.authenticationError = true;

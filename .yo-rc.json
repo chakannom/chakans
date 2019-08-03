@@ -4,7 +4,7 @@
       "packageName": "com.chakans.portal",
       "nativeLanguage": "ko"
     },
-    "jhipsterVersion": "6.1.0",
+    "jhipsterVersion": "6.1.2",
     "applicationType": "monolith",
     "baseName": "chakans",
     "packageName": "com.chakans.portal",

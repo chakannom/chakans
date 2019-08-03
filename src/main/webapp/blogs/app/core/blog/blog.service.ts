@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { IBlog } from '../';
+import { IBlog } from './blog.model';
 import { SERVER_API_URL } from '../../app.constants';
 import { HEADER_ACCEPT_BLOG_V1_USER } from '../../shared/constants/http.constants';
 import { createRequestOption } from '../../shared/util/request-util';

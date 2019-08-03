@@ -1,3 +1,18 @@
 <div class="footer">
-    <p jhiTranslate="footer">© Chakans</p>
+    <span jhiTranslate="footer">© Chakans</span>
+    <div ngbDropdown class="dropdown pointer float-right" placement="top-right" *ngIf="languages && languages.length > 1">
+        <a class="dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesNavBarDropdown">
+            <span>
+                <fa-layers [fixedWidth]="true">
+                    <fa-icon icon="flag"></fa-icon>
+                </fa-layers>
+                <span jhiTranslate="global.menu.language">Language</span>
+            </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesNavBarDropdown">
+            <li *ngFor="let language of languages">
+                <a class="dropdown-item" [cksActiveLanguage]="language"  href="javascript:void(0);" (click)="changeLanguage(language)">{{language | findLanguageFromKey}}</a>
+            </li>
+        </ul>
+    </div>
 </div>

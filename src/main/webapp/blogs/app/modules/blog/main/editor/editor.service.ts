@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PageService, PostService } from '../../../../core';
+import { PageService, PostService, PostTagService } from '../../../../core';
 
 @Injectable({ providedIn: 'root' })
 export class EditorService {
-  constructor(private pageService: PageService, private postService: PostService) {}
+  constructor(private pageService: PageService, private postService: PostService, private postTagService: PostTagService) {}
 
   createContent(editorType: string, blogId: number, content: any): Observable<HttpResponse<any>> {
     if (editorType === 'page') {
@@ -36,6 +36,14 @@ export class EditorService {
       return this.pageService.getPage(blogId, editorId);
     } else {
       return this.postService.getPost(blogId, editorId);
+    }
+  }
+
+  getTags(editorType: string, blogId: number): Observable<HttpResponse<any>> {
+    if (editorType === 'page') {
+      return new Observable(observer => observer.complete());
+    } else {
+      return this.postTagService.getPostTags(blogId, { showPostCount: false });
     }
   }
 }

@@ -1,3 +1,26 @@
 /* ==========================================================================
 Blog page styles
 ========================================================================== */
+
+/* Sidebar Header Template */
+.btn-select-blog {
+  color: #000;
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  font-size: 1.125em;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  &:focus {
+    box-shadow: none;
+  }
+  .btn-select-blog-content {
+    display: block;
+    float: left;
+    max-width: calc(100% - 1.25em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

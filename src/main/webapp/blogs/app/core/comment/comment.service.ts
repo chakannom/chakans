@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { IComment } from '../';
+import { IComment } from './comment.model';
 import { SERVER_API_URL } from '../../app.constants';
 import { HEADER_ACCEPT_BLOG_V1_USER } from '../../shared/constants/http.constants';
 import { createRequestOption } from '../../shared/util/request-util';

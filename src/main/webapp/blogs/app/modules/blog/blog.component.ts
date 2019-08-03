@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-import { BlogService } from '../../core';
-import { FooterService } from '../../layouts/footer/footer.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { CksSubscriptionManager } from 'ng-chakans';
+import { BlogService, IBlog } from '../../core';
+import { FooterService, MainService } from '../../layouts';
+import { SIDEBAR_MENU, BLOG_MAIN_SUBSCRIBERS_ID } from '../../shared';
 
 @Component({
   selector: 'cks-blog',
@@ -14,32 +15,56 @@ import { FooterService } from '../../layouts/footer/footer.service';
 export class BlogComponent implements OnInit, OnDestroy {
   @ViewChild('blogMainContainer', { read: ViewContainerRef, static: true })
   private blogMainContainer: ViewContainerRef;
-  private subscriptions: Subscription[];
-  private blogId: number;
+  menuItems: any[];
+  blogs: IBlog[];
+  blogId: number;
 
   constructor(
     private blogService: BlogService,
+    private mainService: MainService,
     private footerService: FooterService,
     private route: ActivatedRoute,
     private router: Router,
+    private eventManager: JhiEventManager,
+    private subscriptionManager: CksSubscriptionManager,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {
-    const resolveSubscription = this.route.data.subscribe(data => {
+    const resolveSubscriber = this.route.data.subscribe(data => {
       this.blogId = data['blogIdParam'];
+      this.menuItems = SIDEBAR_MENU(this.blogId);
     });
-    this.subscriptions = [resolveSubscription];
+    this.subscriptionManager.push(BLOG_MAIN_SUBSCRIBERS_ID, resolveSubscriber);
+    this.mainService.addContainerClass('cks-container-with-sidebar');
     this.footerService.setFooterViewed(false);
   }
 
   ngOnInit() {
+    this.blogService.list().then((blogs: IBlog[]) => {
+      this.blogs = blogs;
+    });
+    this.registerBlogsChangeEvent();
     this.changeMainViewContainer();
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => this.changeMainViewContainer());
   }
 
   ngOnDestroy() {
-    this.subscriptions.filter(subscription => subscription).forEach(subscription => subscription.unsubscribe());
-    this.subscriptions.splice(0, this.subscriptions.length);
+    this.subscriptionManager.destroy(BLOG_MAIN_SUBSCRIBERS_ID);
+    this.mainService.removeContainerClass('cks-container-with-sidebar');
     this.footerService.setFooterViewed(true);
+  }
+
+  changeBlog(blogId: number) {
+    this.blogId = blogId;
+    this.menuItems = SIDEBAR_MENU(this.blogId);
+  }
+
+  private registerBlogsChangeEvent() {
+    const subscriber = this.eventManager.subscribe('blogsChanged', message => {
+      this.blogService.list().then((blogs: IBlog[]) => {
+        this.blogs = blogs;
+      });
+    });
+    this.subscriptionManager.push(BLOG_MAIN_SUBSCRIBERS_ID, subscriber);
   }
 
   private changeMainViewContainer() {

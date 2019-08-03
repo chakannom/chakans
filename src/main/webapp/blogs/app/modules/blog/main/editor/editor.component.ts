@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { NgbDateStruct, NgbCalendar, NgbTimeStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { JhiAlertService } from 'ng-jhipster';
-import { BlogSidebarService } from '../../sidebar/sidebar.service';
+import { CksSidebarService } from 'ng-chakans';
 import { SERVER_API_URL, IMGPROXY_URL, IMGPROXY_KEY, IMGPROXY_SALT } from '../../../../app.constants';
 import { parseFragment } from '../../../../shared';
 import { EditorService } from './editor.service';
@@ -24,17 +24,18 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
   prevMenu: string;
   rowNum: number;
   content: any;
+  tags: any[];
   openingDate: NgbDateStruct;
   openingTime: NgbTimeStruct;
 
   constructor(
-    private sidebarService: BlogSidebarService,
     private editorService: EditorService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
     private router: Router,
     private route: ActivatedRoute,
     private alertService: JhiAlertService,
+    private sidebarService: CksSidebarService,
     private calendar: NgbCalendar,
     private modalService: NgbModal,
     private localStorage: LocalStorageService,
@@ -117,6 +118,12 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
       this.prevMenu = fragmentParams['prevMenu'];
       this.rowNum = fragmentParams['rowNum'];
     }
+    this.editorService
+      .getTags(this.editorType, this.blogId)
+      .subscribe(
+        (res: HttpResponse<any>) => this.onSuccessGetTags(res.body, res.headers),
+        (res: HttpResponse<any>) => this.onError(res.body)
+      );
   }
 
   ngOnDestroy() {
@@ -197,6 +204,10 @@ export class BlogEditorComponent implements OnInit, OnDestroy {
       this.showRestoreModal(data.blogId, data.id);
     }
     this.content = data;
+  }
+
+  private onSuccessGetTags(data, headers) {
+    this.tags = data;
   }
 
   private onSuccessUpdateContent(data, headers) {

@@ -3,10 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JhiAlertService, JhiEventManager } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
-import { BlogSidebarService } from '../../sidebar/sidebar.service';
+import { CksSidebarService, CksSubscriptionManager } from 'ng-chakans';
 import { ITheme, ThemeService, LanguageHelper, IBlog, BlogService } from '../../../../core';
-import { BLANK_IMAGE, createImgproxySignatureUrl } from '../../../../shared';
+import { BLANK_IMAGE, createImgproxySignatureUrl, BLOG_MAKER_SUBSCRIBERS_ID } from '../../../../shared';
 
 @Component({
   selector: 'cks-blog-maker',
@@ -19,7 +18,6 @@ export class BlogMakerComponent implements OnInit, OnDestroy {
   currTheme: ITheme;
   isEnteringSubdomain: boolean;
   isAvailableSubdomain: boolean;
-  subscriptions: Subscription[];
   makerForm = this.fb.group({
     title: ['', [Validators.minLength(1), Validators.maxLength(100), Validators.required]],
     subDomain: ['', [Validators.maxLength(100), Validators.pattern('^([A-Za-z0-9][A-Za-z0-9-]*)*[A-Za-z0-9]$')]]
@@ -27,15 +25,15 @@ export class BlogMakerComponent implements OnInit, OnDestroy {
 
   constructor(
     private languageHelper: LanguageHelper,
-    private sidebarService: BlogSidebarService,
     private themeService: ThemeService,
     private blogService: BlogService,
     private alertService: JhiAlertService,
     private eventManager: JhiEventManager,
+    private sidebarService: CksSidebarService,
+    private subscriptionManager: CksSubscriptionManager,
     private router: Router,
     private fb: FormBuilder
   ) {
-    this.subscriptions = [];
     this.sidebarService.setSidebarViewed(false);
   }
 
@@ -51,13 +49,12 @@ export class BlogMakerComponent implements OnInit, OnDestroy {
           (res: HttpResponse<any>) => this.onError(res.body)
         );
     });
-    this.subscriptions.push(languageSubscription);
+    this.subscriptionManager.push(BLOG_MAKER_SUBSCRIBERS_ID, languageSubscription);
   }
 
   ngOnDestroy() {
+    this.subscriptionManager.destroy(BLOG_MAKER_SUBSCRIBERS_ID);
     this.sidebarService.setSidebarViewed(true);
-    this.subscriptions.filter(subscription => subscription).forEach(subscription => subscription.unsubscribe());
-    this.subscriptions.splice(0, this.subscriptions.length);
   }
 
   enterSubdomain() {
@@ -116,8 +113,8 @@ export class BlogMakerComponent implements OnInit, OnDestroy {
   private onSuccessCreateBlog(data, headers) {
     this.blogService.list(true).then(blogs => {
       this.eventManager.broadcast({
-        name: 'blogsChange',
-        content: 'Sending Blogs Change'
+        name: 'blogsChanged',
+        content: 'Sending Blogs Changed'
       });
       this.router.navigate(['/blog.cb'], { queryParams: { blogId: blogs[blogs.length - 1].id }, fragment: 'posts/published' });
     });

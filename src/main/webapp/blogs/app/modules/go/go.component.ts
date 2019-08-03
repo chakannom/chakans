@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-
+import { CksNavbarService } from 'ng-chakans';
 import { AccountService, RedirectService } from '../../core';
-import { NavbarService } from '../../layouts/navbar/navbar.service';
-import { FooterService } from '../../layouts/footer/footer.service';
+import { FooterService } from '../../layouts';
 
 @Component({
   selector: 'cks-go',
@@ -11,7 +10,7 @@ import { FooterService } from '../../layouts/footer/footer.service';
 })
 export class GoComponent implements OnInit, OnDestroy {
   constructor(
-    private navbarService: NavbarService,
+    private navbarService: CksNavbarService,
     private footerService: FooterService,
     private redirectService: RedirectService,
     private accountService: AccountService,

@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Map;
 
 /**
@@ -37,7 +36,7 @@ public class PersistentAuditEvent implements Serializable {
     @ElementCollection
     @MapKeyColumn(name = "name")
     @Column(name = "value")
-    @CollectionTable(name = "cks_persistent_audit_evt_data", joinColumns=@JoinColumn(name="event_id"))
+    @CollectionTable(name = "jhi_persistent_audit_evt_data", joinColumns=@JoinColumn(name="event_id"))
     private Map<String, String> data = new HashMap<>();
 
     public Long getId() {
@@ -93,7 +92,7 @@ public class PersistentAuditEvent implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return 31;
     }
 
     @Override
@@ -102,6 +101,6 @@ public class PersistentAuditEvent implements Serializable {
             "principal='" + principal + '\'' +
             ", auditEventDate=" + auditEventDate +
             ", auditEventType='" + auditEventType + '\'' +
-            "}";
+            '}';
     }
 }

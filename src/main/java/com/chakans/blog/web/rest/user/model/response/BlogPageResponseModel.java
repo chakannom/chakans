@@ -2,7 +2,6 @@ package com.chakans.blog.web.rest.user.model.response;
 
 import java.time.Instant;
 
-import com.chakans.blog.config.constants.BlogConstants;
 import com.chakans.blog.service.dto.BlogPageDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 

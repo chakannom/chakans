@@ -1,82 +1,103 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { JhiLanguageService } from 'ng-jhipster';
-import { SessionStorageService } from 'ngx-webstorage';
-
+import { AccountService, SignOutService } from '../../core';
 import { VERSION } from '../../app.constants';
-import { NavbarService } from './navbar.service';
-import { LanguageHelper, AccountService, RedirectService, SignOutService } from '../../core';
-import { ProfileService } from '../profiles/profile.service';
 
 @Component({
-  selector: 'cks-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['navbar.scss']
+  selector: '[cks-navbar]',
+  template: `
+    <cks-navbar [brand]="brand" [menuItems]="menuItems"></cks-navbar>
+  `
 })
 export class NavbarComponent implements OnInit {
-  inProduction: boolean;
-  isNavbarViewed: Observable<boolean>;
-  isNavbarCollapsed: boolean;
-  languages: any[];
-  swaggerEnabled: boolean;
-  version: string;
+  brand: any;
+  menuItems: any[];
 
-  constructor(
-    private navbarService: NavbarService,
-    private signOutService: SignOutService,
-    private languageService: JhiLanguageService,
-    private languageHelper: LanguageHelper,
-    private sessionStorage: SessionStorageService,
-    private accountService: AccountService,
-    private redirectService: RedirectService,
-    private profileService: ProfileService,
-    private router: Router
-  ) {
-    this.version = VERSION ? 'v' + VERSION : '';
-    this.isNavbarCollapsed = true;
-    this.isNavbarViewed = this.navbarService.isNavbarViewed;
-  }
+  constructor(private accountService: AccountService, private signOutService: SignOutService, private router: Router) {}
 
   ngOnInit() {
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
-    });
-
-    this.profileService.getProfileInfo().then(profileInfo => {
-      this.inProduction = profileInfo.inProduction;
-      this.swaggerEnabled = profileInfo.swaggerEnabled;
+    this.brand = this.getBrand();
+    this.menuItems = this.getMenuItems();
+    this.accountService.getAuthenticationState().subscribe(identity => {
+      this.menuItems = this.getMenuItems();
     });
   }
 
-  changeLanguage(languageKey: string) {
-    this.sessionStorage.store('locale', languageKey);
-    this.languageService.changeLanguage(languageKey);
+  private getBrand() {
+    return {
+      title: {
+        label: 'C.Blog',
+        translateKey: 'global.title'
+      },
+      version: VERSION ? 'v' + VERSION : ''
+    };
   }
 
-  collapseNavbar() {
-    this.isNavbarCollapsed = true;
+  private getMenuItems() {
+    if (this.accountService.isAuthenticated()) {
+      return this.getAuthenticatedMenuItems();
+    }
+    return this.getUnAuthenticatedMenuItems();
   }
 
-  isAuthenticated() {
-    return this.accountService.isAuthenticated();
+  private getUnAuthenticatedMenuItems() {
+    return [
+      {
+        navigation: '/accounts/signin?continue=' + encodeURIComponent(window.location.href),
+        icon: ['fa', 'sign-in-alt'],
+        name: {
+          label: 'Sign in',
+          translateKey: 'global.menu.sign.in'
+        }
+      }
+    ];
   }
 
-  signIn() {
-    this.redirectService.goAccountsSignIn();
+  private getAuthenticatedMenuItems() {
+    return [
+      {
+        id: 'my-account-menu',
+        icon: ['fa', 'user'],
+        name: {
+          label: 'Account',
+          translateKey: 'global.menu.account.main'
+        },
+        subItems: [
+          {
+            navigation: {
+              routerLink: ['my/settings']
+            },
+            icon: ['fa', 'wrench'],
+            name: {
+              label: 'Settings',
+              translateKey: 'global.menu.account.settings'
+            }
+          },
+          {
+            navigation: {
+              routerLink: ['my/password/change']
+            },
+            icon: ['fa', 'lock'],
+            name: {
+              label: 'Password',
+              translateKey: 'global.menu.account.password'
+            }
+          },
+          {
+            navigation: this.signOut,
+            icon: ['fa', 'sign-out-alt'],
+            name: {
+              label: 'Sign out',
+              translateKey: 'global.menu.account.sign.out'
+            }
+          }
+        ]
+      }
+    ];
   }
 
-  signOut() {
-    this.collapseNavbar();
+  private signOut = () => {
     this.signOutService.signOut();
     this.router.navigate(['']);
-  }
-
-  toggleNavbar() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
-  }
-
-  getImageUrl() {
-    return this.isAuthenticated() ? this.accountService.getImageUrl() : null;
-  }
+  };
 }

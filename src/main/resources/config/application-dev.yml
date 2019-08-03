@@ -164,3 +164,8 @@ application:
     web-rpc-url: http://localhost:9900/minio/webrpc
   blog:
     domain: blog.localhost:8080
+
+thirdparty:
+  imgproxy: false
+  minio: false
+  webdriver: false

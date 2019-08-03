@@ -1,5 +1,3 @@
-export * from './sidebar/sidebar.component';
-export * from './sidebar/sidebar.service';
 export * from './main/maker/maker.component';
 export * from './main/welcome/welcome.component';
 export * from './main/viewblog/view-blog.component';

@@ -1,21 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
-
+import { ActivatedRoute, Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
 import { LanguageHelper } from '../../core';
+import { MainService } from './main.service';
 
 @Component({
   selector: 'cks-main',
   templateUrl: './main.component.html'
 })
 export class MainComponent implements OnInit {
-  constructor(private languageHelper: LanguageHelper, private router: Router) {}
+  containerClasses: string[];
 
-  private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
-    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'accountsApp';
-    if (routeSnapshot.firstChild) {
-      title = this.getPageTitle(routeSnapshot.firstChild) || title;
-    }
-    return title;
+  constructor(private mainService: MainService, private languageHelper: LanguageHelper, private router: Router) {
+    this.containerClasses = this.mainService.getContainerClasses();
   }
 
   ngOnInit() {
@@ -27,5 +23,13 @@ export class MainComponent implements OnInit {
         this.router.navigate(['/404']);
       }
     });
+  }
+
+  private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
+    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'accountsApp';
+    if (routeSnapshot.firstChild) {
+      title = this.getPageTitle(routeSnapshot.firstChild) || title;
+    }
+    return title;
   }
 }

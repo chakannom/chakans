@@ -17,9 +17,9 @@ public class BlogPostResponseModel {
     
     private final String content;
 
-    private String postName;
+    private final String postName;
     
-    private Instant openedDate;
+    private final Instant openedDate;
     
     private final Long viewedCount;
     
@@ -66,16 +66,8 @@ public class BlogPostResponseModel {
         return postName;
     }
 
-    public void setPostName(String postName) {
-        this.postName = postName;
-    }
-
     public Instant getOpenedDate() {
         return openedDate;
-    }
-
-    public void setOpenedDate(Instant openedDate) {
-        this.openedDate = openedDate;
     }
 
     public Long getViewedCount() {

@@ -193,9 +193,64 @@ body {
 }
 
 .cks-main {
-  position: relative;
-  padding: 0.625em;
+  min-height: calc(100vh - 6.625em);
 }
+
+.cks-main-container {
+  max-width: 840px;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.cks-container-with-sidebar {
+  .sidebar {
+    height: calc(100vh - 3.5em);
+    margin-left: -15.625em;
+  }
+  .cks-main {
+    margin-left: 15.625em;
+  }
+  .cks-footer {
+    margin-left: 15.625em;
+  }
+  @media (min-width: 992px) {
+    .sidebar {
+      margin-left: 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .cks-main-container {
+    max-width: 1100px;
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .cks-main-container {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  .cks-main-container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+@media (min-width: 576px) {
+  .cks-main-container {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
 /* Checkbox */
 .cks-checkbox {
   position: relative;

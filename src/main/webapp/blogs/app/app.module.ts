@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
+import { NgChakansModule } from 'ng-chakans';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
@@ -19,7 +20,8 @@ import { BlogsGoModule } from './modules/go/go.module';
 import { BlogsInitialModule } from './modules/initial/initial.module';
 import { BlogsBlogModule } from './modules/blog/blog.module';
 import * as moment from 'moment';
-import { MainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { MainComponent, NavbarComponent, FooterComponent, ErrorComponent } from './layouts';
+import { SERVER_API_URL } from './app.constants';
 
 @NgModule({
   imports: [
@@ -32,6 +34,9 @@ import { MainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, A
       i18nEnabled: true,
       defaultI18nLang: 'ko'
     }),
+    NgChakansModule.forRoot({
+      serverApiUrl: SERVER_API_URL
+    }),
     BlogsSharedModule.forRoot(),
     BlogsCoreModule,
     BlogsHomeModule,
@@ -40,7 +45,7 @@ import { MainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, A
     BlogsBlogModule,
     BlogsAppRoutingModule
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, FooterComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

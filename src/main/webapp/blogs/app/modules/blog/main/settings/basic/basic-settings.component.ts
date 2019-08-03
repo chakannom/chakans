@@ -117,7 +117,7 @@ export class BlogBasicSettingsComponent implements OnInit {
     this.blogService.list(true).then(() => {
       this.eventManager.broadcast({
         name: 'blogsChange',
-        content: 'Sending Blogs Change'
+        content: 'Sending Blogs Changed'
       });
     });
     this.subDomain = this.basicUrlForm.get(['subDomain']).value;

@@ -66,16 +66,8 @@
                 </ng-template>
                 <ng-template ngbPanelContent>
                     <div class="input-tags mb-2">
-                        <span class="item">
-                            <span class="tag">Tag1</span>
-                            <button type="button" class="btn btn-remove">
-                                <fa-layers [fixedWidth]="true">
-                                    <fa-icon icon="times"></fa-icon>
-                                </fa-layers>
-                            </button>
-                        </span>
-                        <span class="item">
-                            <span class="tag">Tag1tetsasdsadasdadsatset</span>
+                        <span class="item" *ngFor="let tag of content.tags">
+                            <span class="tag">{{tag}}</span>
                             <button type="button" class="btn btn-remove">
                                 <fa-layers [fixedWidth]="true">
                                     <fa-icon icon="times"></fa-icon>
@@ -85,12 +77,7 @@
                     </div>
                     <input type="text" class="tag-inputbox" (focus)="expandSuggestionTags($event)" (focusout)="collapseSuggestionTags($event)">
                     <ul class="suggestion-tags">
-                        <li class="tag" (click)="addTag($event)">Tag2</li>
-                        <li class="tag">Tag3</li>
-                        <li class="tag">Tag4</li>
-                        <li class="tag">Tag5</li>
-                        <li class="tag">Tag6</li>
-                        <li class="tag">Tag7-long-Tag7-long-Tag7-long-Tag7-long</li>
+                        <li class="tag" (click)="addTag($event)" *ngFor="let tag of tags">{{tag.name}}</li>
                     </ul>
                 </ng-template>
             </ngb-panel>

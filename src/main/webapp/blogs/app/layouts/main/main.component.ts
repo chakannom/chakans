@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
-
+import { Observable } from 'rxjs';
 import { LanguageHelper } from '../../core';
+import { MainService } from './main.service';
 
 @Component({
   selector: 'cks-main',
   templateUrl: './main.component.html'
 })
 export class MainComponent implements OnInit {
-  constructor(private languageHelper: LanguageHelper, private router: Router) {}
+  containerClasses: string[];
+
+  constructor(private mainService: MainService, private languageHelper: LanguageHelper, private router: Router) {
+    this.containerClasses = this.mainService.getContainerClasses();
+  }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
-    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'blogsApp';
+    let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'accountsApp';
     if (routeSnapshot.firstChild) {
       title = this.getPageTitle(routeSnapshot.firstChild) || title;
     }

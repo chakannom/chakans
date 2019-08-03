@@ -2,9 +2,9 @@ import { Component, OnInit, ElementRef, Renderer2, OnDestroy } from '@angular/co
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { JhiAlertService, JhiParseLinks, JhiEventManager } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
+import { CksSubscriptionManager } from 'ng-chakans';
 import { PageService, IPage } from '../../../../core';
-import { ITEMS_PER_PAGE, parseFragment } from '../../../../shared';
+import { ITEMS_PER_PAGE, parseFragment, BLOG_PAGES_SUBSCRIBERS_ID } from '../../../../shared';
 
 @Component({
   selector: 'cks-blog-pages',
@@ -24,7 +24,6 @@ export class BlogPagesComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
-  subscribes: Subscription[] = [];
 
   constructor(
     private pageService: PageService,
@@ -33,7 +32,8 @@ export class BlogPagesComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private alertService: JhiAlertService,
-    private parseLinks: JhiParseLinks
+    private parseLinks: JhiParseLinks,
+    private subscriptionManager: CksSubscriptionManager
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     const routeDataSub = this.route.data.subscribe(data => {
@@ -42,7 +42,7 @@ export class BlogPagesComponent implements OnInit, OnDestroy {
       this.reverse = data['pagingParams'].ascending;
       this.predicate = data['pagingParams'].predicate;
     });
-    this.subscribes.push(routeDataSub);
+    this.subscriptionManager.push(BLOG_PAGES_SUBSCRIBERS_ID, routeDataSub);
   }
 
   ngOnInit() {
@@ -55,8 +55,7 @@ export class BlogPagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscribes.forEach(subscribe => subscribe.unsubscribe());
-    this.subscribes.splice(0, this.subscribes.length);
+    this.subscriptionManager.destroy(BLOG_PAGES_SUBSCRIBERS_ID);
   }
 
   loadAll() {

@@ -40,7 +40,8 @@ import {
   faAsterisk,
   faTasks,
   faHome,
-  faCheckCircle as fasCheckCircle
+  faCheckCircle as fasCheckCircle,
+  faIdCard as fasIdCard
 } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle as farCheckCircle, faClock as farClock } from '@fortawesome/free-regular-svg-icons';
 
@@ -81,3 +82,4 @@ library.add(faTrashAlt);
 library.add(faAsterisk);
 library.add(fasCheckCircle, farCheckCircle);
 library.add(farClock);
+library.add(fasIdCard);

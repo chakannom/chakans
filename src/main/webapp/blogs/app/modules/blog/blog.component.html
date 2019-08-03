@@ -1,4 +1,27 @@
-<div>
-    <cks-blog-sidebar></cks-blog-sidebar>
-    <div #blogMainContainer></div>
-</div>
+<cks-sidebar [headerTemplate]="sidebarHeader" [menuItems]="menuItems"></cks-sidebar>
+<div #blogMainContainer></div>
+<ng-template #sidebarHeader>
+    <div ngbDropdown class="dropdown pointer">
+        <button class="btn btn-select-blog dropdown-toggle" id="selectBlogDropdown" ngbDropdownToggle>
+            <span class="btn-select-blog-content" jhiTranslate="blog.sidebar.dropdown.my_blog">My Blog</span>
+        </button>
+        <ul class="dropdown-menu" ngbDropdownMenu>
+            <li>
+                <span class="dropdown-item subject disabled" jhiTranslate="blog.sidebar.dropdown.my_blog">My Blog</span>
+            </li>
+            <li *ngFor="let blog of blogs">
+                <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blog.id }" fragment="posts/published" (click)="changeBlog(blog.id)">
+                    <span class="ml-2">{{blog.title}}</span>
+                </a>
+            </li>
+            <li>
+                <div class="dropdown-divider"></div>
+            </li>
+            <li>
+                <a class="dropdown-item" [routerLink]="['/blog.cb']" [queryParams]="{ blogId: blogId }" fragment="maker">
+                    <span jhiTranslate="blog.sidebar.dropdown.new_blog">New Blog...</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</ng-template>

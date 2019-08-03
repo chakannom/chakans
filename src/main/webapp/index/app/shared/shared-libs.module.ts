@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgJhipsterModule } from 'ng-jhipster';
+import { NgChakansModule } from 'ng-chakans';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CookieModule } from 'ngx-cookie';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -25,7 +26,16 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
       }
     })
   ],
-  exports: [FormsModule, CommonModule, NgbModule, NgJhipsterModule, InfiniteScrollModule, FontAwesomeModule, ReactiveFormsModule]
+  exports: [
+    FormsModule,
+    CommonModule,
+    NgbModule,
+    NgJhipsterModule,
+    NgChakansModule,
+    InfiniteScrollModule,
+    FontAwesomeModule,
+    ReactiveFormsModule
+  ]
 })
 export class IndexSharedLibsModule {
   static forRoot() {

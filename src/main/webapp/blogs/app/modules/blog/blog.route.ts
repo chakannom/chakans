@@ -22,13 +22,13 @@ export class BlogResolveBlogIdParam implements Resolve<any> {
   constructor(private blogService: BlogService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const blogId = route.queryParams['blogId'] ? route.queryParams['blogId'] : null;
+    const blogId = route.queryParams['blogId'] ? route.queryParams['blogId'] : undefined;
     return this.blogService.list().then(blogs => {
       if (blogs.length > 0) {
         const blog = blogs.find(b => b.id.toString() === blogId);
         return blog ? blog.id : blogs[0].id;
       }
-      return null;
+      return undefined;
     });
   }
 }
