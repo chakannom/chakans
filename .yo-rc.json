@@ -4,7 +4,7 @@
       "packageName": "com.chakans.portal",
       "nativeLanguage": "ko"
     },
-    "jhipsterVersion": "6.1.2",
+    "jhipsterVersion": "6.2.0",
     "applicationType": "monolith",
     "baseName": "chakans",
     "packageName": "com.chakans.portal",
@@ -35,6 +35,7 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "ko",
-    "languages": ["ko", "en"]
+    "languages": ["ko", "en"],
+    "blueprints": []
   }
 }

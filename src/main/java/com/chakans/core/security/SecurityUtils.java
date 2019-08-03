@@ -1,11 +1,14 @@
 package com.chakans.core.security;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.chakans.core.config.constants.AuthoritiesConstants;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -55,8 +58,12 @@ public final class SecurityUtils {
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> authentication.getAuthorities().stream()
-                .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS)))
+            .map(authentication -> {
+                List<GrantedAuthority> authorities = new ArrayList<>();
+                authorities.addAll(authentication.getAuthorities());
+                return authorities.stream()
+                    .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS));
+            })
             .orElse(false);
     }
 
@@ -71,8 +78,12 @@ public final class SecurityUtils {
     public static boolean isCurrentUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority)))
+            .map(authentication -> {
+                List<GrantedAuthority> authorities = new ArrayList<>();
+                authorities.addAll(authentication.getAuthorities());
+                return authorities.stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
+            })
             .orElse(false);
     }
 }

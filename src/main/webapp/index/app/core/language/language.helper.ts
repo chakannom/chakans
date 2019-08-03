@@ -8,7 +8,7 @@ import { LANGUAGES } from './language.constants';
 
 @Injectable({ providedIn: 'root' })
 export class LanguageHelper {
-  renderer: Renderer2 = null;
+  private renderer: Renderer2 = null;
   private _language: BehaviorSubject<string>;
 
   constructor(

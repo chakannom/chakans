@@ -30,11 +30,11 @@ Add the `help` flag on any command to see how you can use it. For example, `npm 
 
 The `npm run` command will list all of the scripts available to run for this project.
 
-### Service workers
+### PWA Support
 
-Service workers are commented by default, to enable them please uncomment the following code.
+It's disabled by default. One of the main components of a PWA is a service worker.
 
-- The service worker registering script in index.html
+The service worker initialization code is commented out by default. To enable it, uncomment the following code in `src/main/webapp/index.html`:
 
 ```html
 <script>
@@ -46,7 +46,7 @@ Service workers are commented by default, to enable them please uncomment the fo
 </script>
 ```
 
-Note: workbox creates the respective service worker and dynamically generate the `service-worker.js`
+Note: [Workbox](https://developers.google.com/web/tools/workbox/) powers JHipster's service worker. It dynamically generates the `service-worker.js` file.
 
 ### Managing dependencies
 
@@ -71,9 +71,9 @@ Edit [src/main/webapp/content/css/vendor.css](src/main/webapp/content/css/vendor
 @import '~leaflet/dist/leaflet.css';
 ```
 
-Note: there are still few other things remaining to do for Leaflet that we won't detail here.
+Note: There are still a few other things remaining to do for Leaflet that we won't detail here.
 
-### Using angular-cli
+### Using Angular CLI
 
 You can also use [Angular CLI][] to generate some custom client code.
 

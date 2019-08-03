@@ -30,7 +30,6 @@ public class UserRequestModel extends UserDTO {
 
     @Override
     public String toString() {
-        return "UserRequestModel{" +
-            "} " + super.toString();
+        return "UserRequestModel{" + super.toString() + "} ";
     }
 }
